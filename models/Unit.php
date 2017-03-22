@@ -47,6 +47,7 @@ class Unit extends \yii\db\ActiveRecord {
             'unit_title' => 'Название',
             'unit_parent_id' => 'ID родителя',
             'unit_ratio' => 'Коэффициент',
+            'unit_parent_name' => 'Базовая единица',
         ];
     }
 
