@@ -51,6 +51,6 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getMaterials()
     {
-        return $this->hasMany(Material::className(), ['material_catrgory_id' => 'category_id']);
+        return $this->hasMany(Material::className(), ['material_category_id' => 'category_id']);
     }
 }

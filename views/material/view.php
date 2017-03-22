@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'material_title',
             'materil_price',
             'material_article',
-            'material_catrgory_id',
+            'material_category_id',
             'material_unit_id',
         ],
     ]) ?>

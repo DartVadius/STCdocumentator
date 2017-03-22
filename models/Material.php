@@ -11,10 +11,10 @@ use Yii;
  * @property string $material_title
  * @property string $materil_price
  * @property string $material_article
- * @property string $material_catrgory_id
+ * @property string $material_category_id
  * @property string $material_unit_id
  *
- * @property Category $materialCatrgory
+ * @property Category $materialCategory
  * @property Unit $materialUnit
  * @property Mr[] $mrs
  * @property Recipe[] $mrRecipes
@@ -37,10 +37,10 @@ class Material extends \yii\db\ActiveRecord {
         return [
             [['materil_price', 'material_unit_id'], 'required'],
             [['materil_price'], 'number'],
-            [['material_catrgory_id', 'material_unit_id'], 'integer'],
+            [['material_category_id', 'material_unit_id'], 'integer'],
             [['material_title'], 'string', 'max' => 255],
             [['material_article'], 'string', 'max' => 12],
-            [['material_catrgory_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['material_catrgory_id' => 'category_id']],
+            [['material_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['material_category_id' => 'category_id']],
             [['material_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => Unit::className(), 'targetAttribute' => ['material_unit_id' => 'unit_id']],
         ];
     }
@@ -54,7 +54,7 @@ class Material extends \yii\db\ActiveRecord {
             'material_title' => 'Назавание',
             'materil_price' => 'Цена',
             'material_article' => 'Артикул',
-            'material_catrgory_id' => 'ID категории',
+            'material_category_id' => 'ID категории',
             'material_unit_id' => 'ID единицы измерения',
         ];
     }
@@ -63,7 +63,7 @@ class Material extends \yii\db\ActiveRecord {
      * @return \yii\db\ActiveQuery
      */
     public function getMaterialCatrgory() {
-        return $this->hasOne(Category::className(), ['category_id' => 'material_catrgory_id']);
+        return $this->hasOne(Category::className(), ['category_id' => 'material_category_id']);
     }
 
     /**

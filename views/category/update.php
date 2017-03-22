@@ -8,6 +8,7 @@ use yii\helpers\Html;
 $this->title = 'Редактировать категорию: ' . $model->category_title;
 $this->params['breadcrumbs'][] = ['label' => 'Категории', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->category_title, 'url' => ['view', 'id' => $model->category_id]];
+$this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="category-update">
 

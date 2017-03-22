@@ -34,7 +34,7 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'material_article')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'material_catrgory_id')->dropDownList($category, $catParams)->label('Категория') ?>
+    <?= $form->field($model, 'material_category_id')->dropDownList($category, $catParams)->label('Категория') ?>
 
     <?= $form->field($model, 'material_unit_id')->dropDownList($unit, $unitParams)->label('Ед.изм.') ?>
 

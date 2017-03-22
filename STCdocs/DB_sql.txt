@@ -53,19 +53,19 @@ CREATE TABLE IF NOT EXISTS `documentator`.`material` (
   `material_title` VARCHAR(255) NULL,
   `materil_price` DECIMAL(12,4) UNSIGNED NOT NULL,
   `material_article` VARCHAR(12) NULL,
-  `material_catrgory_id` INT(10) UNSIGNED NULL,
+  `material_category_id` INT(10) UNSIGNED NULL,
   `material_unit_id` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`material_id`),
   UNIQUE INDEX `material_id_UNIQUE` (`material_id` ASC),
   INDEX `fk_material_unit_idx` (`material_unit_id` ASC),
-  INDEX `fk_material_category_idx` (`material_catrgory_id` ASC),
+  INDEX `fk_material_category_idx` (`material_category_id` ASC),
   CONSTRAINT `fk_material_unit`
     FOREIGN KEY (`material_unit_id`)
     REFERENCES `documentator`.`unit` (`unit_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_material_category`
-    FOREIGN KEY (`material_catrgory_id`)
+    FOREIGN KEY (`material_category_id`)
     REFERENCES `documentator`.`category` (`category_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

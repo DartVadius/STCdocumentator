@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Material;
+use app\models\Position;
 
 /**
- * MaterialSearch represents the model behind the search form about `app\models\Material`.
+ * PositionSearch represents the model behind the search form about `app\models\Position`.
  */
-class MaterialSearch extends Material
+class PositionSearch extends Position
 {
     /**
      * @inheritdoc
@@ -18,9 +18,9 @@ class MaterialSearch extends Material
     public function rules()
     {
         return [
-            [['material_id', 'material_category_id', 'material_unit_id'], 'integer'],
-            [['material_title', 'material_article'], 'safe'],
-            [['materil_price'], 'number'],
+            [['position_id'], 'integer'],
+            [['position_title', 'position_desc'], 'safe'],
+            [['position_salary_hour'], 'number'],
         ];
     }
 
@@ -42,7 +42,7 @@ class MaterialSearch extends Material
      */
     public function search($params)
     {
-        $query = Material::find();
+        $query = Position::find();
 
         // add conditions that should always apply here
 
@@ -60,14 +60,12 @@ class MaterialSearch extends Material
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'material_id' => $this->material_id,
-            'materil_price' => $this->materil_price,
-            'material_category_id' => $this->material_category_id,
-            'material_unit_id' => $this->material_unit_id,
+            'position_id' => $this->position_id,
+            'position_salary_hour' => $this->position_salary_hour,
         ]);
 
-        $query->andFilterWhere(['like', 'material_title', $this->material_title])
-            ->andFilterWhere(['like', 'material_article', $this->material_article]);
+        $query->andFilterWhere(['like', 'position_title', $this->position_title])
+            ->andFilterWhere(['like', 'position_desc', $this->position_desc]);
 
         return $dataProvider;
     }

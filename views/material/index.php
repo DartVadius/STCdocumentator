@@ -18,20 +18,42 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Создать Материал', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'material_id',
             'material_title',
             'materil_price',
             'material_article',
-            'material_catrgory_id',
-            // 'material_unit_id',
-
+            [
+                'class' => 'yii\grid\DataColumn',
+                'label' => 'Категория',
+                'value' => function ($data) {
+                    $parent = (new yii\db\Query())
+                            ->select(['category_title'])
+                            ->from('category')
+                            ->where("category_id = $data->material_category_id")
+                            ->column();
+                    return $parent['0']; // $data['name'] for array data, e.g. using SqlDataProvider.
+                },
+            ],
+            [
+                'class' => 'yii\grid\DataColumn',
+                'label' => 'Ед.изм.',
+                'value' => function ($data) {
+                    $parent = (new yii\db\Query())
+                            ->select(['unit_title'])
+                            ->from('unit')
+                            ->where("unit_id = $data->material_unit_id")
+                            ->column();
+                    return $parent['0']; // $data['name'] for array data, e.g. using SqlDataProvider.
+                },
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]);
+    ?>
 </div>
