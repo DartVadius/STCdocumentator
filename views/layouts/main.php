@@ -45,9 +45,10 @@ AppAsset::register($this);
                             ['label' => 'Упаковка', 'url' => ['/pack/index']],
                             ['label' => 'Ед.изм', 'url' => ['/unit/index']],
                             ['label' => 'Свойства и параметры', 'url' => ['/parameter/index']],
-                            ['label' => 'Постоянные расходы', 'url' => ['/otherExpenses/index']],
+                            ['label' => 'Прочие расходы', 'url' => ['/other-expenses/index']],
                             ['label' => 'Должности', 'url' => ['/position/index']],
                             ['label' => 'Категории сырья', 'url' => ['/category/index']],
+                            ['label' => 'Решения', 'url' => ['/solution/index']],
                         ],
                     ],
                     Yii::$app->user->isGuest ? (

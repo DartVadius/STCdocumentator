@@ -41,9 +41,9 @@ class Parameter extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'parameter_id' => 'Parameter ID',
-            'parameter_title' => 'Parameter Title',
-            'parameter_desc' => 'Parameter Desc',
+            'parameter_id' => 'ID',
+            'parameter_title' => 'Название параметра',
+            'parameter_desc' => 'Описание параметра',
         ];
     }
 

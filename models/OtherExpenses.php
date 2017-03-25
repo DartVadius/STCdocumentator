@@ -31,11 +31,9 @@ class OtherExpenses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['other_expenses_id', 'other_expenses_title', 'other_expenses_costs_hour'], 'required'],
-            [['other_expenses_id'], 'integer'],
+            [['other_expenses_title', 'other_expenses_costs_hour'], 'required'],
             [['other_expenses_costs_hour'], 'number'],
             [['other_expenses_title', 'other_expenses_desc'], 'string', 'max' => 255],
-            [['other_expenses_id'], 'unique'],
         ];
     }
 
@@ -45,10 +43,10 @@ class OtherExpenses extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'other_expenses_id' => 'Other Expenses ID',
-            'other_expenses_title' => 'Other Expenses Title',
-            'other_expenses_desc' => 'Other Expenses Desc',
-            'other_expenses_costs_hour' => 'Other Expenses Costs Hour',
+            'other_expenses_id' => 'ID',
+            'other_expenses_title' => 'Название',
+            'other_expenses_desc' => 'Описание',
+            'other_expenses_costs_hour' => 'Стоимость в час',
         ];
     }
 

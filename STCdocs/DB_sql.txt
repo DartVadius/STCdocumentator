@@ -368,7 +368,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `documentator`.`other_expenses` ;
 
 CREATE TABLE IF NOT EXISTS `documentator`.`other_expenses` (
-  `other_expenses_id` INT(10) UNSIGNED NOT NULL,
+  `other_expenses_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `other_expenses_title` VARCHAR(255) NOT NULL,
   `other_expenses_desc` VARCHAR(255) NULL,
   `other_expenses_costs_hour` DECIMAL(12,4) UNSIGNED NOT NULL,

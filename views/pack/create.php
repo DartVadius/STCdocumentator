@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Position */
+/* @var $model app\models\Pack */
 
-$this->title = 'Создать Должность';
-$this->params['breadcrumbs'][] = ['label' => 'Должности', 'url' => ['index']];
+$this->title = 'Создать Упаковку';
+$this->params['breadcrumbs'][] = ['label' => 'Упаковка', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="position-create">
+<div class="pack-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

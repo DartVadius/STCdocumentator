@@ -31,7 +31,8 @@ class Solution extends \yii\db\ActiveRecord
     {
         return [
             [['solution_title'], 'required'],
-            [['solution_title', 'solution_desc'], 'string', 'max' => 255],
+            [['solution_title'], 'string', 'max' => 255],
+            [['solution_desc'], 'string', 'max' => 15000],
         ];
     }
 
@@ -41,9 +42,9 @@ class Solution extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'solution_id' => 'Solution ID',
-            'solution_title' => 'Solution Title',
-            'solution_desc' => 'Solution Desc',
+            'solution_id' => 'ID',
+            'solution_title' => 'Название Решения',
+            'solution_desc' => 'Описание Решения',
         ];
     }
 

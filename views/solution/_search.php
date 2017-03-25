@@ -4,24 +4,22 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\PositionSearch */
+/* @var $model app\models\SolutionSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="position-search">
+<div class="solution-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'position_id') ?>
+    <?= $form->field($model, 'solution_id') ?>
 
-    <?= $form->field($model, 'position_title') ?>
+    <?= $form->field($model, 'solution_title') ?>
 
-    <?= $form->field($model, 'position_desc') ?>
-
-    <?= $form->field($model, 'position_salary_hour') ?>
+    <?= $form->field($model, 'solution_desc') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Искать', ['class' => 'btn btn-primary']) ?>

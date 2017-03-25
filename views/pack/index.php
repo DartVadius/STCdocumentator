@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\PositionSearch */
+/* @var $searchModel app\models\PackSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Должности';
+$this->title = 'Упаковка';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="position-index">
+<div class="pack-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Создать должность', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать Упаковку', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -24,10 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'position_id',
-            'position_title',
-            'position_desc',
-            'position_salary_hour',
+            'pack_id',
+            'pack_title',
+            'pack_desc',
+            'pack_price',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

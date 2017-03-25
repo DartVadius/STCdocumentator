@@ -30,11 +30,9 @@ class Pack extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pack_id', 'pack_title', 'pack_price'], 'required'],
-            [['pack_id'], 'integer'],
+            [['pack_title', 'pack_price'], 'required'],
             [['pack_price'], 'number'],
             [['pack_title', 'pack_desc'], 'string', 'max' => 255],
-            [['pack_id'], 'unique'],
         ];
     }
 
@@ -44,10 +42,10 @@ class Pack extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'pack_id' => 'Pack ID',
-            'pack_title' => 'Pack Title',
-            'pack_desc' => 'Pack Desc',
-            'pack_price' => 'Pack Price',
+            'pack_id' => 'ID',
+            'pack_title' => 'Название Упаковки',
+            'pack_desc' => 'Описание Упаковки',
+            'pack_price' => 'Цена',
         ];
     }
 
