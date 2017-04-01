@@ -10,25 +10,23 @@ use app\models\Material;
 /**
  * MaterialSearch represents the model behind the search form about `app\models\Material`.
  */
-class MaterialSearch extends Material
-{
+class MaterialSearch extends Material {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['material_id', 'material_category_id', 'material_unit_id'], 'integer'],
             [['material_title', 'material_article'], 'safe'],
-            [['materil_price'], 'number'],
+            [['material_price'], 'number'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,14 +38,16 @@ class MaterialSearch extends Material
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
-        $query = Material::find();
+    public function search($params) {
+        $query = Material::find()->with(['materialCategory', 'materialUnit']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
         ]);
 
         $this->load($params);
@@ -61,14 +61,15 @@ class MaterialSearch extends Material
         // grid filtering conditions
         $query->andFilterWhere([
             'material_id' => $this->material_id,
-            'materil_price' => $this->materil_price,
+            'material_price' => $this->material_price,
             'material_category_id' => $this->material_category_id,
             'material_unit_id' => $this->material_unit_id,
         ]);
 
         $query->andFilterWhere(['like', 'material_title', $this->material_title])
-            ->andFilterWhere(['like', 'material_article', $this->material_article]);
+                ->andFilterWhere(['like', 'material_article', $this->material_article]);
 
         return $dataProvider;
     }
+
 }

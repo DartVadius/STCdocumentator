@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Recipe;
+use app\models\Mr;
 
 /**
- * RecipeSearch represents the model behind the search form about `app\models\Recipe`.
+ * MrSearch represents the model behind the search form about `app\models\Mr`.
  */
-class RecipeSearch extends Recipe
+class MrSearch extends Mr
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class RecipeSearch extends Recipe
     public function rules()
     {
         return [
-            [['recipe_id', 'recipe_approved'], 'integer'],
-            [['recipe_title', 'recipe_note', 'recipe_date', 'recipe_update'], 'safe'],
+            [['mr_id', 'mr_recipe_id', 'mr_material_id'], 'integer'],
+            [['mr_percentage'], 'number'],
         ];
     }
 
@@ -41,15 +41,12 @@ class RecipeSearch extends Recipe
      */
     public function search($params)
     {
-        $query = Recipe::find()->with(['mrs', 'mrMaterials']);
+        $query = Mr::find()->with(['mrRecipe', 'mrMaterial']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
         ]);
 
         $this->load($params);
@@ -62,14 +59,11 @@ class RecipeSearch extends Recipe
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'recipe_id' => $this->recipe_id,
-            'recipe_date' => $this->recipe_date,
-            'recipe_update' => $this->recipe_update,
-            'recipe_approved' => $this->recipe_approved,
+            'mr_id' => $this->mr_id,
+            'mr_percentage' => $this->mr_percentage,
+            'mr_recipe_id' => $this->mr_recipe_id,
+            'mr_material_id' => $this->mr_material_id,
         ]);
-
-        $query->andFilterWhere(['like', 'recipe_title', $this->recipe_title])
-            ->andFilterWhere(['like', 'recipe_note', $this->recipe_note]);
 
         return $dataProvider;
     }

@@ -30,10 +30,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'material_id',
             'material_title',
-            'materil_price',
+            'material_price',
             'material_article',
-            'material_category_id',
-            'material_unit_id',
+            [
+                'attribute' => 'material_category_id',
+                'label' => 'Категория',
+                'value' => function (app\models\Material $material) {
+                    return $material->materialCategory->category_title;
+                },
+            ],
+            [
+                'attribute' => 'material_unit_id',                
+                'label' => 'Ед.изм.',
+                'value' => function (app\models\Material $material) {
+                    return $material->materialUnit->unit_title;
+                },
+            ],
         ],
     ]) ?>
 

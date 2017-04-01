@@ -23,19 +23,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            'unit_id',
             'unit_title',
             [
-                'class' => 'yii\grid\DataColumn',
+                'attribute' => 'unit_parent_id',                
                 'label' => 'Базовая единица',
-                'value' => function ($data) {
-                    $parent = (new yii\db\Query())
-                            ->select(['unit_title'])
-                            ->from('unit')
-                            ->where("unit_id = $data->unit_parent_id")
-                            ->column();
-                    return $parent['0']; // $data['name'] for array data, e.g. using SqlDataProvider.
-                },
+                'value' => 'parent.unit_title',
             ],
             ['class' => 'yii\grid\ActionColumn'],
         ],

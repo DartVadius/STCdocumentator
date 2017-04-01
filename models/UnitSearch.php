@@ -41,7 +41,7 @@ class UnitSearch extends Unit
      */
     public function search($params)
     {
-        $query = Unit::find();
+        $query = Unit::find()->with(['parent']);
 
         // add conditions that should always apply here
 

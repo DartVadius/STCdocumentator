@@ -2,12 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Recipe */
 
-$this->title = $model->recipe_id;
-$this->params['breadcrumbs'][] = ['label' => 'Recipes', 'url' => ['index']];
+$this->title = $model->recipe_title;
+$this->params['breadcrumbs'][] = ['label' => 'Рецептуры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="recipe-view">
@@ -15,26 +16,56 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->recipe_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->recipe_id], [
+        <?= Html::a('Редактировать', ['update', 'id' => $model->recipe_id], ['class' => 'btn btn-primary']) ?>
+        <?=
+        Html::a('Удалить', ['delete', 'id' => $model->recipe_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы уверены?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])
+        ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'recipe_id',
             'recipe_title',
             'recipe_note:ntext',
             'recipe_date',
             'recipe_update',
-            'recipe_approved',
+            'recipe_approved:boolean',
         ],
-    ]) ?>
+    ])
+    ?>
+
+    <p>
+        <?= Html::a('Добавить материал', ['mr/create', 'mr_recipe_id' => $model->recipe_id], ['class' => 'btn btn-success']) ?>        
+    </p>
+    <?=
+    GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [            
+            'mr_id',
+            [
+                'attribute' => 'mr_material_id',
+                'label' => 'Материал',
+                'value' => 'mrMaterial.material_title'
+            ],
+            [
+                'attribute' => 'mr_percentage',
+                'label' => '%  (всего ' . $total . '%)',
+                'value' => 'mr_percentage',
+            ],
+            //'mr_percentage',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'controller' => 'mr',
+            ],
+        ],
+    ]);
+    ?>
 
 </div>

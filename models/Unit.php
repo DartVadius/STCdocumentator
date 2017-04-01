@@ -87,12 +87,15 @@ class Unit extends \yii\db\ActiveRecord {
     }
     
     public function getParent() {
-        $parent = $this->find()->where(['unit_parent_id' => 'unit_id'])->one();
-        if (!empty($parent)) {
-            return $parent;
-        } else {
-            return FALSE;
-        }
+        return $this->hasOne(Unit::className(), ['unit_id' => 'unit_parent_id']);
+    }   
+    
+    /**
+     * @inheritdoc
+     * @return UnitQuery the active query used by this AR class.
+     */
+    public static function find() {
+        return new UnitQuery(get_called_class());
     }
 
 }

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Recipe */
@@ -12,18 +13,22 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?php
+    $materials = app\models\Material::find()->all();
+    $material = ArrayHelper::map($materials, 'material_id', 'material_title');
+    $materialParams = [
+        'prompt' => 'Выберите материал',
+    ];
+    ?>
+
     <?= $form->field($model, 'recipe_title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'recipe_note')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'recipe_date')->textInput() ?>
-
-    <?= $form->field($model, 'recipe_update')->textInput() ?>
-
-    <?= $form->field($model, 'recipe_approved')->textInput() ?>
-
+    <?= $form->field($model, 'recipe_approved')->checkbox() ?>
+    
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Сохранить' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

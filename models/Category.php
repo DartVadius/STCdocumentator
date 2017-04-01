@@ -13,21 +13,19 @@ use Yii;
  *
  * @property Material[] $materials
  */
-class Category extends \yii\db\ActiveRecord
-{
+class Category extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'category';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['category_title'], 'required'],
             [['category_title', 'category_desc'], 'string', 'max' => 255],
@@ -37,8 +35,7 @@ class Category extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'category_id' => 'ID',
             'category_title' => 'Название категории',
@@ -49,8 +46,16 @@ class Category extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMaterials()
-    {
+    public function getMaterials() {
         return $this->hasMany(Material::className(), ['material_category_id' => 'category_id']);
+        }
+
+    /**
+     * @inheritdoc 
+     * @return CategoryQuery the active query used by this AR class. 
+     */
+    public static function find() {
+        return new CategoryQuery(get_called_class());
     }
+
 }

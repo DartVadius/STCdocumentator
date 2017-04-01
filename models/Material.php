@@ -35,8 +35,8 @@ class Material extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['materil_price', 'material_unit_id'], 'required'],
-            [['materil_price'], 'number'],
+            [['material_title', 'material_price', 'material_unit_id'], 'required'],
+            [['material_price'], 'number'],
             [['material_category_id', 'material_unit_id'], 'integer'],
             [['material_title'], 'string', 'max' => 255],
             [['material_article'], 'string', 'max' => 12],
@@ -52,7 +52,7 @@ class Material extends \yii\db\ActiveRecord {
         return [
             'material_id' => 'ID',
             'material_title' => 'Назавание',
-            'materil_price' => 'Цена',
+            'material_price' => 'Цена',
             'material_article' => 'Артикул',
             'material_category_id' => 'ID категории',
             'material_unit_id' => 'ID единицы измерения',
@@ -62,7 +62,7 @@ class Material extends \yii\db\ActiveRecord {
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMaterialCatrgory() {
+    public function getMaterialCategory() {
         return $this->hasOne(Category::className(), ['category_id' => 'material_category_id']);
     }
 
@@ -99,6 +99,14 @@ class Material extends \yii\db\ActiveRecord {
      */
     public function getPmProducts() {
         return $this->hasMany(Product::className(), ['product_id' => 'pm_product_id'])->viaTable('pm', ['pm_material_id' => 'material_id']);
+    }
+
+    /**
+     * @inheritdoc 
+     * @return MaterialQuery the active query used by this AR class. 
+     */
+    public static function find() {
+        return new MaterialQuery(get_called_class());
     }
 
 }

@@ -19,19 +19,21 @@ use Yii;
  * @property Rp[] $rps
  * @property Product[] $rpProducts
  */
-class Recipe extends \yii\db\ActiveRecord {
-
+class Recipe extends \yii\db\ActiveRecord
+{
     /**
      * @inheritdoc
      */
-    public static function tableName() {
+    public static function tableName()
+    {
         return 'recipe';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['recipe_title', 'recipe_date', 'recipe_update'], 'required'],
             [['recipe_note'], 'string'],
@@ -44,43 +46,56 @@ class Recipe extends \yii\db\ActiveRecord {
     /**
      * @inheritdoc
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return [
-            'recipe_id' => 'Recipe ID',
-            'recipe_title' => 'Recipe Title',
-            'recipe_note' => 'Recipe Note',
-            'recipe_date' => 'Recipe Date',
-            'recipe_update' => 'Recipe Update',
-            'recipe_approved' => 'Recipe Approved',
+            'recipe_id' => 'ID',
+            'recipe_title' => 'Название',
+            'recipe_note' => 'Примечание',
+            'recipe_date' => 'Дата создания',
+            'recipe_update' => 'Дата редактирования',
+            'recipe_approved' => 'Утверждено',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMrs() {
+    public function getMrs()
+    {
         return $this->hasMany(Mr::className(), ['mr_recipe_id' => 'recipe_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMrMaterials() {
+    public function getMrMaterials()
+    {
         return $this->hasMany(Material::className(), ['material_id' => 'mr_material_id'])->viaTable('mr', ['mr_recipe_id' => 'recipe_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRps() {
+    public function getRps()
+    {
         return $this->hasMany(Rp::className(), ['rp_recipe_id' => 'recipe_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRpProducts() {
+    public function getRpProducts()
+    {
         return $this->hasMany(Product::className(), ['product_id' => 'rp_product_id'])->viaTable('rp', ['rp_recipe_id' => 'recipe_id']);
     }
 
+    /**
+     * @inheritdoc
+     * @return RecipeQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new RecipeQuery(get_called_class());
+    }
 }

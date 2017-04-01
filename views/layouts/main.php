@@ -41,7 +41,7 @@ AppAsset::register($this);
                     [
                         'label' => 'Справочники',
                         'items' => [
-                            ['label' => 'Сырье', 'url' => ['/material/index']],
+                            ['label' => 'Материалы', 'url' => ['/material/index']],
                             ['label' => 'Упаковка', 'url' => ['/pack/index']],
                             ['label' => 'Ед.изм', 'url' => ['/unit/index']],
                             ['label' => 'Свойства и параметры', 'url' => ['/parameter/index']],

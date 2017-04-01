@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Recipe */
+/* @var $model app\models\Mr */
 
-$this->title = 'Создать Рецептуру';
-$this->params['breadcrumbs'][] = ['label' => 'Рецептуры', 'url' => ['index']];
+$this->title = 'Добавить Материал';
+$this->params['breadcrumbs'][] = ['label' => 'Рецептуры', 'url' => ['recipe/view', 'id' => $model->mr_recipe_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="recipe-create">
+<div class="mr-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

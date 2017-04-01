@@ -30,7 +30,7 @@ use yii\helpers\ArrayHelper;
 
     <?= $form->field($model, 'material_title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'materil_price')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'material_price')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'material_article')->textInput(['maxlength' => true]) ?>
 

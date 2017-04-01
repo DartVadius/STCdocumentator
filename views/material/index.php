@@ -22,34 +22,23 @@ $this->params['breadcrumbs'][] = $this->title;
     GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+        'columns' => [            
             'material_id',
             'material_title',
-            'materil_price',
+            'material_price',
             'material_article',
             [
-                'class' => 'yii\grid\DataColumn',
+                'attribute' => 'material_category_id',
                 'label' => 'Категория',
-                'value' => function ($data) {
-                    $parent = (new yii\db\Query())
-                            ->select(['category_title'])
-                            ->from('category')
-                            ->where("category_id = $data->material_category_id")
-                            ->column();
-                    return $parent['0']; // $data['name'] for array data, e.g. using SqlDataProvider.
+                'value' => function (app\models\Material $material) {
+                    return $material->materialCategory->category_title;
                 },
             ],
             [
-                'class' => 'yii\grid\DataColumn',
+                'attribute' => 'material_unit_id',                
                 'label' => 'Ед.изм.',
-                'value' => function ($data) {
-                    $parent = (new yii\db\Query())
-                            ->select(['unit_title'])
-                            ->from('unit')
-                            ->where("unit_id = $data->material_unit_id")
-                            ->column();
-                    return $parent['0']; // $data['name'] for array data, e.g. using SqlDataProvider.
+                'value' => function (app\models\Material $material) {
+                    return $material->materialUnit->unit_title;
                 },
             ],
             ['class' => 'yii\grid\ActionColumn'],

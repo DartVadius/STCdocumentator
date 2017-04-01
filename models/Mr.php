@@ -46,10 +46,10 @@ class Mr extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'mr_id' => 'Mr ID',
-            'mr_percentage' => 'Mr Percentage',
-            'mr_recipe_id' => 'Mr Recipe ID',
-            'mr_material_id' => 'Mr Material ID',
+            'mr_id' => 'ID',
+            'mr_percentage' => '%',
+            'mr_recipe_id' => 'Рецептура',
+            'mr_material_id' => 'Материал',
         ];
     }
 
@@ -67,5 +67,14 @@ class Mr extends \yii\db\ActiveRecord
     public function getMrRecipe()
     {
         return $this->hasOne(Recipe::className(), ['recipe_id' => 'mr_recipe_id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return MrQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new MrQuery(get_called_class());
     }
 }

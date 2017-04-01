@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\RecipeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Recipes';
+$this->title = 'Рецептуры';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="recipe-index">
@@ -16,22 +16,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Recipe', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить Рецептуру', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <div class="table-responsive">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'recipe_id',
             'recipe_title',
             'recipe_note:ntext',
             'recipe_date',
             'recipe_update',
-            // 'recipe_approved',
+            'recipe_approved:boolean',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    </div>
 </div>
