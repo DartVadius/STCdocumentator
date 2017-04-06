@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Recipe;
+use app\models\CategoryProduct;
 
 /**
- * RecipeSearch represents the model behind the search form about `app\models\Recipe`.
+ * CategoryProductSearch represents the model behind the search form about `app\models\CategoryProduct`.
  */
-class RecipeSearch extends Recipe
+class CategoryProductSearch extends CategoryProduct
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class RecipeSearch extends Recipe
     public function rules()
     {
         return [
-            [['recipe_id', 'recipe_approved'], 'integer'],
-            [['recipe_title', 'recipe_note', 'recipe_date', 'recipe_update'], 'safe'],
+            [['category_product_id'], 'integer'],
+            [['category_product_title', 'category_product_desc', 'category_product_img'], 'safe'],
         ];
     }
 
@@ -41,15 +41,12 @@ class RecipeSearch extends Recipe
      */
     public function search($params)
     {
-        $query = Recipe::find();
+        $query = CategoryProduct::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
         ]);
 
         $this->load($params);
@@ -62,14 +59,12 @@ class RecipeSearch extends Recipe
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'recipe_id' => $this->recipe_id,
-            'recipe_date' => $this->recipe_date,
-            'recipe_update' => $this->recipe_update,
-            'recipe_approved' => $this->recipe_approved,
+            'category_product_id' => $this->category_product_id,
         ]);
 
-        $query->andFilterWhere(['like', 'recipe_title', $this->recipe_title])
-            ->andFilterWhere(['like', 'recipe_note', $this->recipe_note]);
+        $query->andFilterWhere(['like', 'category_product_title', $this->category_product_title])
+            ->andFilterWhere(['like', 'category_product_desc', $this->category_product_desc])
+            ->andFilterWhere(['like', 'category_product_img', $this->category_product_img]);
 
         return $dataProvider;
     }

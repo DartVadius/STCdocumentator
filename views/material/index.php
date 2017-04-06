@@ -30,16 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'material_category_id',
                 'label' => 'Категория',
-                'value' => function (app\models\Material $material) {
-                    return $material->materialCategory->category_title;
-                },
+                'value' => 'materialCategory.category_title',
+                'filter' => app\models\Category::find()->select(['category_title', 'category_id'])->indexBy('category_id')->column(),
             ],
             [
                 'attribute' => 'material_unit_id',                
                 'label' => 'Ед.изм.',
-                'value' => function (app\models\Material $material) {
-                    return $material->materialUnit->unit_title;
-                },
+                'value' => 'materialUnit.unit_title',
+                'filter' => app\models\Unit::find()->select(['unit_title', 'unit_id'])->indexBy('unit_id')->column(),
             ],
             ['class' => 'yii\grid\ActionColumn'],
         ],

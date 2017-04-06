@@ -34,21 +34,19 @@ use Yii;
  * @property Sp[] $sps
  * @property Solution[] $spSolutions
  */
-class Product extends \yii\db\ActiveRecord
-{
+class Product extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'product';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['product_title', 'product_capacity_hour', 'product_date', 'product_update', 'product_unit_id'], 'required'],
             [['product_capacity_hour', 'product_linear_meter', 'product_unit_id'], 'integer'],
@@ -62,8 +60,7 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'product_id' => 'Product ID',
             'product_title' => 'Product Title',
@@ -79,136 +76,120 @@ class Product extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getFiles()
-    {
+    public function getFiles() {
         return $this->hasMany(File::className(), ['file_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getLps()
-    {
+    public function getLps() {
         return $this->hasMany(Lp::className(), ['lp_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getLpLosses()
-    {
+    public function getLpLosses() {
         return $this->hasMany(Loss::className(), ['loss_id' => 'lp_loss_id'])->viaTable('lp', ['lp_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOps()
-    {
+    public function getOps() {
         return $this->hasMany(Op::className(), ['op_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getOpOthers()
-    {
+    public function getOpOthers() {
         return $this->hasMany(OtherExpenses::className(), ['other_expenses_id' => 'op_other_id'])->viaTable('op', ['op_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPaps()
-    {
+    public function getPaps() {
         return $this->hasMany(Pap::className(), ['pap_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPaprs()
-    {
+    public function getPaprs() {
         return $this->hasMany(Papr::className(), ['papr_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPaprParameters()
-    {
+    public function getPaprParameters() {
         return $this->hasMany(Parameter::className(), ['parameter_id' => 'papr_parameter_id'])->viaTable('papr', ['papr_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPms()
-    {
+    public function getPms() {
         return $this->hasMany(Pm::className(), ['pm_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPmMaterials()
-    {
+    public function getPmMaterials() {
         return $this->hasMany(Material::className(), ['material_id' => 'pm_material_id'])->viaTable('pm', ['pm_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPops()
-    {
+    public function getPops() {
         return $this->hasMany(Pop::className(), ['pop_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPopPositions()
-    {
+    public function getPopPositions() {
         return $this->hasMany(Position::className(), ['position_id' => 'pop_position_id'])->viaTable('pop', ['pop_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getProductUnit()
-    {
+    public function getProductUnit() {
         return $this->hasOne(Unit::className(), ['unit_id' => 'product_unit_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRps()
-    {
+    public function getRps() {
         return $this->hasMany(Rp::className(), ['rp_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRpRecipes()
-    {
+    public function getRpRecipes() {
         return $this->hasMany(Recipe::className(), ['recipe_id' => 'rp_recipe_id'])->viaTable('rp', ['rp_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSps()
-    {
+    public function getSps() {
         return $this->hasMany(Sp::className(), ['sp_product_id' => 'product_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSpSolutions()
-    {
+    public function getSpSolutions() {
         return $this->hasMany(Solution::className(), ['solution_id' => 'sp_solution_id'])->viaTable('sp', ['sp_product_id' => 'product_id']);
     }
+
 }

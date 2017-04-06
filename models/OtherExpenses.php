@@ -46,7 +46,7 @@ class OtherExpenses extends \yii\db\ActiveRecord
             'other_expenses_id' => 'ID',
             'other_expenses_title' => 'Название',
             'other_expenses_desc' => 'Описание',
-            'other_expenses_costs_hour' => 'Стоимость в час',
+            'other_expenses_costs_hour' => 'Затраты грн. в час',
         ];
     }
 

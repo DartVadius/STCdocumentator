@@ -48,6 +48,7 @@ AppAsset::register($this);
                             ['label' => 'Прочие расходы', 'url' => ['/other-expenses/index']],
                             ['label' => 'Должности', 'url' => ['/position/index']],
                             ['label' => 'Категории сырья', 'url' => ['/category/index']],
+                            ['label' => 'Категории продуктов', 'url' => ['/category-product/index']],
                             ['label' => 'Решения', 'url' => ['/solution/index']],
                         ],
                     ],

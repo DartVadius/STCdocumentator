@@ -25,7 +25,7 @@ use app\models\Unit;
 
     <?= $form->field($model, 'unit_parent_id')->dropDownList($items, $param)->label('Базовая единица измерения') ?>
 
-    <?= $form->field($model, 'unit_ratio')->textInput(['maxlength' => true, 'value' => 1])
+    <?= $form->field($model, 'unit_ratio')->textInput(['maxlength' => true])
             ->label('Коэффициент')
             ->hint('Базовая ед. * Коэфф. = Ед. изм.; Для базовой ед. оставьте коэффициент = 1') ?>
 
