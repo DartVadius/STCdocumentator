@@ -143,14 +143,20 @@ CREATE TABLE IF NOT EXISTS `documentator`.`product` (
   `product_capacity_hour` INT(10) UNSIGNED NOT NULL COMMENT 'productivity of current product per hour',
   `product_date` DATETIME NOT NULL,
   `product_update` DATETIME NOT NULL,
-  `product_linear_meter` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
   `product_unit_id` INT(10) UNSIGNED NOT NULL,
   `product_price` DECIMAL(12,2) UNSIGNED NULL COMMENT 'Selling price',
   `product_category_id` INT(11) UNSIGNED NULL,
+  `product_weight` INT(12) UNSIGNED NULL,
+  `product_length` INT(12) UNSIGNED NULL,
+  `product_width` INT(12) UNSIGNED NULL,
+  `product_thickness` INT(12) UNSIGNED NULL,
+  `product_note` VARCHAR(255) NULL,
+  `product_recipe_id` INT(10) UNSIGNED NULL,
   PRIMARY KEY (`product_id`),
   UNIQUE INDEX `product_id_UNIQUE` (`product_id` ASC),
   INDEX `fk_product_unit_idx` (`product_unit_id` ASC),
   INDEX `product_category_id` (`product_category_id` ASC),
+  INDEX `fk_product_recipe_idx` (`product_recipe_id` ASC),
   CONSTRAINT `fk_product_unit`
     FOREIGN KEY (`product_unit_id`)
     REFERENCES `documentator`.`unit` (`unit_id`)
@@ -160,39 +166,10 @@ CREATE TABLE IF NOT EXISTS `documentator`.`product` (
     FOREIGN KEY (`product_category_id`)
     REFERENCES `documentator`.`category_product` (`category_product_id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `documentator`.`rp`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`rp` ;
-
-CREATE TABLE IF NOT EXISTS `documentator`.`rp` (
-  `rp_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `rp_recipe_id` INT(10) UNSIGNED NOT NULL,
-  `rp_product_id` INT(10) UNSIGNED NOT NULL,
-  `rp_weight` DECIMAL(12,4) UNSIGNED NOT NULL COMMENT 'Weight of sealant per unit of product',
-  `rp_unit_id` INT(10) UNSIGNED NOT NULL COMMENT 'Unit of measurement of weight',
-  PRIMARY KEY (`rp_id`),
-  UNIQUE INDEX `rp_id_UNIQUE` (`rp_id` ASC),
-  UNIQUE INDEX `recipe_product` (`rp_recipe_id` ASC, `rp_product_id` ASC),
-  INDEX `fk_rp_product_idx` (`rp_product_id` ASC),
-  INDEX `fk_rp_unit_idx` (`rp_unit_id` ASC),
-  CONSTRAINT `fk_rp_product`
-    FOREIGN KEY (`rp_product_id`)
-    REFERENCES `documentator`.`product` (`product_id`)
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_rp_recipe`
-    FOREIGN KEY (`rp_recipe_id`)
+  CONSTRAINT `fk_product_recipe`
+    FOREIGN KEY (`product_recipe_id`)
     REFERENCES `documentator`.`recipe` (`recipe_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_rp_unit`
-    FOREIGN KEY (`rp_unit_id`)
-    REFERENCES `documentator`.`unit` (`unit_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -209,6 +186,7 @@ CREATE TABLE IF NOT EXISTS `documentator`.`pm` (
   `pm_material_id` INT(10) UNSIGNED NOT NULL,
   `pm_quantity` DECIMAL(12,4) UNSIGNED NOT NULL,
   `pm_unit_id` INT(10) UNSIGNED NOT NULL,
+  `pm_square` TINYINT(1) UNSIGNED NULL,
   PRIMARY KEY (`pm_id`),
   UNIQUE INDEX `pm_id_UNIQUE` (`pm_id` ASC),
   INDEX `fk_pm_unit_idx` (`pm_unit_id` ASC),
