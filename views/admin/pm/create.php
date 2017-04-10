@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\admin\Pm */
 
-$this->title = 'Create Pm';
-$this->params['breadcrumbs'][] = ['label' => 'Pms', 'url' => ['index']];
+$this->title = 'Добавить материал';
+$this->params['breadcrumbs'][] = ['label' => 'Продукт', 'url' => ['admin/product/view', 'id' => $model->pm_product_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pm-create">

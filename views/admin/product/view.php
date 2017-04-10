@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\admin\Product */
@@ -16,16 +17,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->product_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->product_id], [
+        <?=
+        Html::a('Удалить', ['delete', 'id' => $model->product_id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Вы уверены?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])
+        ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'product_id',
@@ -49,12 +53,41 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Категория',
                 'value' => $model->productCategory->category_product_title,
             ],
-            'product_price',            
+            'product_price',
             'product_weight',
             'product_length',
             'product_width',
             'product_thickness',
         ],
-    ]) ?>
-
+    ])
+    ?>
+    <p>
+        <?= Html::a('Добавить материал', ['admin/pm/create', 'pm_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+    </p>
+    <?=
+    GridView::widget([
+        'dataProvider' => $dataProviderPm,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            'pm_id',
+            [
+                'attribute' => 'pm_material_id',
+                'label' => 'Материал',
+                'value' => 'pmMaterial.material_title'
+            ],
+            'pm_quantity',
+            [
+                'attribute' => 'pm_unit_id',
+                'label' => 'Ед.учета',
+                'value' => 'pmUnit.unit_title'
+            ],
+            'pm_square:boolean',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'controller' => 'admin\pm',
+            ],
+        ],
+    ]);
+    ?>
 </div>

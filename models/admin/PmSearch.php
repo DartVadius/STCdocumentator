@@ -10,13 +10,12 @@ use app\models\admin\Pm;
 /**
  * PmSearch represents the model behind the search form about `app\models\admin\Pm`.
  */
-class PmSearch extends Pm
-{
+class PmSearch extends Pm {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['pm_id', 'pm_product_id', 'pm_material_id', 'pm_unit_id', 'pm_square'], 'integer'],
             [['pm_quantity'], 'number'],
@@ -26,8 +25,7 @@ class PmSearch extends Pm
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -39,8 +37,7 @@ class PmSearch extends Pm
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Pm::find()->with('pmProduct', 'pmMaterial', 'pmUnit');
 
         // add conditions that should always apply here
@@ -69,4 +66,5 @@ class PmSearch extends Pm
 
         return $dataProvider;
     }
+
 }

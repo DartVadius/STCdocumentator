@@ -50,12 +50,12 @@ class Pm extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'pm_id' => 'Pm ID',
-            'pm_product_id' => 'Pm Product ID',
-            'pm_material_id' => 'Pm Material ID',
-            'pm_quantity' => 'Pm Quantity',
-            'pm_unit_id' => 'Pm Unit ID',
-            'pm_square' => 'Pm Square',
+            'pm_id' => 'ID',
+            'pm_product_id' => 'Продукция',
+            'pm_material_id' => 'Материал',
+            'pm_quantity' => 'Расход',
+            'pm_unit_id' => 'Ед.учета',
+            'pm_square' => 'Расход на м2',
         ];
     }
 
