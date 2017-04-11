@@ -34,13 +34,7 @@ class PmController extends Controller {
      * @return mixed
      */
     public function actionIndex() {
-        $searchModel = new PmSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-        ]);
+        return $this->redirect(['admin/product/index']);
     }
 
     /**
@@ -62,7 +56,6 @@ class PmController extends Controller {
     public function actionCreate($pm_product_id = NULL) {
         $model = new Pm();
         $model->pm_product_id = $pm_product_id;
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $products = new Product();
             $product = $products->findOne($model->pm_product_id);
@@ -83,10 +76,13 @@ class PmController extends Controller {
      * @return mixed
      */
     public function actionUpdate($id) {
-        $model = $this->findModel($id);
-
+        $model = $this->findModel($id);        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->pm_id]);
+            $products = new Product();
+            $product = $products->findOne($model->pm_product_id);
+            $product->product_update = date('Y-m-d H:i:s');
+            $product->save();
+            return $this->redirect(['admin/product/view', 'id' => $model->pm_product_id]);
         } else {
             return $this->render('update', [
                         'model' => $model,
@@ -101,9 +97,9 @@ class PmController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = $this->findModel($id);
+        $model->delete();
+        return $this->redirect(['admin/product/view', 'id' => $model->pm_product_id]);
     }
 
     /**

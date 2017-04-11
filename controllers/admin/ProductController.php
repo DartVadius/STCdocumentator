@@ -5,6 +5,7 @@ namespace app\controllers\admin;
 use Yii;
 use app\models\admin\Product;
 use app\models\admin\ProductSearch;
+use app\models\admin\Pm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -100,7 +101,7 @@ class ProductController extends Controller {
                 ]);
             }
         } else {
-            return $this->render('create', [
+            return $this->render('update', [
                         'model' => $model,
             ]);
         }
@@ -113,8 +114,8 @@ class ProductController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
-
+        Pm::deleteAll("pm_product_id = $id");
+        $this->findModel($id)->delete();        
         return $this->redirect(['index']);
     }
 

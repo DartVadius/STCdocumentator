@@ -32,9 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
     DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'product_id',
-            'product_title',
-            'product_note:ntext',
             'product_date',
             'product_update',
             'product_capacity_hour',
@@ -58,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'product_length',
             'product_width',
             'product_thickness',
+            'product_note:ntext',
         ],
     ])
     ?>
@@ -69,8 +67,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProviderPm,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'pm_id',
             [
                 'attribute' => 'pm_material_id',
                 'label' => 'Материал',
@@ -86,6 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'controller' => 'admin\pm',
+                'template' => '{update}&nbsp;&nbsp;{delete}',
             ],
         ],
     ]);

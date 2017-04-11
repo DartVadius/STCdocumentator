@@ -24,27 +24,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'product_id',
             'product_title',
-//            'product_capacity_hour',
             'product_date',
             'product_update',
-//            'product_unit_id',
-//            'product_price',
             [
                 'attribute' => 'product_category_id',
                 'label' => 'Категория',
                 'value' => 'productCategory.category_product_title',
                 'filter' => CategoryProduct::find()->select(['category_product_title', 'category_product_id'])->indexBy('category_product_id')->column(),
-            ],            
-//            'product_weight',
-//            'product_length',
-//            'product_width',
-//            'product_thickness',
-//            'product_note',
-//            'product_recipe_id',
-
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

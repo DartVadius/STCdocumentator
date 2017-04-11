@@ -50,13 +50,9 @@ class RecipeController extends Controller {
      * @return mixed
      */
     public function actionView($id) {
-        $total = NULL;
         $model = $this->findModel($id);
         $dataProvider = new ActiveDataProvider(['query' => $model->getMrs()->with('mrMaterial')]);
-        $models = $dataProvider->models;
-        foreach ($models as $material) {
-            $total += $material->mr_percentage;
-        }
+        $total = $model->getMrs()->with('mrMaterial')->sum('mr_percentage');
         return $this->render('view', [
                     'model' => $model,
                     'dataProvider' => $dataProvider,
@@ -119,8 +115,8 @@ class RecipeController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
-        Mr::deleteAll("mr_recipe_id = $id");
+        Mr::deleteAll('mr_recipe_id = :id', [':id' => $id]);
+        $this->findModel($id)->delete();        
         return $this->redirect(['index']);
     }
 

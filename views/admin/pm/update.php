@@ -5,10 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\admin\Pm */
 
-$this->title = 'Update Pm: ' . $model->pm_id;
-$this->params['breadcrumbs'][] = ['label' => 'Pms', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->pm_id, 'url' => ['view', 'id' => $model->pm_id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Редактировать материал в : ' . $model->pmProduct->product_title;
+$this->params['breadcrumbs'][] = ['label' => $model->pmProduct->product_title, 'url' => ['admin/product/view', 'id' => $model->pm_product_id]];
+$this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="pm-update">
 

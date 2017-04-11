@@ -19,19 +19,23 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Добавить Рецептуру', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <div class="table-responsive">
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            'recipe_id',
-            'recipe_title',
-            'recipe_note:ntext',
-            'recipe_date',
-            'recipe_update',
-            'recipe_approved:boolean',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+        <?=
+        GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'recipe_title',
+                'recipe_date',
+                'recipe_update',
+                'recipe_note:ntext',
+                'recipe_approved:boolean',
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{view}&nbsp;&nbsp;{update}&nbsp;&nbsp;{delete}',
+                ],
+            ],
+        ]);
+        ?>
     </div>
 </div>
