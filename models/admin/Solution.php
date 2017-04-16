@@ -14,21 +14,19 @@ use Yii;
  * @property Sp[] $sps
  * @property Product[] $spProducts
  */
-class Solution extends \yii\db\ActiveRecord
-{
+class Solution extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'solution';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['solution_title'], 'required'],
             [['solution_title'], 'string', 'max' => 255],
@@ -39,8 +37,7 @@ class Solution extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'solution_id' => 'ID',
             'solution_title' => 'Название Решения',
@@ -51,16 +48,23 @@ class Solution extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSps()
-    {
+    public function getSps() {
         return $this->hasMany(Sp::className(), ['sp_solution_id' => 'solution_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSpProducts()
-    {
+    public function getSpProducts() {
         return $this->hasMany(Product::className(), ['product_id' => 'sp_product_id'])->viaTable('sp', ['sp_solution_id' => 'solution_id']);
     }
+
+    /**
+     * @inheritdoc 
+     * @return SolutionQuery the active query used by this AR class. 
+     */
+    public static function find() {
+        return new SolutionQuery(get_called_class());
+    }
+
 }

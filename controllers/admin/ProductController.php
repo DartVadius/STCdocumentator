@@ -55,11 +55,13 @@ class ProductController extends Controller {
         $dataProviderPm = new ActiveDataProvider(['query' => $model->getPms()->with('pmMaterial')]);
         $dataProviderPap = new ActiveDataProvider(['query' => $model->getPaps()->with('papPack')]);
         $dataProviderPapr = new ActiveDataProvider(['query' => $model->getPaprs()->with('paprParameter')]);
+        $dataProviderSp = new ActiveDataProvider(['query' => $model->getSps()->with('spSolution')]);
         return $this->render('view', [
                     'model' => $model,
                     'dataProviderPm' => $dataProviderPm,
                     'dataProviderPap' => $dataProviderPap,
                     'dataProviderPapr' => $dataProviderPapr,
+                    'dataProviderSp' => $dataProviderSp,
         ]);
     }
 

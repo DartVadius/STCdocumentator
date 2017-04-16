@@ -161,4 +161,28 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
+    <p>
+        <?= Html::a('Управление Решениями', ['admin/sp/create', 'sp_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+    </p>
+    <?= GridView::widget([
+        'dataProvider' => $dataProviderSp,
+        'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
+        'columns' => [
+            [
+                'attribute' => 'sp_solution_id',
+                'label' => 'Решение',
+                'value' => 'spSolution.solution_title',
+            ],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'controller' => 'admin\sp',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
+                'template' => '{delete}',
+            ],
+        ],
+    ]); ?>
 </div>
