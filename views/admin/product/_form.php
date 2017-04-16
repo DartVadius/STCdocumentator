@@ -56,7 +56,9 @@ use app\models\admin\Recipe;
 
     <?= $form->field($model, 'product_category_id')->dropDownList($category, $catParams)->label('Категория') ?>
 
-
+    <?= $form->field($model, 'product_vendor_code')->textInput(['maxlength' => true]) ?> 
+		 
+    <?= $form->field($model, 'product_archiv')->textInput()->checkbox() ?> 
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

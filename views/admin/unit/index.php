@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Базовая единица',
                 'value' => 'parent.unit_title',
             ],
+            'unit_ratio',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => 'Действия',

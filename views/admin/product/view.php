@@ -61,6 +61,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'product_width',
             'product_thickness',
             'product_note:ntext',
+            'product_vendor_code',
+            'product_archiv:boolean',
         ],
     ])
     ?>

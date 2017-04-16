@@ -16,7 +16,8 @@ use Yii;
  * @property Papr[] $paprs
  * @property Pm[] $pms
  * @property Product[] $products
- * @property Rp[] $rps
+ * @property Unit $unitParent
+ * @property Unit[] $units
  */
 class Unit extends \yii\db\ActiveRecord {
 
@@ -35,6 +36,7 @@ class Unit extends \yii\db\ActiveRecord {
             [['unit_title', 'unit_ratio'], 'required'],
             [['unit_parent_id', 'unit_ratio'], 'integer'],
             [['unit_title'], 'string', 'max' => 45],
+            //[['unit_parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Unit::className(), 'targetAttribute' => ['unit_parent_id' => 'unit_id']],
         ];
     }
 
@@ -79,17 +81,18 @@ class Unit extends \yii\db\ActiveRecord {
         return $this->hasMany(Product::className(), ['product_unit_id' => 'unit_id']);
     }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getRps() {
-        return $this->hasMany(Rp::className(), ['rp_unit_id' => 'unit_id']);
-    }
     
     public function getParent() {
         return $this->hasOne(Unit::className(), ['unit_id' => 'unit_parent_id']);
-    }   
-    
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUnits() {
+        return $this->hasMany(Unit::className(), ['unit_parent_id' => 'unit_id']);
+    }
+
     /**
      * @inheritdoc
      * @return UnitQuery the active query used by this AR class.

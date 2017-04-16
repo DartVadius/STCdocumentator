@@ -42,6 +42,10 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'product_note') ?>
 
     <?php // echo $form->field($model, 'product_recipe_id') ?>
+    
+    <?php // echo $form->field($model, 'product_vendor_code') ?> 
+		 
+    <?php // echo $form->field($model, 'product_archiv') ?> 
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
