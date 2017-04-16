@@ -43,8 +43,8 @@ class Pack extends \yii\db\ActiveRecord
     {
         return [
             'pack_id' => 'ID',
-            'pack_title' => 'Название Упаковки',
-            'pack_desc' => 'Описание Упаковки',
+            'pack_title' => 'Название упаковки',
+            'pack_desc' => 'Описание',
             'pack_price' => 'Цена',
         ];
     }
@@ -55,5 +55,14 @@ class Pack extends \yii\db\ActiveRecord
     public function getPaps()
     {
         return $this->hasMany(Pap::className(), ['pap_pack_id' => 'pack_id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return PackQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new PackQuery(get_called_class());
     }
 }

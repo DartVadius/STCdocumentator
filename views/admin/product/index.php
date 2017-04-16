@@ -22,6 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'product_title',
@@ -33,7 +36,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'productCategory.category_product_title',
                 'filter' => CategoryProduct::find()->select(['category_product_title', 'category_product_id'])->indexBy('category_product_id')->column(),
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
+            ],
         ],
     ]); ?>
 </div>

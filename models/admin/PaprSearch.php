@@ -5,30 +5,27 @@ namespace app\models\admin;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\admin\Pack;
+use app\models\admin\Papr;
 
 /**
- * PackSearch represents the model behind the search form about `app\models\admin\Pack`.
+ * PaprSearch represents the model behind the search form about `app\models\admin\Papr`.
  */
-class PackSearch extends Pack
-{
+class PaprSearch extends Papr {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['pack_id'], 'integer'],
-            [['pack_title', 'pack_desc'], 'safe'],
-            [['pack_price'], 'number'],
+            [['papr_id', 'papr_parameter_id', 'papr_product_id', 'papr_unit_id'], 'integer'],
+            [['papr_value'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,9 +37,8 @@ class PackSearch extends Pack
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
-        $query = Pack::find();
+    public function search($params) {
+        $query = Papr::find();
 
         // add conditions that should always apply here
 
@@ -60,13 +56,15 @@ class PackSearch extends Pack
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'pack_id' => $this->pack_id,
-            'pack_price' => $this->pack_price,
+            'papr_id' => $this->papr_id,
+            'papr_parameter_id' => $this->papr_parameter_id,
+            'papr_product_id' => $this->papr_product_id,
+            'papr_unit_id' => $this->papr_unit_id,
         ]);
 
-        $query->andFilterWhere(['like', 'pack_title', $this->pack_title])
-            ->andFilterWhere(['like', 'pack_desc', $this->pack_desc]);
+        $query->andFilterWhere(['like', 'papr_value', $this->papr_value]);
 
         return $dataProvider;
     }
+
 }

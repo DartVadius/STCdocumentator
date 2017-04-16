@@ -14,21 +14,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    
+
     <p>
         <?= Html::a('Создать Параметр', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'parameter_id',
             'parameter_title',
             'parameter_desc',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
+            ],
         ],
-    ]); ?>
+    ]);
+    ?>
 </div>

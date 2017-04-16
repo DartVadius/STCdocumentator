@@ -5,12 +5,12 @@ namespace app\models\admin;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\admin\Pack;
+use app\models\admin\Pap;
 
 /**
- * PackSearch represents the model behind the search form about `app\models\admin\Pack`.
+ * PapSearch represents the model behind the search form about `app\models\admin\Pap`.
  */
-class PackSearch extends Pack
+class PapSearch extends Pap
 {
     /**
      * @inheritdoc
@@ -18,9 +18,8 @@ class PackSearch extends Pack
     public function rules()
     {
         return [
-            [['pack_id'], 'integer'],
-            [['pack_title', 'pack_desc'], 'safe'],
-            [['pack_price'], 'number'],
+            [['pap_id', 'pap_pack_id', 'pap_product_id'], 'integer'],
+            [['pap_capacity'], 'number'],
         ];
     }
 
@@ -42,7 +41,7 @@ class PackSearch extends Pack
      */
     public function search($params)
     {
-        $query = Pack::find();
+        $query = Pap::find()->with(['papPack', 'papProduct']);
 
         // add conditions that should always apply here
 
@@ -60,12 +59,11 @@ class PackSearch extends Pack
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'pack_id' => $this->pack_id,
-            'pack_price' => $this->pack_price,
+            'pap_id' => $this->pap_id,
+            'pap_pack_id' => $this->pap_pack_id,
+            'pap_product_id' => $this->pap_product_id,
+            'pap_capacity' => $this->pap_capacity,
         ]);
-
-        $query->andFilterWhere(['like', 'pack_title', $this->pack_title])
-            ->andFilterWhere(['like', 'pack_desc', $this->pack_desc]);
 
         return $dataProvider;
     }

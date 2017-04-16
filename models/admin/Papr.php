@@ -49,11 +49,11 @@ class Papr extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'papr_id' => 'Papr ID',
-            'papr_parameter_id' => 'Papr Parameter ID',
-            'papr_product_id' => 'Papr Product ID',
-            'papr_value' => 'Papr Value',
-            'papr_unit_id' => 'Papr Unit ID',
+            'papr_id' => 'ID',
+            'papr_parameter_id' => 'Параметр',
+            'papr_product_id' => 'Продукция',
+            'papr_value' => 'Значение',
+            'papr_unit_id' => 'Ед.изм.',
         ];
     }
 
@@ -79,5 +79,14 @@ class Papr extends \yii\db\ActiveRecord
     public function getPaprUnit()
     {
         return $this->hasOne(Unit::className(), ['unit_id' => 'papr_unit_id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return PaprQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new PaprQuery(get_called_class());
     }
 }

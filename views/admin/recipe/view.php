@@ -14,7 +14,10 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="recipe-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <?php if ($product): ?>
+    <p class="alert alert-warning">Невозможно удалить рецептуру. Удалите ее в продуктах: <?= $product ?></p>
+    <?php endif; ?>
+    <p></p>
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->recipe_id], ['class' => 'btn btn-primary']) ?>
         <?=
@@ -47,8 +50,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?=
     GridView::widget([
         'dataProvider' => $dataProvider,
-        'columns' => [            
-            'mr_id',
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
+        'columns' => [
             [
                 'attribute' => 'mr_material_id',
                 'label' => 'Материал',
@@ -62,6 +67,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'controller' => 'admin\mr',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
                 'template' => '{update}&nbsp;&nbsp;{delete}',
             ],
         ],

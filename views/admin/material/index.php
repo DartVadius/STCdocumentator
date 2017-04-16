@@ -22,8 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
     GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
-        'columns' => [            
-            'material_id',
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
+        'columns' => [ 
+            ['class' => 'yii\grid\SerialColumn'],
             'material_title',
             'material_price',
             'material_article',
@@ -39,7 +42,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'materialUnit.unit_title',
                 'filter' => app\models\admin\Unit::find()->select(['unit_title', 'unit_id'])->indexBy('unit_id')->column(),
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
+            ],
         ],
     ]);
     ?>

@@ -45,10 +45,10 @@ class Pap extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'pap_id' => 'Pap ID',
-            'pap_pack_id' => 'Pap Pack ID',
-            'pap_product_id' => 'Pap Product ID',
-            'pap_capacity' => 'Pap Capacity',
+            'pap_id' => 'ID',
+            'pap_pack_id' => 'Упаковка',
+            'pap_product_id' => 'Продукт',
+            'pap_capacity' => 'Емкость упаковки',
         ];
     }
 
@@ -66,5 +66,14 @@ class Pap extends \yii\db\ActiveRecord
     public function getPapProduct()
     {
         return $this->hasOne(Product::className(), ['product_id' => 'pap_product_id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return PapQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new PapQuery(get_called_class());
     }
 }

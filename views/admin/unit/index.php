@@ -22,15 +22,22 @@ $this->params['breadcrumbs'][] = $this->title;
     GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
         'columns' => [
-            'unit_id',
+            ['class' => 'yii\grid\SerialColumn'],
             'unit_title',
             [
                 'attribute' => 'unit_parent_id',                
                 'label' => 'Базовая единица',
                 'value' => 'parent.unit_title',
             ],
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
+            ],
         ],
     ]);
     ?>

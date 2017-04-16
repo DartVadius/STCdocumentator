@@ -18,18 +18,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Создать новую Статью расходов', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'other_expenses_id',
             'other_expenses_title',
             'other_expenses_desc',
             'other_expenses_costs_hour',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
+            ],
         ],
-    ]); ?>
+    ]);
+    ?>
 </div>

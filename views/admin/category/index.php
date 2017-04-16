@@ -18,17 +18,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'category_id',
             'category_title',
             'category_desc',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
+            ],
         ],
-    ]); ?>
+    ]);
+    ?>
 </div>

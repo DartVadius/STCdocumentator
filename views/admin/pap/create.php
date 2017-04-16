@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\admin\Pack */
+/* @var $model app\models\admin\Pap */
 
 $this->title = 'Добавить упаковку';
-$this->params['breadcrumbs'][] = ['label' => 'Упаковка', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Продукт', 'url' => ['admin/product/view', 'id' => $model->pap_product_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="pack-create">
+<div class="pap-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

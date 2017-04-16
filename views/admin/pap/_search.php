@@ -4,24 +4,24 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\admin\PackSearch */
+/* @var $model app\models\admin\PapSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="pack-search">
+<div class="pap-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'pack_id') ?>
+    <?= $form->field($model, 'pap_id') ?>
 
-    <?= $form->field($model, 'pack_title') ?>
+    <?= $form->field($model, 'pap_pack_id') ?>
 
-    <?= $form->field($model, 'pack_desc') ?>
+    <?= $form->field($model, 'pap_product_id') ?>
 
-    <?= $form->field($model, 'pack_price') ?>
+    <?= $form->field($model, 'pap_capacity') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

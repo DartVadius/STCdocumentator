@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\PackSearch */
+/* @var $searchModel app\models\admin\PackSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Упаковка';
@@ -16,20 +16,26 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Создать Упаковку', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить упаковку', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'pack_id',
             'pack_title',
             'pack_desc',
             'pack_price',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
+            ],
         ],
-    ]); ?>
+    ]);
+    ?>
 </div>

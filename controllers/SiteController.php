@@ -8,7 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use DartVadius\YmlGenerator\offer;
+use DartVadius\YmlGenerator\YmlFactory;
 
 class SiteController extends Controller {
 
@@ -59,14 +59,14 @@ class SiteController extends Controller {
      */
     public function actionIndex() {
 
-        $head = new offer\HeadYmlOffer();
+//        $head = YmlFactory::getYml($name);
+////        print_r($head);
+//        $arr = [
+//            'place' => 'place',
+//            'date' => 'date'
+//        ];
+//        $head->getHead();
 //        print_r($head);
-        $arr = [
-            'place' => 'place',
-            'date' => 'date'
-        ];
-        $head->setAllValues($arr);
-        print_r($head);
 //        $head->getOffer();
 //        print_r($head->getOffer());
         return $this->render('index');

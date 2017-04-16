@@ -3,9 +3,9 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Pack */
+/* @var $model app\models\admin\Pack */
 
-$this->title = 'Редактировать Упаковку: ' . $model->pack_title;
+$this->title = 'Редактировать упаковку: ' . $model->pack_title;
 $this->params['breadcrumbs'][] = ['label' => 'Упаковка', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->pack_title, 'url' => ['view', 'id' => $model->pack_id]];
 $this->params['breadcrumbs'][] = 'Редактировать';

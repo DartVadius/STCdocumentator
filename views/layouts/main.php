@@ -37,7 +37,7 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => 'Главная', 'url' => ['/site/index']],
                     ['label' => 'Номенклатура', 'url' => ['/admin/product/index']],
-                    ['label' => 'Рецептуры', 'url' => ['/admin/recipe/index']],                  
+                    ['label' => 'Рецептуры', 'url' => ['/admin/recipe/index']],
                     [
                         'label' => 'Справочники',
                         'items' => [
@@ -74,7 +74,7 @@ AppAsset::register($this);
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ])
                 ?>
-<?= $content ?>
+                <?= $content ?>
             </div>
         </div>
 
@@ -86,7 +86,7 @@ AppAsset::register($this);
             </div>
         </footer>
 
-<?php $this->endBody() ?>
+        <?php $this->endBody() ?>
     </body>
 </html>
 <?php $this->endPage() ?>

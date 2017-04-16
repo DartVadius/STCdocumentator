@@ -115,8 +115,23 @@ class RecipeController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
+        $model = $this->findModel($id);
+        if ($model->getProducts()->count() > 0) {
+            $product = $model->getProducts()->select('product_title')->asArray()->all();
+            $prod = NULL;
+            foreach ($product as $value) {
+                $prod .= $value['product_title'] . ', ';
+            }
+            $prod[strlen($prod) - 2] = '';
+            $dataProvider = new ActiveDataProvider(['query' => $model->getMrs()->with('mrMaterial')]);
+            return $this->render('view', [
+                        'model' => $model,
+                        'dataProvider' => $dataProvider,
+                        'product' => trim($prod),
+            ]);
+        }
         Mr::deleteAll('mr_recipe_id = :id', [':id' => $id]);
-        $this->findModel($id)->delete();        
+        $model->delete();
         return $this->redirect(['index']);
     }
 

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Pack */
+/* @var $model app\models\admin\Pack */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -14,7 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'pack_title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'pack_desc')->textarea(['maxlength' => true]) ?>
+    <?= $form->field($model, 'pack_desc')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'pack_price')->textInput(['maxlength' => true]) ?>
 

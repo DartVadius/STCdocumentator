@@ -3,17 +3,16 @@
 namespace app\controllers\admin;
 
 use Yii;
-use app\models\admin\Mr;
-use app\models\admin\MrSearch;
-use app\models\admin\Recipe;
+use app\models\admin\Papr;
+use app\models\admin\Product;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MrController implements the CRUD actions for Mr model.
+ * PaprController implements the CRUD actions for Papr model.
  */
-class MrController extends Controller {
+class PaprController extends Controller {
 
     /**
      * @inheritdoc
@@ -30,15 +29,15 @@ class MrController extends Controller {
     }
 
     /**
-     * Lists all Mr models.
+     * Lists all Papr models.
      * @return mixed
      */
     public function actionIndex() {
-        return $this->redirect(['admin/recipe/index']);
+        return $this->redirect(['admin/product/index']);
     }
 
     /**
-     * Displays a single Mr model.
+     * Displays a single Papr model.
      * @param string $id
      * @return mixed
      */
@@ -49,19 +48,19 @@ class MrController extends Controller {
     }
 
     /**
-     * Creates a new Mr model.
+     * Creates a new Papr model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($mr_recipe_id = NULL) {
-        $model = new Mr();
-        $model->mr_recipe_id = $mr_recipe_id;
+    public function actionCreate($papr_product_id = NULL) {
+        $model = new Papr();
+        $model->papr_product_id = $papr_product_id;
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $recipes = new Recipe();
-            $recipe = $recipes->findOne($model->mr_recipe_id);
-            $recipe->recipe_update = date('Y-m-d H:i:s');
-            $recipe->save();
-            return $this->redirect(['admin/recipe/view', 'id' => $model->mr_recipe_id]);
+            $products = new Product();
+            $product = $products->findOne($model->papr_product_id);
+            $product->product_update = date('Y-m-d H:i:s');
+            $product->save();
+            return $this->redirect(['admin/product/view', 'id' => $model->papr_product_id]);
         } else {
             return $this->render('create', [
                         'model' => $model,
@@ -70,19 +69,20 @@ class MrController extends Controller {
     }
 
     /**
-     * Updates an existing Mr model.
+     * Updates an existing Papr model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $recipes = new \app\models\admin\Recipe();
-            $recipe = $recipes->findOne($model->mr_recipe_id);
-            $recipe->recipe_update = date('Y-m-d H:i:s');
-            $recipe->save();
-            return $this->redirect(['admin/recipe/view', 'id' => $model->mr_recipe_id]);
+            $products = new Product();
+            $product = $products->findOne($model->papr_product_id);
+            $product->product_update = date('Y-m-d H:i:s');
+            $product->save();
+            return $this->redirect(['admin/product/view', 'id' => $model->papr_product_id]);
         } else {
             return $this->render('update', [
                         'model' => $model,
@@ -91,30 +91,26 @@ class MrController extends Controller {
     }
 
     /**
-     * Deletes an existing Mr model.
+     * Deletes an existing Papr model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
      */
     public function actionDelete($id) {
-        $recipeId = $this->findModel($id)->mr_recipe_id;
-        $this->findModel($id)->delete();
-        $recipes = new \app\models\admin\Recipe();
-        $recipe = $recipes->findOne($recipeId);
-        $recipe->recipe_update = date('Y-m-d H:i:s');
-        $recipe->save();
-        return $this->redirect(['admin/recipe/view', 'id' => $recipeId]);
+        $model = $this->findModel($id);
+        $model->delete();
+        return $this->redirect(['admin/product/view', 'id' => $model->papr_product_id]);
     }
 
     /**
-     * Finds the Mr model based on its primary key value.
+     * Finds the Papr model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return Mr the loaded model
+     * @return Papr the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id) {
-        if (($model = Mr::findOne($id)) !== null) {
+        if (($model = Papr::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

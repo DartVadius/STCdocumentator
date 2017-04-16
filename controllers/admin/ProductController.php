@@ -6,6 +6,7 @@ use Yii;
 use app\models\admin\Product;
 use app\models\admin\ProductSearch;
 use app\models\admin\Pm;
+use app\models\admin\Pap;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -51,10 +52,14 @@ class ProductController extends Controller {
      */
     public function actionView($id) {
         $model = $this->findModel($id);
-        $dataProviderPm = new ActiveDataProvider(['query' => $model->getPms()->with('pmMaterial')]);        
+        $dataProviderPm = new ActiveDataProvider(['query' => $model->getPms()->with('pmMaterial')]);
+        $dataProviderPap = new ActiveDataProvider(['query' => $model->getPaps()->with('papPack')]);
+        $dataProviderPapr = new ActiveDataProvider(['query' => $model->getPaprs()->with('paprParameter')]);
         return $this->render('view', [
                     'model' => $model,
                     'dataProviderPm' => $dataProviderPm,
+                    'dataProviderPap' => $dataProviderPap,
+                    'dataProviderPapr' => $dataProviderPapr,
         ]);
     }
 
@@ -114,8 +119,9 @@ class ProductController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        Pm::deleteAll("pm_product_id = $id");
-        $this->findModel($id)->delete();        
+        Pm::deleteAll('pm_product_id = :id', [':id' => $id]);
+        Pap::deleteAll('pap_product_id = :id', [':id' => $id]);
+        $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
 
