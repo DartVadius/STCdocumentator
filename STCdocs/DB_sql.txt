@@ -373,7 +373,6 @@ CREATE TABLE IF NOT EXISTS `documentator`.`other_expenses` (
   `other_expenses_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `other_expenses_title` VARCHAR(255) NOT NULL,
   `other_expenses_desc` VARCHAR(255) NULL,
-  `other_expenses_costs_hour` DECIMAL(12,4) UNSIGNED NOT NULL,
   PRIMARY KEY (`other_expenses_id`),
   UNIQUE INDEX `other_expenses_id_UNIQUE` (`other_expenses_id` ASC))
 ENGINE = InnoDB;
@@ -388,6 +387,7 @@ CREATE TABLE IF NOT EXISTS `documentator`.`op` (
   `op_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `op_other_id` INT(10) UNSIGNED NOT NULL,
   `op_product_id` INT(10) UNSIGNED NOT NULL,
+  `op_cost_hour` DECIMAL(12,4) UNSIGNED NOT NULL,
   PRIMARY KEY (`op_id`),
   UNIQUE INDEX `op_id_UNIQUE` (`op_id` ASC),
   INDEX `fk_op_other_idx` (`op_other_id` ASC),
@@ -414,7 +414,7 @@ DROP TABLE IF EXISTS `documentator`.`solution` ;
 CREATE TABLE IF NOT EXISTS `documentator`.`solution` (
   `solution_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `solution_title` VARCHAR(255) NOT NULL,
-  `solution_desc` VARCHAR(255) NULL,
+  `solution_desc` MEDIUMBLOB NULL,
   PRIMARY KEY (`solution_id`),
   UNIQUE INDEX `solution_id_UNIQUE` (`solution_id` ASC))
 ENGINE = InnoDB;

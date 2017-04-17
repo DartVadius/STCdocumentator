@@ -19,7 +19,7 @@ use app\models\admin\Solution;
     $solution = ArrayHelper::map($solutions, 'solution_id', 'solution_title');
     ?>
     
-    <?=$form->field($model, 'sp_solution_ids')->checkboxList($solution, ['label' => $solution[1], 'value' => $solution[0], 'uncheck' => null]); ?>
+    <?=$form->field($model, 'sp_solution_ids')->checkboxList($solution, ['label' => $solution[1], 'value' => $solution[0], 'uncheck' => null])->label('Решения'); ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Сохранить' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

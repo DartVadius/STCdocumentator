@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "pop".
  *
- * @property string $pop_pop
+ * @property string $pop_id
  * @property string $pop_position_id
  * @property string $pop_product_id
  * @property string $pop_num
@@ -46,10 +46,10 @@ class Pop extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'pop_pop' => 'Pop Pop',
-            'pop_position_id' => 'Pop Position ID',
-            'pop_product_id' => 'Pop Product ID',
-            'pop_num' => 'Pop Num',
+            'pop_id' => 'Id',
+            'pop_position_id' => 'Должность',
+            'pop_product_id' => 'Продукт',
+            'pop_num' => 'Число сотрудников',
         ];
     }
 

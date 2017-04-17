@@ -15,21 +15,19 @@ use Yii;
  * @property Pop[] $pops
  * @property Product[] $popProducts
  */
-class Position extends \yii\db\ActiveRecord
-{
+class Position extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'position';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['position_title'], 'required'],
             [['position_salary_hour'], 'number'],
@@ -40,8 +38,7 @@ class Position extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'position_id' => 'ID',
             'position_title' => 'Название должности',
@@ -53,16 +50,23 @@ class Position extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPops()
-    {
+    public function getPops() {
         return $this->hasMany(Pop::className(), ['pop_position_id' => 'position_id']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPopProducts()
-    {
+    public function getPopProducts() {
         return $this->hasMany(Product::className(), ['product_id' => 'pop_product_id'])->viaTable('pop', ['pop_position_id' => 'position_id']);
     }
+
+    /**
+     * @inheritdoc 
+     * @return PositionQuery the active query used by this AR class. 
+     */
+    public static function find() {
+        return new PositionQuery(get_called_class());
+    }
+
 }

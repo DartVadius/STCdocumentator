@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\admin\Sp */
 
-$this->title = 'Create Sp';
-$this->params['breadcrumbs'][] = ['label' => 'Sps', 'url' => ['index']];
+$this->title = 'Управление решениями';
+$this->params['breadcrumbs'][] = ['label' => $model->spProduct->product_title, 'url' => ['admin/product/view', 'id' => $model->sp_product_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sp-create">

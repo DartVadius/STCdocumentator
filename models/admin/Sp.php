@@ -76,9 +76,9 @@ class Sp extends \yii\db\ActiveRecord {
      * get list of solutions IDs connected to this product
      */
     public function getSolutionIds() {
-        $this->sp_solution_ids = (array)$this->find()->select('sp_solution_id')->where(['sp_product_id' => $this->sp_product_id])->column();
+        $this->sp_solution_ids = (array) $this->find()->select('sp_solution_id')->where(['sp_product_id' => $this->sp_product_id])->column();
     }
-    
+
     /**
      * save/update list of solutions IDs connected to this product
      * 
@@ -94,7 +94,7 @@ class Sp extends \yii\db\ActiveRecord {
                 $model->save();
             }
         }
-        
         return TRUE;
     }
+
 }

@@ -129,6 +129,34 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
+    <h2>Должности</h2>
+    <p>
+        <?= Html::a('Добавить должность', ['admin/pop/create', 'pop_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+    </p>
+    <?=
+    GridView::widget([
+        'dataProvider' => $dataProviderPop,
+        'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
+        'columns' => [
+            [
+                'attribute' => 'pop_position_id',
+                'label' => 'Должность',
+                'value' => 'popPosition.position_title',
+            ],
+            'pop_num',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'controller' => 'admin\pop',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
+                'template' => '{update}&nbsp;&nbsp;{delete}',
+            ],
+        ],
+    ]);
+    ?>
     <h2>Дополнительные параметры</h2>
     <p>
         <?= Html::a('Добавить параметр', ['admin/papr/create', 'papr_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
@@ -161,10 +189,12 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
+    <h2>Решения</h2>
     <p>
         <?= Html::a('Управление Решениями', ['admin/sp/create', 'sp_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProviderSp,
         'filterModel' => $searchModel,
         'tableOptions' => [
@@ -184,5 +214,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{delete}',
             ],
         ],
-    ]); ?>
+    ]);
+    ?>
 </div>
