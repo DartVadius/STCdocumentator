@@ -57,6 +57,8 @@ class ProductController extends Controller {
         $dataProviderPapr = new ActiveDataProvider(['query' => $model->getPaprs()->with('paprParameter')]);
         $dataProviderSp = new ActiveDataProvider(['query' => $model->getSps()->with('spSolution')]);
         $dataProviderPop = new ActiveDataProvider(['query' => $model->getPops()->with('popPosition')]);
+        $dataProviderOp = new ActiveDataProvider(['query' => $model->getOps()->with('opOther')]);
+        $dataProviderLp = new ActiveDataProvider(['query' => $model->getLps()->with('lpLoss')]);
         return $this->render('view', [
                     'model' => $model,
                     'dataProviderPm' => $dataProviderPm,
@@ -64,6 +66,8 @@ class ProductController extends Controller {
                     'dataProviderPapr' => $dataProviderPapr,
                     'dataProviderSp' => $dataProviderSp,
                     'dataProviderPop' => $dataProviderPop,
+                    'dataProviderOp' => $dataProviderOp,
+                    'dataProviderLp' => $dataProviderLp,
         ]);
     }
 

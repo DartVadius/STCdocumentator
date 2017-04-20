@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\admin\Pop */
 
 $this->title = 'Добавить должность';
-$this->params['breadcrumbs'][] = ['label' => 'Продукт', 'url' => ['admin/product/view', 'id' => $model->pop_product_id]];
+$this->params['breadcrumbs'][] = ['label' => $model->popProduct->product_title, 'url' => ['admin/product/view', 'id' => $model->pop_product_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="pop-create">

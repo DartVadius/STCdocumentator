@@ -8,6 +8,7 @@ use app\models\admin\MaterialSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\ActiveDataProvider;
 
 /**
  * MaterialController implements the CRUD actions for Material model.
@@ -95,8 +96,36 @@ class MaterialController extends Controller {
      * @return mixed
      */
     public function actionDelete($id) {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
 
+        if ($model->getMrRecipes()->count() > 0 || $model->getPmProducts()->count() > 0) {
+            $prod = NULL;
+            $rec = NULL;
+            
+            $product = $model->getPmProducts()->select('product_title')->asArray()->all();            
+            foreach ($product as $value) {
+                $prod .= $value['product_title'] . ', ';
+            }
+            if ($prod) {
+                $prod[strlen($prod) - 2] = '';
+            }
+            
+            
+            $recipe = $model->getMrRecipes()->select('recipe_title')->asArray()->all();            
+            foreach ($recipe as $value) {
+                $rec .= $value['recipe_title'] . ', ';
+            }
+            if ($rec) {
+                $rec[strlen($rec) - 2] = '';
+            }
+            return $this->render('view', [
+                        'model' => $model,
+                        'product' => trim($prod),
+                        'recipe' => trim($rec),
+            ]);
+        }
+        
+        $model->delete();
         return $this->redirect(['index']);
     }
 

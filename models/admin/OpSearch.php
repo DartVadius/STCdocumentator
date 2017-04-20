@@ -5,12 +5,12 @@ namespace app\models\admin;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\admin\OtherExpenses;
+use app\models\admin\Op;
 
 /**
- * OtherExpensesSearch represents the model behind the search form about `app\models\admin\OtherExpenses`.
+ * OpSearch represents the model behind the search form about `app\models\admin\Op`.
  */
-class OtherExpensesSearch extends OtherExpenses
+class OpSearch extends Op
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class OtherExpensesSearch extends OtherExpenses
     public function rules()
     {
         return [
-            [['other_expenses_id'], 'integer'],
-            [['other_expenses_title', 'other_expenses_desc'], 'safe'],
+            [['op_id', 'op_other_id', 'op_product_id'], 'integer'],
+            [['op_cost_hour'], 'number'],
         ];
     }
 
@@ -41,7 +41,7 @@ class OtherExpensesSearch extends OtherExpenses
      */
     public function search($params)
     {
-        $query = OtherExpenses::find();
+        $query = Op::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +59,11 @@ class OtherExpensesSearch extends OtherExpenses
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'other_expenses_id' => $this->other_expenses_id,
+            'op_id' => $this->op_id,
+            'op_other_id' => $this->op_other_id,
+            'op_product_id' => $this->op_product_id,
+            'op_cost_hour' => $this->op_cost_hour,
         ]);
-
-        $query->andFilterWhere(['like', 'other_expenses_title', $this->other_expenses_title])
-            ->andFilterWhere(['like', 'other_expenses_desc', $this->other_expenses_desc]);
 
         return $dataProvider;
     }

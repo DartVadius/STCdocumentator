@@ -16,22 +16,31 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->solution_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->solution_id], [
+        <?=
+        Html::a('Удалить', ['delete', 'id' => $model->solution_id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Вы уверены?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])
+        ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'solution_id',
             'solution_title',
-            'solution_desc:ntext',
+            [
+                'attribute' => 'solution_desc',
+                'label' => 'Описание решения',
+                'value' => $model->solution_desc,
+                'format' => 'raw'
+            ],
         ],
-    ]) ?>
+    ])
+    ?>
 
 </div>

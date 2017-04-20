@@ -4,10 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\OtherExpenses */
+/* @var $model app\models\admin\OtherExpenses */
 
 $this->title = $model->other_expenses_title;
-$this->params['breadcrumbs'][] = ['label' => 'Прочие Расходы', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Прочие затраты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="other-expenses-view">
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Удалить', ['delete', 'id' => $model->other_expenses_id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Вы уверенны?',
+                'confirm' => 'Вы уверены?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -31,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'other_expenses_id',
             'other_expenses_title',
             'other_expenses_desc',
-            'other_expenses_costs_hour',
         ],
     ]) ?>
 

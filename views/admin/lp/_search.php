@@ -4,22 +4,24 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\admin\OtherExpensesSearch */
+/* @var $model app\models\admin\LpSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="other-expenses-search">
+<div class="lp-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'other_expenses_id') ?>
+    <?= $form->field($model, 'lp_id') ?>
 
-    <?= $form->field($model, 'other_expenses_title') ?>
+    <?= $form->field($model, 'lp_loss_id') ?>
 
-    <?= $form->field($model, 'other_expenses_desc') ?>
+    <?= $form->field($model, 'lp_product_id') ?>
+
+    <?= $form->field($model, 'lp_percentage') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

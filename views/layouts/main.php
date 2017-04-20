@@ -41,14 +41,24 @@ AppAsset::register($this);
                     [
                         'label' => 'Справочники',
                         'items' => [
+                            '<li class="divider"></li>',
+                            '<li class="dropdown-header">Базовые справочники</li>',
+                            '<li class="divider"></li>',
+                            ['label' => 'Ед.изм', 'url' => ['/admin/unit/index']],
+                            ['label' => 'Категории материалов', 'url' => ['/admin/category/index']],
+                            ['label' => 'Категории продуктов', 'url' => ['/admin/category-product/index']],
+                            '<li class="divider"></li>',
+                            '<li class="dropdown-header">Расходные материалы и затраты</li>',
+                            '<li class="divider"></li>',
                             ['label' => 'Материалы', 'url' => ['/admin/material/index']],
                             ['label' => 'Упаковка', 'url' => ['/admin/pack/index']],
-                            ['label' => 'Ед.изм', 'url' => ['/admin/unit/index']],
-                            ['label' => 'Свойства и параметры', 'url' => ['/admin/parameter/index']],
-                            ['label' => 'Прочие расходы', 'url' => ['/admin/other-expenses/index']],
+                            ['label' => 'Прочие затраты', 'url' => ['/admin/other-expenses/index']],
                             ['label' => 'Должности', 'url' => ['/admin/position/index']],
-                            ['label' => 'Категории сырья', 'url' => ['/admin/category/index']],
-                            ['label' => 'Категории продуктов', 'url' => ['/admin/category-product/index']],
+                            ['label' => 'Плановые потери', 'url' => ['/admin/loss/index']],
+                            '<li class="divider"></li>',
+                            '<li class="dropdown-header">Продукция</li>',
+                            '<li class="divider"></li>',
+                            ['label' => 'Свойства и параметры', 'url' => ['/admin/parameter/index']],
                             ['label' => 'Решения', 'url' => ['/admin/solution/index']],
                         ],
                     ],
@@ -69,11 +79,11 @@ AppAsset::register($this);
             ?>
 
             <div class="container">
-                <?=
-                Breadcrumbs::widget([
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                ])
-                ?>
+            <?=
+            Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ])
+            ?>
                 <?= $content ?>
             </div>
         </div>
@@ -86,7 +96,7 @@ AppAsset::register($this);
             </div>
         </footer>
 
-        <?php $this->endBody() ?>
+<?php $this->endBody() ?>
     </body>
 </html>
 <?php $this->endPage() ?>

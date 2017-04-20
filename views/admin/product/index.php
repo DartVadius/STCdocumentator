@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\admin\CategoryProduct;
+use app\models\admin\Product;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\admin\ProductSearch */
@@ -19,7 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Создать Продукт', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'tableOptions' => [
@@ -37,10 +39,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => CategoryProduct::find()->select(['category_product_title', 'category_product_id'])->indexBy('category_product_id')->column(),
             ],
             [
+                'attribute' => 'product_archiv',
+                'label' => 'Архив',
+                'value' => function ($model) {
+                    if ($model->product_archiv === 0) {
+                        return 'нет';
+                    }
+                    return 'да';
+                },
+                'filter' => ['нет', 'да'],
+            ],
+            [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => 'Действия',
                 'headerOptions' => ['width' => '100'],
+                'template' => '{view}&nbsp;&nbsp;{delete}',
             ],
         ],
-    ]); ?>
+    ]);
+    ?>
 </div>

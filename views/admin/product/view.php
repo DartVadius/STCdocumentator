@@ -13,9 +13,10 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?> <span class="small"><?= Html::encode($model->productRecipe->recipe_title) ?></span></h1>
     <h6 class="small">Создан: <?= $model->product_date ?></h6>
     <h6 class="small">Отредактирован: <?= $model->product_update ?></h6>
+    <h6 class="small">Архив: <?= ($model->product_archiv === 1) ? 'Да' : 'Нет'; ?></h6>
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->product_id], ['class' => 'btn btn-primary']) ?>
         <?=
@@ -33,21 +34,27 @@ $this->params['breadcrumbs'][] = $this->title;
     DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'product_capacity_hour',
+//            [
+//                'attribute' => 'product_unit_id',
+//                'label' => 'Ед.учета',
+//                'value' => $model->productUnit->unit_title . $model->productUnit->unit_title,
+////                'contentOptions' => ['class' => 'alert alert-success'],
+////                'captionOptions' => ['class' => 'alert alert-success'],
+//            ],
             [
-                'attribute' => 'product_recipe_id',
-                'label' => 'Рецептура',
-                'value' => $model->productRecipe->recipe_title,
+                'attribute' => 'product_capacity_hour',
+                'label' => 'Выработка в час (учетная единица: ' . $model->productUnit->unit_title . ')',
+                'value' => $model->product_capacity_hour,
 //                'contentOptions' => ['class' => 'alert alert-success'],
 //                'captionOptions' => ['class' => 'alert alert-success'],
             ],
-            [
-                'attribute' => 'product_unit_id',
-                'label' => 'Ед.учета',
-                'value' => $model->productUnit->unit_title,
-//                'contentOptions' => ['class' => 'alert alert-success'],
-//                'captionOptions' => ['class' => 'alert alert-success'],
-            ],
+//            [
+//                'attribute' => 'product_recipe_id',
+//                'label' => 'Рецептура',
+//                'value' => $model->productRecipe->recipe_title,
+////                'contentOptions' => ['class' => 'alert alert-success'],
+////                'captionOptions' => ['class' => 'alert alert-success'],
+//            ],            
             [
                 'attribute' => 'product_category_id',
                 'label' => 'Категория',
@@ -56,17 +63,35 @@ $this->params['breadcrumbs'][] = $this->title;
 //                'captionOptions' => ['class' => 'alert alert-success'],
             ],
             'product_price',
+            [
+                'label' => 'Размеры, мм (длина/ширина/толщина)',
+                'value' => function ($model) {
+                    if (empty($model->product_length)) {
+                        $model->product_length = 'не задано';
+                    }
+                    if (empty($model->product_width)) {
+                        $model->product_width = 'не задано';
+                    }
+                    if (empty($model->product_thickness)) {
+                        $model->product_thickness = 'не задано';
+                    }
+                    return $model->product_length . ' / ' . $model->product_width . ' / ' . $model->product_thickness;
+                },
+//                'contentOptions' => ['class' => 'alert alert-success'],
+//                'captionOptions' => ['class' => 'alert alert-success'],
+            ],
             'product_weight',
-            'product_length',
-            'product_width',
-            'product_thickness',
-            'product_note:ntext',
+//            'product_length',
+//            'product_width',
+//            'product_thickness',
+//            'product_note:ntext',
             'product_vendor_code',
-            'product_archiv:boolean',
+//            'product_archiv:boolean',
         ],
     ])
     ?>
-    <h2>Материалы</h2>
+    <h2 class="alert-info">Затраты</h2>
+    <h3>Материалы</h3>
     <p>
         <?= Html::a('Добавить материал', ['admin/pm/create', 'pm_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
     </p>
@@ -100,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
-    <h2>Упаковка</h2>
+    <h3>Упаковка</h3>
     <?php if ($dataProviderPap->count < 1): ?>
         <p>
             <?= Html::a('Добавить Упаковку', ['admin/pap/create', 'pap_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
@@ -129,7 +154,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
-    <h2>Должности</h2>
+    <h3>Должности</h3>
     <p>
         <?= Html::a('Добавить должность', ['admin/pop/create', 'pop_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
     </p>
@@ -157,9 +182,66 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
-    <h2>Дополнительные параметры</h2>
+    <h3>Прочие затраты</h3>
     <p>
-        <?= Html::a('Добавить параметр', ['admin/papr/create', 'papr_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить статью затрат', ['admin/op/create', 'op_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+    </p>
+    <?=
+    GridView::widget([
+        'dataProvider' => $dataProviderOp,
+        'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
+        'columns' => [
+            [
+                'attribute' => 'op_other_id',
+                'label' => 'Статья затрат',
+                'value' => 'opOther.other_expenses_title',
+            ],
+            'op_cost_hour',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'controller' => 'admin\op',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
+                'template' => '{update}&nbsp;&nbsp;{delete}',
+            ],
+        ],
+    ]);
+    ?>
+    <h3>Плановые потери</h3>
+    <p>
+    <?= Html::a('Добавить статью плановых потерь', ['admin/lp/create', 'lp_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+    </p>
+    <?=
+    GridView::widget([
+        'dataProvider' => $dataProviderLp,
+        'filterModel' => $searchModel,
+        'tableOptions' => [
+            'class' => 'table table-striped table-bordered table-hover table-condensed'
+        ],
+        'columns' => [
+            [
+                'attribute' => 'lp_loss_id',
+                'label' => 'Название',
+                'value' => 'lpLoss.loss_title',
+            ],
+            'lp_percentage',
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'controller' => 'admin\lp',
+                'header' => 'Действия',
+                'headerOptions' => ['width' => '100'],
+                'template' => '{update}&nbsp;&nbsp;{delete}',
+            ],
+        ],
+    ]);
+    ?>
+    <h2 class="alert-info">Дополнительные сведенья о продукте</h2>
+    <h3>Дополнительные свойства и характеристики</h3>
+    <p>
+    <?= Html::a('Добавить параметр', ['admin/papr/create', 'papr_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
     </p>
     <?=
     GridView::widget([
@@ -189,9 +271,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
-    <h2>Решения</h2>
+    <h3>Решения</h3>
     <p>
-        <?= Html::a('Управление Решениями', ['admin/sp/create', 'sp_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Управление Решениями', ['admin/sp/create', 'sp_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
     </p>
     <?=
     GridView::widget([

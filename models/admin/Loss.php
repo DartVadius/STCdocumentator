@@ -41,9 +41,9 @@ class Loss extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'loss_id' => 'Loss ID',
-            'loss_title' => 'Loss Title',
-            'loss_desc' => 'Loss Desc',
+            'loss_id' => 'ID',
+            'loss_title' => 'Название',
+            'loss_desc' => 'Примечание',
         ];
     }
 
@@ -61,5 +61,14 @@ class Loss extends \yii\db\ActiveRecord
     public function getLpProducts()
     {
         return $this->hasMany(Product::className(), ['product_id' => 'lp_product_id'])->viaTable('lp', ['lp_loss_id' => 'loss_id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return LossQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new LossQuery(get_called_class());
     }
 }

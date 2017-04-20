@@ -13,7 +13,12 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="material-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <?php if ($product): ?>
+    <p class="alert alert-warning">Невозможно удалить материал. Удалите его в продуктах: <?= $product ?></p>
+    <?php endif; ?>
+    <?php if ($recipe): ?>
+    <p class="alert alert-warning">Невозможно удалить материал. Удалите его в рецептурах: <?= $recipe ?></p>
+    <?php endif; ?>
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->material_id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->material_id], [

@@ -4,27 +4,30 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\admin\OtherExpensesSearch */
+/* @var $searchModel app\models\admin\LpSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Прочие затраты';
+$this->title = 'Lps';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="other-expenses-index">
+<div class="lp-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить статью затрат', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Lp', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'other_expenses_title',
-            'other_expenses_desc',
+
+            'lp_id',
+            'lp_loss_id',
+            'lp_product_id',
+            'lp_percentage',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

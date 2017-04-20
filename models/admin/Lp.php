@@ -7,7 +7,7 @@ use Yii;
 /**
  * This is the model class for table "lp".
  *
- * @property string $lp_lp
+ * @property string $lp_id
  * @property string $lp_loss_id
  * @property string $lp_product_id
  * @property string $lp_percentage
@@ -46,10 +46,10 @@ class Lp extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'lp_lp' => 'Lp Lp',
-            'lp_loss_id' => 'Lp Loss ID',
-            'lp_product_id' => 'Lp Product ID',
-            'lp_percentage' => 'Lp Percentage',
+            'lp_id' => 'Id',
+            'lp_loss_id' => 'Потери',
+            'lp_product_id' => 'Продукт',
+            'lp_percentage' => '%',
         ];
     }
 
@@ -67,5 +67,14 @@ class Lp extends \yii\db\ActiveRecord
     public function getLpProduct()
     {
         return $this->hasOne(Product::className(), ['product_id' => 'lp_product_id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return LpQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new LpQuery(get_called_class());
     }
 }

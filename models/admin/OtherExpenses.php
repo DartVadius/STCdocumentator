@@ -10,7 +10,6 @@ use Yii;
  * @property string $other_expenses_id
  * @property string $other_expenses_title
  * @property string $other_expenses_desc
- * @property string $other_expenses_costs_hour
  *
  * @property Op[] $ops
  * @property Product[] $opProducts
@@ -31,8 +30,7 @@ class OtherExpenses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['other_expenses_title', 'other_expenses_costs_hour'], 'required'],
-            [['other_expenses_costs_hour'], 'number'],
+            [['other_expenses_title'], 'required'],
             [['other_expenses_title', 'other_expenses_desc'], 'string', 'max' => 255],
         ];
     }
@@ -44,9 +42,8 @@ class OtherExpenses extends \yii\db\ActiveRecord
     {
         return [
             'other_expenses_id' => 'ID',
-            'other_expenses_title' => 'Название',
+            'other_expenses_title' => 'Статья затрат',
             'other_expenses_desc' => 'Описание',
-            'other_expenses_costs_hour' => 'Затраты грн. в час',
         ];
     }
 
@@ -64,5 +61,14 @@ class OtherExpenses extends \yii\db\ActiveRecord
     public function getOpProducts()
     {
         return $this->hasMany(Product::className(), ['product_id' => 'op_product_id'])->viaTable('op', ['op_other_id' => 'other_expenses_id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return OtherExpensesQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new OtherExpensesQuery(get_called_class());
     }
 }

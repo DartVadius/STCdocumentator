@@ -70,7 +70,7 @@ class Material extends \yii\db\ActiveRecord {
      * @return \yii\db\ActiveQuery
      */
     public function getMaterialUnit() {
-        return $this->hasOne(Unit::className(), ['unit_id' => 'material_unit_id']);
+        return $this->hasOne(Unit::className(), ['unit_id' => 'material_unit_id']);        
     }
 
     /**

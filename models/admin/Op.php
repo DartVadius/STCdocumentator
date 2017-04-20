@@ -10,6 +10,7 @@ use Yii;
  * @property string $op_id
  * @property string $op_other_id
  * @property string $op_product_id
+ * @property string $op_cost_hour
  *
  * @property OtherExpenses $opOther
  * @property Product $opProduct
@@ -30,8 +31,9 @@ class Op extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['op_other_id', 'op_product_id'], 'required'],
+            [['op_other_id', 'op_product_id', 'op_cost_hour'], 'required'],
             [['op_other_id', 'op_product_id'], 'integer'],
+            [['op_cost_hour'], 'number'],
             [['op_other_id', 'op_product_id'], 'unique', 'targetAttribute' => ['op_other_id', 'op_product_id'], 'message' => 'The combination of Op Other ID and Op Product ID has already been taken.'],
             [['op_other_id'], 'exist', 'skipOnError' => true, 'targetClass' => OtherExpenses::className(), 'targetAttribute' => ['op_other_id' => 'other_expenses_id']],
             [['op_product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['op_product_id' => 'product_id']],
@@ -44,9 +46,10 @@ class Op extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'op_id' => 'Op ID',
-            'op_other_id' => 'Op Other ID',
-            'op_product_id' => 'Op Product ID',
+            'op_id' => 'ID',
+            'op_other_id' => 'Статья затрат',
+            'op_product_id' => 'Продукт',
+            'op_cost_hour' => 'грн/час',
         ];
     }
 
@@ -64,5 +67,14 @@ class Op extends \yii\db\ActiveRecord
     public function getOpProduct()
     {
         return $this->hasOne(Product::className(), ['product_id' => 'op_product_id']);
+    }
+
+    /**
+     * @inheritdoc
+     * @return OpQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new OpQuery(get_called_class());
     }
 }

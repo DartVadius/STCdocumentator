@@ -3,10 +3,10 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\OtherExpenses */
+/* @var $model app\models\admin\OtherExpenses */
 
-$this->title = 'Редактировать статью расходов: ' . $model->other_expenses_title;
-$this->params['breadcrumbs'][] = ['label' => 'Прочие расходы', 'url' => ['index']];
+$this->title = 'Редактировать статью затрат: ' . $model->other_expenses_title;
+$this->params['breadcrumbs'][] = ['label' => 'Прочие затраты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->other_expenses_title, 'url' => ['view', 'id' => $model->other_expenses_id]];
 $this->params['breadcrumbs'][] = 'Редактировать';
 ?>

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
+use dosamigos\tinymce\TinyMce;
 use app\models\admin\CategoryProduct;
 use app\models\admin\Unit;
 use app\models\admin\Recipe;
@@ -36,7 +37,7 @@ use app\models\admin\Recipe;
 
     <?= $form->field($model, 'product_title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'product_note')->textarea(['maxlength' => true]) ?>
+    <?= $form->field($model, 'product_note')->textarea(['maxlength' => true])->widget(TinyMce::className()) ?>
 
     <?= $form->field($model, 'product_capacity_hour')->textInput(['maxlength' => true]) ?>
 
