@@ -10,22 +10,24 @@ use app\models\admin\Solution;
 /**
  * SolutionSearch represents the model behind the search form about `app\models\Solution`.
  */
-class SolutionSearch extends Solution {
-
+class SolutionSearch extends Solution
+{
     /**
      * @inheritdoc
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             [['solution_id'], 'integer'],
-            [['solution_title', 'solution_desc', 'solution_desc_short'], 'safe'],
+            [['solution_title', 'solution_desc'], 'safe'],
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios() {
+    public function scenarios()
+    {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -37,7 +39,8 @@ class SolutionSearch extends Solution {
      *
      * @return ActiveDataProvider
      */
-    public function search($params) {
+    public function search($params)
+    {
         $query = Solution::find();
 
         // add conditions that should always apply here
@@ -60,10 +63,8 @@ class SolutionSearch extends Solution {
         ]);
 
         $query->andFilterWhere(['like', 'solution_title', $this->solution_title])
-                ->andFilterWhere(['like', 'solution_desc_short', $this->solution_desc_short])
-                ->andFilterWhere(['like', 'solution_desc', $this->solution_desc]);
+            ->andFilterWhere(['like', 'solution_desc', $this->solution_desc]);
 
         return $dataProvider;
     }
-
 }
