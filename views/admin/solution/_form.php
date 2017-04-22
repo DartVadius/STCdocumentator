@@ -14,10 +14,8 @@ use dosamigos\tinymce\TinyMce;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'solution_title')->textInput(['maxlength' => true]) ?>
-
-    <?=
-    $form->field($model, 'solution_desc')->textarea(['maxlength' => true])->widget(TinyMce::className());
-    ?>
+    <?= $form->field($model, 'solution_desc_short')->textarea(['maxlength' => true])->widget(TinyMce::className()); ?>
+    <?= $form->field($model, 'solution_desc')->textarea(['maxlength' => true])->widget(TinyMce::className()); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

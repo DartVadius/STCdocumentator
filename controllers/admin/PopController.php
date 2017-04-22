@@ -5,6 +5,7 @@ namespace app\controllers\admin;
 use Yii;
 use app\models\admin\Pop;
 use app\models\admin\PopSearch;
+use app\models\admin\Product;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

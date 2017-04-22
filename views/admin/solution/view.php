@@ -34,6 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'solution_id',
             'solution_title',
             [
+                'attribute' => 'solution_desc_short',
+                    'label' => 'Красткое описание решения',
+                'value' => $model->solution_desc_short,
+                'format' => 'raw'
+            ],
+            [
                 'attribute' => 'solution_desc',
                 'label' => 'Описание решения',
                 'value' => $model->solution_desc,

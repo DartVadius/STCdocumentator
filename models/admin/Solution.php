@@ -30,6 +30,7 @@ class Solution extends \yii\db\ActiveRecord {
         return [
             [['solution_title'], 'required'],
             [['solution_title'], 'string', 'max' => 255],
+            [['solution_desc_short'], 'string', 'max' => 255],
             [['solution_desc'], 'string', 'max' => 15000],
         ];
     }
@@ -42,6 +43,7 @@ class Solution extends \yii\db\ActiveRecord {
             'solution_id' => 'ID',
             'solution_title' => 'Название Решения',
             'solution_desc' => 'Описание Решения',
+            'solution_desc_short' => 'Короткое описание Решения'
         ];
     }
 
