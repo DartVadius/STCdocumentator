@@ -7,7 +7,22 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language' => 'ru',
+    'modules' => [
+        'rbac' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu',
+        ],
+        'calculation' => [
+            'class' => 'app\modules\calculation\CalculationModule',
+        ],
+        'product' => [
+            'class' => 'app\modules\product\ProductModule',
+        ],
+    ],
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'Kp854lTO_xsgl4VplFzdFRJxiw8NYKFO',
@@ -17,8 +32,8 @@ $config = [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'identityClass' => 'mdm\admin\models\User',
+            'loginUrl' => ['admin/user/login'],
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
@@ -44,11 +59,25 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '' => 'site/index',
+                '/' => 'site/index',
+                'login' => 'rbac/user/login',
+                'signup' => 'rbac/user/signup',
                 '<controller:\w+>/<action:\w+>/' => '<controller>/<action>',
-                'admin' => 'admin/index',
             ],
         ],
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'site/*',
+            'rbac/user/login',
+            'rbac/user/signup',
+        // The actions listed here will be allowed to everyone including guests.
+        // So, 'admin/*' should not appear here in the production, of course.
+        // But in the earlier stages of your development, you may probably want to
+        // add a lot of actions here until you finally completed setting up rbac,
+        // otherwise you may not even take a first step.
+        ]
     ],
     'params' => $params,
 ];

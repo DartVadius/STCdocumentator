@@ -69,6 +69,8 @@ class SiteController extends Controller {
 //        print_r($head);
 //        $head->getOffer();
 //        print_r($head->getOffer());
+//        print_r(Yii::$app->user->identity);
+//        die();
         return $this->render('index');
     }
 

@@ -36,13 +36,33 @@ AppAsset::register($this);
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
                     ['label' => 'Главная', 'url' => ['/site/index']],
-                    
-                    Yii::$app->user->isGuest ? (
-                            ['label' => 'Signup', 'url' => ['/rbac/user/signup']]
-                            ) : (
-                            ['label' => 'Админка', 'url' => ['/product/admin/index']]
-                            ),
-                    
+                    ['label' => 'Номенклатура', 'url' => ['/product/admin/product/index']],
+                    ['label' => 'Рецептуры', 'url' => ['/product/admin/recipe/index']],
+                    [
+                        'label' => 'Справочники',
+                        'items' => [
+                            '<li class="divider"></li>',
+                            '<li class="dropdown-header">Базовые справочники</li>',
+                            '<li class="divider"></li>',
+                            ['label' => 'Ед.изм', 'url' => ['/product/admin/unit/index']],
+                            ['label' => 'Категории материалов', 'url' => ['/product/admin/category/index']],
+                            ['label' => 'Категории продуктов', 'url' => ['/product/admin/category-product/index']],
+                            '<li class="divider"></li>',
+                            '<li class="dropdown-header">Расходные материалы и затраты</li>',
+                            '<li class="divider"></li>',
+                            ['label' => 'Материалы', 'url' => ['/product/admin/material/index']],
+                            ['label' => 'Упаковка', 'url' => ['/product/admin/pack/index']],
+                            ['label' => 'Прочие затраты', 'url' => ['/product/admin/other-expenses/index']],
+                            ['label' => 'Должности', 'url' => ['/product/admin/position/index']],
+                            ['label' => 'Плановые потери', 'url' => ['/product/admin/loss/index']],
+                            '<li class="divider"></li>',
+                            '<li class="dropdown-header">Продукция</li>',
+                            '<li class="divider"></li>',
+                            ['label' => 'Свойства и параметры', 'url' => ['/product/admin/parameter/index']],
+                            ['label' => 'Решения', 'url' => ['/product/admin/solution/index']],
+                        ],                        
+                    ],
+                    ['label' => 'Пользователи', 'url' => ['/rbac']],
                     Yii::$app->user->isGuest ? (
                             ['label' => 'Login', 'url' => ['/rbac/user/login']]
                             ) : (
@@ -53,7 +73,7 @@ AppAsset::register($this);
                             )
                             . Html::endForm()
                             . '</li>'
-                            )                    
+                            )
                 ],
             ]);
             NavBar::end();
