@@ -31,7 +31,7 @@ class Pack extends \yii\db\ActiveRecord
     {
         return [
             [['pack_title', 'pack_price'], 'required'],
-            [['pack_price'], 'number'],
+            [['pack_price', 'pack_weight'], 'number'],
             [['pack_title', 'pack_desc'], 'string', 'max' => 255],
         ];
     }
@@ -46,6 +46,7 @@ class Pack extends \yii\db\ActiveRecord
             'pack_title' => 'Название упаковки',
             'pack_desc' => 'Описание',
             'pack_price' => 'Цена',
+            'pack_weight' => 'Вес упаковки, гр'
         ];
     }
 

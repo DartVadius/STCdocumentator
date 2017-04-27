@@ -9,7 +9,7 @@ use Yii;
  *
  * @property string $material_id
  * @property string $material_title
- * @property string $materil_price
+ * @property string $material_price
  * @property string $material_article
  * @property string $material_category_id
  * @property string $material_unit_id

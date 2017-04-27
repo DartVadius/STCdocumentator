@@ -28,8 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             'pack_title',
-            'pack_desc',
             'pack_price',
+            'pack_weight',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => 'Действия',

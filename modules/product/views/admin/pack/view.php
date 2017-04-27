@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'pack_title',
             'pack_desc',
             'pack_price',
+            'pack_weight',
         ],
     ]) ?>
 

@@ -17,6 +17,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'pack_desc')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'pack_price')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'pack_weight')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

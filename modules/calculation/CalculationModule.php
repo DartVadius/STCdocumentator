@@ -11,6 +11,7 @@ class CalculationModule extends \yii\base\Module {
      * @inheritdoc
      */
     public $controllerNamespace = 'app\modules\calculation\controllers';
+    public $layout = '/admin';
     /**
      * @inheritdoc
      */

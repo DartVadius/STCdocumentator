@@ -35,7 +35,7 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                    ['label' => 'Главная', 'url' => ['/site/index']],
+                    ['label' => 'Главная', 'url' => ['/product/admin/index']],
                     ['label' => 'Номенклатура', 'url' => ['/product/admin/product/index']],
                     ['label' => 'Рецептуры', 'url' => ['/product/admin/recipe/index']],
                     [

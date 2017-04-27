@@ -20,7 +20,7 @@ class PackSearch extends Pack
         return [
             [['pack_id'], 'integer'],
             [['pack_title', 'pack_desc'], 'safe'],
-            [['pack_price'], 'number'],
+            [['pack_price', 'pack_weight'], 'number'],
         ];
     }
 
