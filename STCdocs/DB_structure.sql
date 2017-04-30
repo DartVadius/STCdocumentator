@@ -1,4 +1,4 @@
-﻿-- MySQL Workbench Forward Engineering
+-- MySQL Workbench Forward Engineering
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -150,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `documentator`.`product` (
   `product_length` INT(12) UNSIGNED NULL,
   `product_width` INT(12) UNSIGNED NULL,
   `product_thickness` INT(12) UNSIGNED NULL,
-  `product_note` VARCHAR(255) NULL,
+  `product_note` MEDIUMTEXT NULL,
   `product_recipe_id` INT(10) UNSIGNED NULL,
   `product_vendor_code` VARCHAR(45) NULL,
   `product_archiv` TINYINT(1) UNSIGNED NULL DEFAULT 0,
@@ -245,6 +245,7 @@ CREATE TABLE IF NOT EXISTS `documentator`.`pack` (
   `pack_title` VARCHAR(255) NOT NULL,
   `pack_desc` VARCHAR(255) NULL,
   `pack_price` DECIMAL(12,4) UNSIGNED NOT NULL,
+  `pack_weight` DECIMAL(12,4) UNSIGNED NULL,
   PRIMARY KEY (`pack_id`),
   UNIQUE INDEX `pack_id_UNIQUE` (`pack_id` ASC))
 ENGINE = InnoDB;
@@ -299,12 +300,12 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `documentator`.`pop` ;
 
 CREATE TABLE IF NOT EXISTS `documentator`.`pop` (
-  `pop_pop` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `pop_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pop_position_id` INT(10) UNSIGNED NOT NULL,
   `pop_product_id` INT(10) UNSIGNED NOT NULL,
   `pop_num` DECIMAL(10,2) UNSIGNED NOT NULL COMMENT 'number workers on current position for  this product',
-  PRIMARY KEY (`pop_pop`),
-  UNIQUE INDEX `pop_pop_UNIQUE` (`pop_pop` ASC),
+  PRIMARY KEY (`pop_id`),
+  UNIQUE INDEX `pop_pop_UNIQUE` (`pop_id` ASC),
   INDEX `fk_pop_product_idx` (`pop_product_id` ASC),
   INDEX `fk_pop_position_idx` (`pop_position_id` ASC),
   UNIQUE INDEX `product_position` (`pop_position_id` ASC, `pop_product_id` ASC),
@@ -342,12 +343,12 @@ COMMENT = 'table for additional losses ';
 DROP TABLE IF EXISTS `documentator`.`lp` ;
 
 CREATE TABLE IF NOT EXISTS `documentator`.`lp` (
-  `lp_lp` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lp_id` INT(10) UNSIGNED NOT NULL,
   `lp_loss_id` INT(10) UNSIGNED NOT NULL,
   `lp_product_id` INT(10) UNSIGNED NOT NULL,
   `lp_percentage` DECIMAL(10,2) UNSIGNED NOT NULL,
-  PRIMARY KEY (`lp_lp`),
-  UNIQUE INDEX `lp_lp_UNIQUE` (`lp_lp` ASC),
+  PRIMARY KEY (`lp_id`),
+  UNIQUE INDEX `lp_lp_UNIQUE` (`lp_id` ASC),
   INDEX `fk_lp_loss_idx` (`lp_loss_id` ASC),
   INDEX `fk_lp_product_idx` (`lp_product_id` ASC),
   UNIQUE INDEX `loss_product` (`lp_loss_id` ASC, `lp_product_id` ASC),
@@ -503,128 +504,29 @@ DROP TABLE IF EXISTS `documentator`.`calculation` ;
 
 CREATE TABLE IF NOT EXISTS `documentator`.`calculation` (
   `calculation_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `calculation_date` DATETIME NOT NULL,
   `calculation_product_id` INT(10) UNSIGNED NULL,
   `calculation_product_title` VARCHAR(255) NOT NULL,
+  `calculation_date` DATETIME NOT NULL,
   `calculation_note` MEDIUMTEXT NULL,
   `calculation_product_capacity_hour` INT(10) UNSIGNED NOT NULL,
+  `calculation_weight` INT(12) UNSIGNED NULL,
+  `calculation_length` INT(12) UNSIGNED NULL,
+  `calculation_width` INT(12) UNSIGNED NULL,
+  `calculation_thickness` INT(12) UNSIGNED NULL,
+  `calculation_unit` VARCHAR(255) NULL,
+  `calculation_materials_data` MEDIUMTEXT NULL,
+  `calculation_recipe_data` MEDIUMTEXT NULL,
+  `calculation_packs_data` MEDIUMTEXT NULL,
+  `calculation_positions_data` MEDIUMTEXT NULL,
+  `calculation_expenses_data` MEDIUMTEXT NULL,
+  `calculation_losses_data` MEDIUMTEXT NULL,
   PRIMARY KEY (`calculation_id`),
   UNIQUE INDEX `calculation_id_UNIQUE` (`calculation_id` ASC),
-  INDEX `fk_calculation_product_idx` (`calculation_product_id` ASC),
-  CONSTRAINT `fk_calculation_product`
+  INDEX `fk_calc_prod_idx` (`calculation_product_id` ASC),
+  CONSTRAINT `fk_calc_prod`
     FOREIGN KEY (`calculation_product_id`)
     REFERENCES `documentator`.`product` (`product_id`)
     ON DELETE SET NULL
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `documentator`.`calcmat`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`calcmat` ;
-
-CREATE TABLE IF NOT EXISTS `documentator`.`calcmat` (
-  `calcmat_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `calcmat_calculation_id` INT(11) UNSIGNED NOT NULL,
-  `calcmat_material_title` VARCHAR(255) NOT NULL,
-  `calcmat_material_price` DECIMAL(12,4) UNSIGNED NOT NULL,
-  `calcmat_quantity` DECIMAL(12,4) UNSIGNED NOT NULL,
-  `calcmat_unit_title` VARCHAR(255) NOT NULL,
-  `calcmat_unit_id` INT(10) UNSIGNED NOT NULL,
-  PRIMARY KEY (`calcmat_id`),
-  UNIQUE INDEX `id_calcmat_UNIQUE` (`calcmat_id` ASC),
-  INDEX `fk_calcmat_calculation_idx` (`calcmat_calculation_id` ASC),
-  CONSTRAINT `fk_calcmat_calculation`
-    FOREIGN KEY (`calcmat_calculation_id`)
-    REFERENCES `documentator`.`calculation` (`calculation_id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `documentator`.`calcpack`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`calcpack` ;
-
-CREATE TABLE IF NOT EXISTS `documentator`.`calcpack` (
-  `calcpack_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `calcpack_calculation_id` INT(11) UNSIGNED NOT NULL,
-  `calcpack_pack_title` VARCHAR(255) NOT NULL,
-  `calcpack_pack_price` DECIMAL(12,4) UNSIGNED NOT NULL,
-  `calcpack_pack_capacity` DECIMAL(12,4) UNSIGNED NOT NULL,
-  PRIMARY KEY (`calcpack_id`),
-  UNIQUE INDEX `calcpack_id_UNIQUE` (`calcpack_id` ASC),
-  INDEX `fk_calcpack_calculation_idx` (`calcpack_calculation_id` ASC),
-  CONSTRAINT `fk_calcpack_calculation`
-    FOREIGN KEY (`calcpack_calculation_id`)
-    REFERENCES `documentator`.`calculation` (`calculation_id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `documentator`.`calcpos`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`calcpos` ;
-
-CREATE TABLE IF NOT EXISTS `documentator`.`calcpos` (
-  `calcpos_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `calcpos_calculation_id` INT(11) UNSIGNED NOT NULL,
-  `calcpos_position_title` VARCHAR(255) NOT NULL,
-  `calcpos_position_salary_hour` DECIMAL(12,2) UNSIGNED NOT NULL,
-  `calcpos_position_num` DECIMAL(10,2) UNSIGNED NOT NULL,
-  PRIMARY KEY (`calcpos_id`),
-  UNIQUE INDEX `calcpos_id_UNIQUE` (`calcpos_id` ASC),
-  INDEX `fk_calcpos_calculation_idx` (`calcpos_calculation_id` ASC),
-  CONSTRAINT `fk_calcpos_calculation`
-    FOREIGN KEY (`calcpos_calculation_id`)
-    REFERENCES `documentator`.`calculation` (`calculation_id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `documentator`.`calcexp`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`calcexp` ;
-
-CREATE TABLE IF NOT EXISTS `documentator`.`calcexp` (
-  `calcexp_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `calcexp_calculation_id` INT(11) UNSIGNED NOT NULL,
-  `calcexp_other_expenses_title` VARCHAR(255) NOT NULL,
-  `calcexp_other_expenses_costs_hour` DECIMAL(12,4) UNSIGNED NOT NULL,
-  PRIMARY KEY (`calcexp_id`),
-  UNIQUE INDEX `calcexp_id_UNIQUE` (`calcexp_id` ASC),
-  INDEX `fk_calcexp_calculation_idx` (`calcexp_calculation_id` ASC),
-  CONSTRAINT `fk_calcexp_calculation`
-    FOREIGN KEY (`calcexp_calculation_id`)
-    REFERENCES `documentator`.`calculation` (`calculation_id`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `documentator`.`calcloss`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`calcloss` ;
-
-CREATE TABLE IF NOT EXISTS `documentator`.`calcloss` (
-  `calcloss_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `calcloss_calculation_id` INT(11) UNSIGNED NOT NULL,
-  `calcloss_loss_title` VARCHAR(255) NOT NULL,
-  `calcloss_loss_percentage` DECIMAL(10,2) UNSIGNED NOT NULL,
-  PRIMARY KEY (`calcloss_id`),
-  UNIQUE INDEX `calcloss_id_UNIQUE` (`calcloss_id` ASC),
-  INDEX `calcloss_calculation_idx` (`calcloss_calculation_id` ASC),
-  CONSTRAINT `calcloss_calculation`
-    FOREIGN KEY (`calcloss_calculation_id`)
-    REFERENCES `documentator`.`calculation` (`calculation_id`)
-    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

@@ -1,11 +1,22 @@
 <?php
 
-namespace app\modules\calculation\models;
+namespace app\modules\calculation\models\calculation;
 
 /**
  * Description of Params
  *
  * @author DartVadius
+ * 
+ * @property integer $product_id
+ * @property string $title
+ * @property date $date
+ * @property string $note
+ * @property integer $capacity
+ * @property integer $weight
+ * @property integer $length
+ * @property integer $width
+ * @property integer $thickness
+ * @property integer $unit
  */
 class Params {
 
@@ -17,6 +28,7 @@ class Params {
     private $weight = NULL;
     private $length = NULL;
     private $width = NULL;
+    private $thickness = NULL;
     private $unit = NULL;
 
     public function __construct($params) {

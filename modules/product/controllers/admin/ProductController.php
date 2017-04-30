@@ -7,6 +7,11 @@ use app\modules\product\models\admin\Product;
 use app\modules\product\models\admin\ProductSearch;
 use app\modules\product\models\admin\Pm;
 use app\modules\product\models\admin\Pap;
+use app\modules\product\models\admin\Sp;
+use app\modules\product\models\admin\Papr;
+use app\modules\product\models\admin\Pop;
+use app\modules\product\models\admin\Op;
+use app\modules\product\models\admin\Lp;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -126,10 +131,23 @@ class ProductController extends Controller {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {
-        Pm::deleteAll('pm_product_id = :id', [':id' => $id]);
-        Pap::deleteAll('pap_product_id = :id', [':id' => $id]);
-        $this->findModel($id)->delete();
+    public function actionDelete($id) {        
+        $transaction = Yii::$app->db->beginTransaction();
+        $model = $this->findModel($id);
+        try {
+            Pm::deleteAll('pm_product_id = :id', [':id' => $id]);
+            Pap::deleteAll('pap_product_id = :id', [':id' => $id]);
+            Sp::deleteAll('sp_product_id = :id', [':id' => $id]);
+            Papr::deleteAll('papr_product_id = :id', [':id' => $id]);
+            Pop::deleteAll('pop_product_id = :id', [':id' => $id]);
+            Op::deleteAll('op_product_id = :id', [':id' => $id]);
+            Lp::deleteAll('lp_product_id = :id', [':id' => $id]);
+            $model->delete();
+            $transaction->commit();
+        } catch (Exception $e) {
+            $transaction->rollback();
+            return $this->render('view', ['model' => $model]);
+        }
         return $this->redirect(['index']);
     }
 

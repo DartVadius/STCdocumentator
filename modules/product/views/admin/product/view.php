@@ -17,18 +17,32 @@ $this->params['breadcrumbs'][] = $this->title;
     <h6 class="small">Создан: <?= $model->product_date ?></h6>
     <h6 class="small">Отредактирован: <?= $model->product_update ?></h6>
     <h6 class="small">Архив: <?= ($model->product_archiv === 1) ? 'Да' : 'Нет'; ?></h6>
-    <p>
-        <?= Html::a('Редактировать', ['update', 'id' => $model->product_id], ['class' => 'btn btn-primary']) ?>
-        <?=
-        Html::a('Удалить', ['delete', 'id' => $model->product_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Вы уверены?',
-                'method' => 'post',
-            ],
-        ])
-        ?>
-    </p>
+    <div class="row">
+        <div class="col-lg-10">
+            <p>
+                <?= Html::a('Редактировать', ['update', 'id' => $model->product_id], ['class' => 'btn btn-primary']) ?>
+                <?=
+                Html::a('Удалить', ['delete', 'id' => $model->product_id], [
+                    'class' => 'btn btn-danger',
+                    'data' => [
+                        'confirm' => 'Вы уверены?',
+                        'method' => 'post',
+                    ],
+                ])
+                ?>            
+            </p>
+        </div>
+        <div class="col-lg-2">
+            <p>
+                <?= Html::a('Калькуляция', ['../calculation/calculation/create', 'id_product' => $model->product_id], ['class' => 'btn btn-success', 
+                    'data' => [
+                        'confirm' => 'Оно вам надо?',
+                        'method' => 'post',
+                    ],]) ?>
+            </p>
+        </div>
+    </div>
+    
 
     <?=
     DetailView::widget([
@@ -126,11 +140,11 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     ?>
     <h3>Упаковка</h3>
-    <?php if ($dataProviderPap->count < 1): ?>
+    <?php //if ($dataProviderPap->count < 1): ?>
         <p>
             <?= Html::a('Добавить Упаковку', ['admin/pap/create', 'pap_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
         </p>
-    <?php endif; ?>
+    <?php //endif; ?>
     <?=
     GridView::widget([
         'dataProvider' => $dataProviderPap,

@@ -4,6 +4,7 @@ namespace app\modules\product\models;
 
 use Yii;
 use app\modules\product\models\admin\Product;
+use app\modules\product\models\admin\Pm;
 
 /**
  * Description of Product
@@ -31,7 +32,7 @@ class ProductAggregator {
     private $updateDate;
     private $parameters = [];
     private $materials = [];
-    private $pack = [];
+    private $packs = [];
     private $solutions = [];
     private $positions = [];
     private $expenses = [];
@@ -58,7 +59,7 @@ class ProductAggregator {
         $this->updateDate = $product->product_update;
         $this->parameters = $product->paprs;
         $this->materials = $product->pms;
-        $this->pack = $product->paps;
+        $this->packs = $product->paps;
         $this->solutions = $product->sps;
         $this->positions = $product->pops;
         $this->expenses = $product->ops;
@@ -69,16 +70,15 @@ class ProductAggregator {
         // $this->files =
     }
 
+    /**
+     * calculate square of product (sq.m.)
+     */
     private function setSquare() {
         if (!empty($this->length) && !empty($this->width)) {
-            $this->square = ($this->length /1000) * ($this->width / 1000);
+            $this->square = ($this->length / 1000) * ($this->width / 1000);
         } else {
             $this->square = NULL;
         }
-    }
-
-    protected function squareRatio() {
-        return 1 / $this->square;
     }
 
     public function __get($name) {
@@ -88,6 +88,11 @@ class ProductAggregator {
         return FALSE;
     }
 
+    /**
+     * get base params of product
+     * 
+     * @return array
+     */
     public function getParams() {
         $params['product_id'] = $this->id;
         $params['title'] = $this->title;
@@ -97,45 +102,141 @@ class ProductAggregator {
         $params['weight'] = $this->weight;
         $params['length'] = $this->length;
         $params['width'] = $this->width;
+        $params['thickness'] = $this->thickness;
         $params['unit'] = $this->unit->unit_title;
         return $params;
     }
-    
+
+    /**
+     * get the basic materials of the product which ones is not in the recipe
+     * 
+     * @return array
+     */
     public function getMaterials() {
         $materials = [];
         foreach ($this->materials as $material) {
             $materials[$material->pm_material_id]['title'] = $material->pmMaterial->material_title;
             $materials[$material->pm_material_id]['unit'] = $material->pmUnit->unit_title;
-            $materials[$material->pm_material_id]['price'] = $material->pmMaterial->material_price / 
+            $materials[$material->pm_material_id]['price'] = $material->pmMaterial->material_price /
                     $material->pmMaterial->materialUnit->unit_ratio * $material->pmUnit->unit_ratio;
-            $materials[$material->pm_material_id]['quantity'] = $material->pm_quantity;
+            $materials[$material->pm_material_id]['quantity'] = $this->calcQuantity($material);
             $materials[$material->pm_material_id]['summ'] = $materials[$material->pm_material_id]['price'] *
                     $materials[$material->pm_material_id]['quantity'];
         }
         return $materials;
     }
 
+    /**
+     * get sealant weight in gramms
+     * 
+     * @return int|boolean
+     */
+    private function getRecipeWeight() {
+        $weightOther = 0;
+        if (empty($this->weight)) {
+            return FALSE;
+        }
+        foreach ($this->materials as $material) {
+            $weightOther += $material->pmUnit->unit_ratio * $this->calcQuantity($material);
+        }
+        return $this->weight - $weightOther;
+    }
 
+    /**
+     * get quantity of supporting materials in current material
+     * 
+     * @param Pm $material
+     * @return boolean|int
+     */
+    private function calcQuantity(Pm $material) {
+        if (!$material->pm_square) {
+            return $material->pm_quantity;
+        }
+        if (!empty($this->square)) {
+            return $this->square * $material->pm_quantity;
+        }
+        return FALSE;
+    }
 
+    /**
+     * get the basic materials of the product in the recipe
+     * materials key is material ID
+     * 
+     * @return array
+     */
+    public function getRecipe() {
+        $recipe = [];
+        $recipe['title'] = $this->recipe->recipe_title;
+        foreach ($this->recipe->mrs as $material) {
+            $recipe['materials'][$material->mrMaterial->material_id]['title'] = $material->mrMaterial->material_title;
+            $recipe['materials'][$material->mrMaterial->material_id]['unit'] = 'гр';
+            $recipe['materials'][$material->mrMaterial->material_id]['%'] = $material->mr_percentage;
+            $recipe['materials'][$material->mrMaterial->material_id]['quantity'] = $this->getRecipeWeight() *
+                    $material->mr_percentage / 100;
+            $recipe['materials'][$material->mrMaterial->material_id]['price'] = $material->mrMaterial->material_price /
+                    $material->mrMaterial->materialUnit->unit_ratio;
+            $recipe['materials'][$material->mrMaterial->material_id]['summ'] = $recipe['materials'][$material->mrMaterial->material_id]['price'] *
+                    $recipe['materials'][$material->mrMaterial->material_id]['quantity'];
+        }
+        return $recipe;
+    }
 
+    /**
+     * get details of packaging material
+     * 
+     * @return array
+     */
+    public function getPacks() {
+        $packs = [];
+        foreach ($this->packs as $pack) {
+            $packs[$pack->papPack->pack_id]['title'] = $pack->papPack->pack_title;
+            $packs[$pack->papPack->pack_id]['capacity'] = $pack->pap_capacity;
+            $packs[$pack->papPack->pack_id]['price'] = $pack->papPack->pack_price;
+            $packs[$pack->papPack->pack_id]['value'] = $pack->papPack->pack_price / $pack->pap_capacity;
+        }
+        return $packs;
+    }
 
+    /**
+     * receive details of positions
+     * 
+     * @return array
+     */
+    public function getPositions() {
+        $positions = [];
+        foreach ($this->positions as $position) {
+            $positions[$position->pop_position_id]['title'] = $position->popPosition->position_title;
+            $positions[$position->pop_position_id]['quantity'] = $position->pop_num;
+            $positions[$position->pop_position_id]['value_per_hour'] = $position->popPosition->position_salary_hour;
+            $positions[$position->pop_position_id]['summ'] = $positions[$position->pop_position_id]['value_per_hour'] /
+                    $this->capacity * $positions[$position->pop_position_id]['quantity'];
+        }
+        return $positions;
+    }
 
-
-
-//    public function getId() {
-//        return $this->id;
-//    }
-//
-//    public function getTitle() {
-//        return $this->title;
-//    }
-//
-//    public function getCapacity() {
-//        return $this->capacity;
-//    }
-//
-//    public function getUnit() {
-//        return $this->unit;
-//    }
+    /**
+     * get other expenses
+     * 
+     * @return array
+     */
+    public function getExpenses() {
+        $expenses = [];
+        foreach ($this->expenses as $expense) {
+            $expenses[$expense->opOther->other_expenses_id]['title'] = $expense->opOther->other_expenses_title;
+            $expenses[$expense->opOther->other_expenses_id]['value_per_hour'] = $expense->op_cost_hour;
+            $expenses[$expense->opOther->other_expenses_id]['summ'] = $expenses[$expense->opOther->other_expenses_id]['value_per_hour'] /
+                    $this->capacity;
+        }
+        return $expenses;
+    }
+    
+    public function getLosses() {
+        $losses = [];
+        foreach ($this->losses as $loss) {
+            $losses[$loss->lpLoss->loss_id]['title'] = $loss->lpLoss->loss_title;
+            $losses[$loss->lpLoss->loss_id]['%'] = $loss->lp_percentage;
+        }
+        return $losses;
+    }
 
 }
