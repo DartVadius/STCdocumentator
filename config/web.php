@@ -10,7 +10,7 @@ $config = [
     'modules' => [
         'rbac' => [
             'class' => 'mdm\admin\Module',
-            'layout' => 'left-menu',
+            'layout' => '/admin',
         ],
         'calculation' => [
             'class' => 'app\modules\calculation\CalculationModule',
@@ -73,8 +73,8 @@ $config = [
             'rbac/user/login',
             'rbac/user/signup',
             //'rbac/*',
-            'site/login',
-            'site/signup',
+//            'site/login',
+//            'site/signup',
         // The actions listed here will be allowed to everyone including guests.
         // So, 'admin/*' should not appear here in the production, of course.
         // But in the earlier stages of your development, you may probably want to

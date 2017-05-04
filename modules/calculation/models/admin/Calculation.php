@@ -46,7 +46,7 @@ class Calculation extends \yii\db\ActiveRecord
         return [
             [['calculation_product_id', 'calculation_product_capacity_hour', 'calculation_weight', 'calculation_length', 'calculation_width', 'calculation_thickness'], 'integer'],
             [['calculation_product_title', 'calculation_date', 'calculation_product_capacity_hour'], 'required'],
-            [['calculation_date'], 'safe'],
+            [['calculation_date', 'calculation_archive'], 'safe'],
             [['calculation_note', 'calculation_materials_data', 'calculation_recipe_data', 'calculation_packs_data', 'calculation_positions_data', 'calculation_expenses_data', 'calculation_losses_data'], 'string'],
             [['calculation_product_title', 'calculation_unit'], 'string', 'max' => 255],
             [['calculation_product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['calculation_product_id' => 'product_id']],
@@ -61,7 +61,7 @@ class Calculation extends \yii\db\ActiveRecord
         return [
             'calculation_id' => 'Calculation ID',
             'calculation_product_id' => 'Calculation Product ID',
-            'calculation_product_title' => 'Продукт',
+            'calculation_product_title' => 'Название',
             'calculation_date' => 'Дата создания',
             'calculation_note' => 'Примечание',
             'calculation_product_capacity_hour' => 'Выработка в час',
@@ -76,6 +76,7 @@ class Calculation extends \yii\db\ActiveRecord
             'calculation_positions_data' => 'Calculation Positions Data',
             'calculation_expenses_data' => 'Calculation Expenses Data',
             'calculation_losses_data' => 'Calculation Losses Data',
+            'calculation_archive' => 'Архив',
         ];
     }
 

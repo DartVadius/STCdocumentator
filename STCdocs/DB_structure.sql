@@ -520,6 +520,7 @@ CREATE TABLE IF NOT EXISTS `documentator`.`calculation` (
   `calculation_positions_data` MEDIUMTEXT NULL,
   `calculation_expenses_data` MEDIUMTEXT NULL,
   `calculation_losses_data` MEDIUMTEXT NULL,
+  `calculation_archive` SMALLINT(1) UNSIGNED NULL,
   PRIMARY KEY (`calculation_id`),
   UNIQUE INDEX `calculation_id_UNIQUE` (`calculation_id` ASC),
   INDEX `fk_calc_prod_idx` (`calculation_product_id` ASC),

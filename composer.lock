@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "85153ba4e30cc0485803abadaa60f75b",
+    "content-hash": "bc142fbab55f48afcf5d0c0d4cf82df0",
     "packages": [
         {
             "name": "2amigos/yii2-tinymce-widget",
@@ -483,6 +483,52 @@
             "time": "2016-05-20T23:38:13+00:00"
         },
         {
+            "name": "mdmsoft/yii2-captcha",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mdmsoft/yii2-captcha.git",
+                "reference": "033588c1e7ccfdccb7f25bfa2fb16bf260d84d1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mdmsoft/yii2-captcha/zipball/033588c1e7ccfdccb7f25bfa2fb16bf260d84d1c",
+                "reference": "033588c1e7ccfdccb7f25bfa2fb16bf260d84d1c",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "mdm\\captcha\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Misbahul D Munir",
+                    "email": "misbahuldmunir@gmail.com"
+                }
+            ],
+            "description": "Captcha with math equation",
+            "keywords": [
+                "captcha",
+                "math",
+                "yii2"
+            ],
+            "time": "2016-02-10T06:09:36+00:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.7",
             "source": {
@@ -538,16 +584,16 @@
         },
         {
             "name": "tinymce/tinymce",
-            "version": "4.5.6",
+            "version": "4.5.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "87a20625963d051cce993130c6d8ebd5fbc96314"
+                "reference": "9f00447e1dd5b99d47810c84c66c39950663c129"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/87a20625963d051cce993130c6d8ebd5fbc96314",
-                "reference": "87a20625963d051cce993130c6d8ebd5fbc96314",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/9f00447e1dd5b99d47810c84c66c39950663c129",
+                "reference": "9f00447e1dd5b99d47810c84c66c39950663c129",
                 "shasum": ""
             },
             "type": "component",
@@ -580,7 +626,7 @@
                 "tinymce",
                 "wysiwyg"
             ],
-            "time": "2017-03-30T13:48:40+00:00"
+            "time": "2017-04-25T12:41:19+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -784,16 +830,16 @@
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
-            "version": "2.0.6",
+            "version": "2.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-swiftmailer.git",
-                "reference": "26b900767f1031ff3a4668dfa36c10595875f0a5"
+                "reference": "8a03a62cbcb82e7697d3002eb43a8d2637f566ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/26b900767f1031ff3a4668dfa36c10595875f0a5",
-                "reference": "26b900767f1031ff3a4668dfa36c10595875f0a5",
+                "url": "https://api.github.com/repos/yiisoft/yii2-swiftmailer/zipball/8a03a62cbcb82e7697d3002eb43a8d2637f566ec",
+                "reference": "8a03a62cbcb82e7697d3002eb43a8d2637f566ec",
                 "shasum": ""
             },
             "require": {
@@ -830,7 +876,7 @@
                 "swiftmailer",
                 "yii2"
             ],
-            "time": "2016-09-09T11:48:11+00:00"
+            "time": "2017-05-01T08:29:00+00:00"
         }
     ],
     "packages-dev": [

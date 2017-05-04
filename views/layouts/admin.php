@@ -25,20 +25,21 @@ AppAsset::register($this);
 
         <div class="wrap">
             <?php
-            NavBar::begin([
-                'brandLabel' => 'Documentator',
-                'brandUrl' => Yii::$app->homeUrl,
-                'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
-                ],
-            ]);
-            echo Nav::widget([
-                'options' => ['class' => 'navbar-nav navbar-right'],
-                'items' => [
-                    ['label' => 'Главная', 'url' => ['/product/admin/index']],
-                    ['label' => 'Номенклатура', 'url' => ['/product/admin/product/index']],
-                    ['label' => 'Рецептуры', 'url' => ['/product/admin/recipe/index']],
-                    [
+            $menuItems = [];
+            if (Yii::$app->user->isGuest) {
+                $menuItems[] = ['label' => 'Signup', 'url' => ['/rbac/user/signup']];
+                $menuItems[] = ['label' => 'Login', 'url' => ['/rbac/user/login']];
+            } else {
+                $menuItems[] = ['label' => 'Главная', 'url' => ['/product/index']];
+                $menuItems[] =  [
+                    'label' => 'Управление номенклатурой',
+                        'items' => [
+                            ['label' => 'Продукция', 'url' => ['/product/admin/product/index']],
+                            ['label' => 'Рецептуры', 'url' => ['/product/admin/recipe/index']],
+                            ['label' => 'Калькуляции', 'url' => ['/calculation/calculation/index']],
+                        ]
+                ];
+                $menuItems[] = [
                         'label' => 'Справочники',
                         'items' => [
                             '<li class="divider"></li>',
@@ -60,31 +61,45 @@ AppAsset::register($this);
                             '<li class="divider"></li>',
                             ['label' => 'Свойства и параметры', 'url' => ['/product/admin/parameter/index']],
                             ['label' => 'Решения', 'url' => ['/product/admin/solution/index']],
-                        ],                        
-                    ],
-                    ['label' => 'Пользователи', 'url' => ['/rbac']],
-                    Yii::$app->user->isGuest ? (
-                            ['label' => 'Login', 'url' => ['/rbac/user/login']]
-                            ) : (
-                            '<li>'
+                        ],
+                    ];
+                $menuItems[] = [
+                        'label' => 'Управление доступом',
+                        'items' => [
+                            ['label' => 'Пользователи', 'url' => ['/rbac/user']],
+                            ['label' => 'Назначения', 'url' => ['/rbac/assignment']],
+                            ['label' => 'Маршруты', 'url' => ['/rbac/route']],
+                            ['label' => 'Роли', 'url' => ['/rbac/role']],
+                        ],
+                    ];
+                $menuItems[] = '<li>'
                             . Html::beginForm(['/site/logout'], 'post')
                             . Html::submitButton(
                                     'Logout (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout']
                             )
                             . Html::endForm()
-                            . '</li>'
-                            )
+                            . '</li>';
+            }
+            NavBar::begin([
+                'brandLabel' => 'Documentator',
+                'brandUrl' => Yii::$app->homeUrl,
+                'options' => [
+                    'class' => 'navbar-inverse navbar-fixed-top',
                 ],
+            ]);
+            echo Nav::widget([
+                'options' => ['class' => 'navbar-nav navbar-right'],
+                'items' => $menuItems,
             ]);
             NavBar::end();
             ?>
 
             <div class="container">
-            <?=
-            Breadcrumbs::widget([
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ])
-            ?>
+                <?=
+                Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ])
+                ?>
                 <?= $content ?>
             </div>
         </div>
@@ -97,7 +112,7 @@ AppAsset::register($this);
             </div>
         </footer>
 
-<?php $this->endBody() ?>
+        <?php $this->endBody() ?>
     </body>
 </html>
 <?php $this->endPage() ?>
