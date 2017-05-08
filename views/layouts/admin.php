@@ -46,6 +46,7 @@ AppAsset::register($this);
                             '<li class="dropdown-header">Базовые справочники</li>',
                             '<li class="divider"></li>',
                             ['label' => 'Ед.изм', 'url' => ['/product/admin/unit/index']],
+                            ['label' => 'Валюта', 'url' => ['/product/admin/currency/index']],
                             ['label' => 'Категории материалов', 'url' => ['/product/admin/category/index']],
                             ['label' => 'Категории продуктов', 'url' => ['/product/admin/category-product/index']],
                             '<li class="divider"></li>',

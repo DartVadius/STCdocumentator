@@ -3,11 +3,11 @@
 namespace app\modules\product\models\admin;
 
 /**
- * This is the ActiveQuery class for [[Material]].
+ * This is the ActiveQuery class for [[Currency]].
  *
- * @see Material
+ * @see Currency
  */
-class MaterialQuery extends \yii\db\ActiveQuery
+class CurrencyQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class MaterialQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Material[]|array
+     * @return Currency[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class MaterialQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Material|array|null
+     * @return Currency|array|null
      */
     public function one($db = null)
     {

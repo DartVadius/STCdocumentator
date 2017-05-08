@@ -13,9 +13,12 @@ use Yii;
  * @property string $material_article
  * @property string $material_category_id
  * @property string $material_unit_id
+ * @property string $material_currency_type 
+ * @property string $material_delivery 
  *
  * @property Category $materialCategory
  * @property Unit $materialUnit
+ * @property Currency $materialCurrencyType
  * @property Mr[] $mrs
  * @property Recipe[] $mrRecipes
  * @property Pm[] $pms
@@ -35,13 +38,14 @@ class Material extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['material_title', 'material_price', 'material_unit_id'], 'required'],
-            [['material_price'], 'number'],
-            [['material_category_id', 'material_unit_id'], 'integer'],
+            [['material_title', 'material_price', 'material_unit_id', 'material_currency_type'], 'required'],
+            [['material_price', 'material_delivery'], 'number'],
+            [['material_category_id', 'material_unit_id', 'material_currency_type'], 'integer'],
             [['material_title'], 'string', 'max' => 255],
             [['material_article'], 'string', 'max' => 12],
             [['material_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['material_category_id' => 'category_id']],
             [['material_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => Unit::className(), 'targetAttribute' => ['material_unit_id' => 'unit_id']],
+            [['material_currency_type'], 'exist', 'skipOnError' => true, 'targetClass' => Currency::className(), 'targetAttribute' => ['material_currency_type' => 'currency_id']],
         ];
     }
 
@@ -51,11 +55,13 @@ class Material extends \yii\db\ActiveRecord {
     public function attributeLabels() {
         return [
             'material_id' => 'ID',
-            'material_title' => 'Назавание',
+            'material_title' => 'Название',
             'material_price' => 'Цена',
             'material_article' => 'Артикул',
             'material_category_id' => 'ID категории',
             'material_unit_id' => 'ID единицы измерения',
+            'material_currency_type' => 'Валюта закупки',
+            'material_delivery' => 'Затраты на доставку, %',
         ];
     }
 
@@ -70,7 +76,14 @@ class Material extends \yii\db\ActiveRecord {
      * @return \yii\db\ActiveQuery
      */
     public function getMaterialUnit() {
-        return $this->hasOne(Unit::className(), ['unit_id' => 'material_unit_id']);        
+        return $this->hasOne(Unit::className(), ['unit_id' => 'material_unit_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMaterialCurrencyType() {
+        return $this->hasOne(Currency::className(), ['currency_id' => 'material_currency_type']);
     }
 
     /**

@@ -44,6 +44,20 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `documentator`.`currency`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `documentator`.`currency` ;
+
+CREATE TABLE IF NOT EXISTS `documentator`.`currency` (
+  `currency_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `currency_code` VARCHAR(45) NOT NULL,
+  `currency_value` DECIMAL(12,4) UNSIGNED NULL,
+  PRIMARY KEY (`currency_id`),
+  UNIQUE INDEX `currency_id_UNIQUE` (`currency_id` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `documentator`.`material`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `documentator`.`material` ;
@@ -55,10 +69,13 @@ CREATE TABLE IF NOT EXISTS `documentator`.`material` (
   `material_article` VARCHAR(12) NULL,
   `material_category_id` INT(10) UNSIGNED NULL,
   `material_unit_id` INT(10) UNSIGNED NOT NULL,
+  `material_currency_type` INT(10) UNSIGNED NULL,
+  `material_delivery` DECIMAL(10,2) UNSIGNED NULL,
   PRIMARY KEY (`material_id`),
   UNIQUE INDEX `material_id_UNIQUE` (`material_id` ASC),
   INDEX `fk_material_unit_idx` (`material_unit_id` ASC),
   INDEX `fk_material_category_idx` (`material_category_id` ASC),
+  INDEX `fk_material_currency_idx` (`material_currency_type` ASC),
   CONSTRAINT `fk_material_unit`
     FOREIGN KEY (`material_unit_id`)
     REFERENCES `documentator`.`unit` (`unit_id`)
@@ -68,7 +85,12 @@ CREATE TABLE IF NOT EXISTS `documentator`.`material` (
     FOREIGN KEY (`material_category_id`)
     REFERENCES `documentator`.`category` (`category_id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_material_currency`
+    FOREIGN KEY (`material_currency_type`)
+    REFERENCES `documentator`.`currency` (`currency_id`)
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -343,7 +365,7 @@ COMMENT = 'table for additional losses ';
 DROP TABLE IF EXISTS `documentator`.`lp` ;
 
 CREATE TABLE IF NOT EXISTS `documentator`.`lp` (
-  `lp_id` INT(10) UNSIGNED NOT NULL,
+  `lp_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `lp_loss_id` INT(10) UNSIGNED NOT NULL,
   `lp_product_id` INT(10) UNSIGNED NOT NULL,
   `lp_percentage` DECIMAL(10,2) UNSIGNED NOT NULL,

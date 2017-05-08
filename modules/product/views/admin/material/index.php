@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'material_unit_id',                
                 'label' => 'Ед.изм.',
                 'value' => 'materialUnit.unit_title',
-                'filter' => Unit::find()->select(['unit_title', 'unit_id'])->indexBy('unit_id')->column(),
+                'headerOptions' => ['width' => '100'],
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
