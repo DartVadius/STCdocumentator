@@ -11,15 +11,15 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema documentator
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `documentator` DEFAULT CHARACTER SET utf8 ;
-USE `documentator` ;
+-- CREATE SCHEMA IF NOT EXISTS `documentator` DEFAULT CHARACTER SET utf8 ;
+-- USE `documentator` ;
 
 -- -----------------------------------------------------
 -- Table `documentator`.`unit`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`unit` ;
+DROP TABLE IF EXISTS `unit` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`unit` (
+CREATE TABLE IF NOT EXISTS `unit` (
   `unit_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `unit_title` VARCHAR(45) NOT NULL,
   `unit_parent_id` INT(10) UNSIGNED NULL,
@@ -32,9 +32,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`category`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`category` ;
+DROP TABLE IF EXISTS `category` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`category` (
+CREATE TABLE IF NOT EXISTS `category` (
   `category_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `category_title` VARCHAR(255) NOT NULL,
   `category_desc` VARCHAR(255) NULL,
@@ -46,12 +46,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`currency`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`currency` ;
+DROP TABLE IF EXISTS `currency` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`currency` (
+CREATE TABLE IF NOT EXISTS `currency` (
   `currency_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `currency_code` VARCHAR(45) NOT NULL,
-  `currency_value` DECIMAL(12,4) UNSIGNED NULL,
+  `currency_value` DECIMAL(12,6) UNSIGNED NULL,
   PRIMARY KEY (`currency_id`),
   UNIQUE INDEX `currency_id_UNIQUE` (`currency_id` ASC))
 ENGINE = InnoDB;
@@ -60,9 +60,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`material`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`material` ;
+DROP TABLE IF EXISTS `material` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`material` (
+CREATE TABLE IF NOT EXISTS `material` (
   `material_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `material_title` VARCHAR(255) NOT NULL,
   `material_price` DECIMAL(12,4) UNSIGNED NOT NULL,
@@ -78,17 +78,17 @@ CREATE TABLE IF NOT EXISTS `documentator`.`material` (
   INDEX `fk_material_currency_idx` (`material_currency_type` ASC),
   CONSTRAINT `fk_material_unit`
     FOREIGN KEY (`material_unit_id`)
-    REFERENCES `documentator`.`unit` (`unit_id`)
+    REFERENCES `unit` (`unit_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_material_category`
     FOREIGN KEY (`material_category_id`)
-    REFERENCES `documentator`.`category` (`category_id`)
+    REFERENCES `category` (`category_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_material_currency`
     FOREIGN KEY (`material_currency_type`)
-    REFERENCES `documentator`.`currency` (`currency_id`)
+    REFERENCES `currency` (`currency_id`)
     ON DELETE RESTRICT
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
@@ -97,9 +97,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`recipe`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`recipe` ;
+DROP TABLE IF EXISTS `recipe` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`recipe` (
+CREATE TABLE IF NOT EXISTS `recipe` (
   `recipe_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Sealant formulation',
   `recipe_title` VARCHAR(255) NOT NULL,
   `recipe_note` MEDIUMTEXT NULL,
@@ -114,9 +114,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`mr`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`mr` ;
+DROP TABLE IF EXISTS `mr` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`mr` (
+CREATE TABLE IF NOT EXISTS `mr` (
   `mr_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `mr_percentage` DECIMAL(5,2) UNSIGNED NOT NULL COMMENT 'Percentage of the content of this material in the recipe',
   `mr_recipe_id` INT(10) UNSIGNED NOT NULL,
@@ -128,12 +128,12 @@ CREATE TABLE IF NOT EXISTS `documentator`.`mr` (
   UNIQUE INDEX `mr_recipe_aterial` (`mr_recipe_id` ASC, `mr_material_id` ASC),
   CONSTRAINT `fk_mr_recipe`
     FOREIGN KEY (`mr_recipe_id`)
-    REFERENCES `documentator`.`recipe` (`recipe_id`)
+    REFERENCES `recipe` (`recipe_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_mr_material`
     FOREIGN KEY (`mr_material_id`)
-    REFERENCES `documentator`.`material` (`material_id`)
+    REFERENCES `material` (`material_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -142,9 +142,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`category_product`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`category_product` ;
+DROP TABLE IF EXISTS `category_product` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`category_product` (
+CREATE TABLE IF NOT EXISTS `category_product` (
   `category_product_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `category_product_title` VARCHAR(255) NOT NULL,
   `category_product_desc` VARCHAR(255) NULL,
@@ -157,9 +157,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`product`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`product` ;
+DROP TABLE IF EXISTS `product` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`product` (
+CREATE TABLE IF NOT EXISTS `product` (
   `product_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `product_title` VARCHAR(255) NOT NULL,
   `product_capacity_hour` INT(10) UNSIGNED NOT NULL COMMENT 'productivity of current product per hour',
@@ -183,17 +183,17 @@ CREATE TABLE IF NOT EXISTS `documentator`.`product` (
   INDEX `fk_product_recipe_idx` (`product_recipe_id` ASC),
   CONSTRAINT `fk_product_unit`
     FOREIGN KEY (`product_unit_id`)
-    REFERENCES `documentator`.`unit` (`unit_id`)
+    REFERENCES `unit` (`unit_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_product_category`
     FOREIGN KEY (`product_category_id`)
-    REFERENCES `documentator`.`category_product` (`category_product_id`)
+    REFERENCES `category_product` (`category_product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_product_recipe`
     FOREIGN KEY (`product_recipe_id`)
-    REFERENCES `documentator`.`recipe` (`recipe_id`)
+    REFERENCES `recipe` (`recipe_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -202,9 +202,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`pm`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`pm` ;
+DROP TABLE IF EXISTS `pm` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`pm` (
+CREATE TABLE IF NOT EXISTS `pm` (
   `pm_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pm_product_id` INT(10) UNSIGNED NOT NULL,
   `pm_material_id` INT(10) UNSIGNED NOT NULL,
@@ -219,17 +219,17 @@ CREATE TABLE IF NOT EXISTS `documentator`.`pm` (
   UNIQUE INDEX `product_material` (`pm_product_id` ASC, `pm_material_id` ASC),
   CONSTRAINT `fk_pm_unit`
     FOREIGN KEY (`pm_unit_id`)
-    REFERENCES `documentator`.`unit` (`unit_id`)
+    REFERENCES `unit` (`unit_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pm_material`
     FOREIGN KEY (`pm_material_id`)
-    REFERENCES `documentator`.`material` (`material_id`)
+    REFERENCES `material` (`material_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pm_product`
     FOREIGN KEY (`pm_product_id`)
-    REFERENCES `documentator`.`product` (`product_id`)
+    REFERENCES `product` (`product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -238,9 +238,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`file`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`file` ;
+DROP TABLE IF EXISTS `file` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`file` (
+CREATE TABLE IF NOT EXISTS `file` (
   `file_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `file_data` MEDIUMBLOB NOT NULL,
   `file_product_id` INT(10) UNSIGNED NOT NULL,
@@ -251,7 +251,7 @@ CREATE TABLE IF NOT EXISTS `documentator`.`file` (
   INDEX `fk_file_product_idx` (`file_product_id` ASC),
   CONSTRAINT `fk_file_product`
     FOREIGN KEY (`file_product_id`)
-    REFERENCES `documentator`.`product` (`product_id`)
+    REFERENCES `product` (`product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -260,9 +260,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`pack`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`pack` ;
+DROP TABLE IF EXISTS `pack` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`pack` (
+CREATE TABLE IF NOT EXISTS `pack` (
   `pack_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pack_title` VARCHAR(255) NOT NULL,
   `pack_desc` VARCHAR(255) NULL,
@@ -276,9 +276,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`pap`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`pap` ;
+DROP TABLE IF EXISTS `pap` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`pap` (
+CREATE TABLE IF NOT EXISTS `pap` (
   `pap_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pap_pack_id` INT(10) UNSIGNED NOT NULL,
   `pap_product_id` INT(10) UNSIGNED NOT NULL,
@@ -290,12 +290,12 @@ CREATE TABLE IF NOT EXISTS `documentator`.`pap` (
   INDEX `pack_product` (`pap_pack_id` ASC, `pap_product_id` ASC),
   CONSTRAINT `fk_pap_pack`
     FOREIGN KEY (`pap_pack_id`)
-    REFERENCES `documentator`.`pack` (`pack_id`)
+    REFERENCES `pack` (`pack_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pap_product`
     FOREIGN KEY (`pap_product_id`)
-    REFERENCES `documentator`.`product` (`product_id`)
+    REFERENCES `product` (`product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -304,9 +304,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`position`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`position` ;
+DROP TABLE IF EXISTS `position` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`position` (
+CREATE TABLE IF NOT EXISTS `position` (
   `position_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `position_title` VARCHAR(255) NOT NULL,
   `position_desc` VARCHAR(255) NULL,
@@ -319,9 +319,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`pop`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`pop` ;
+DROP TABLE IF EXISTS `pop` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`pop` (
+CREATE TABLE IF NOT EXISTS `pop` (
   `pop_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `pop_position_id` INT(10) UNSIGNED NOT NULL,
   `pop_product_id` INT(10) UNSIGNED NOT NULL,
@@ -333,12 +333,12 @@ CREATE TABLE IF NOT EXISTS `documentator`.`pop` (
   UNIQUE INDEX `product_position` (`pop_position_id` ASC, `pop_product_id` ASC),
   CONSTRAINT `fk_pop_product`
     FOREIGN KEY (`pop_product_id`)
-    REFERENCES `documentator`.`product` (`product_id`)
+    REFERENCES `product` (`product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pop_position`
     FOREIGN KEY (`pop_position_id`)
-    REFERENCES `documentator`.`position` (`position_id`)
+    REFERENCES `position` (`position_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -347,9 +347,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`loss`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`loss` ;
+DROP TABLE IF EXISTS `loss` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`loss` (
+CREATE TABLE IF NOT EXISTS `loss` (
   `loss_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `loss_title` VARCHAR(255) NOT NULL COMMENT 'Table of additional losses in the production of current product',
   `loss_desc` VARCHAR(255) NULL,
@@ -362,9 +362,9 @@ COMMENT = 'table for additional losses ';
 -- -----------------------------------------------------
 -- Table `documentator`.`lp`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`lp` ;
+DROP TABLE IF EXISTS `lp` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`lp` (
+CREATE TABLE IF NOT EXISTS `lp` (
   `lp_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `lp_loss_id` INT(10) UNSIGNED NOT NULL,
   `lp_product_id` INT(10) UNSIGNED NOT NULL,
@@ -376,12 +376,12 @@ CREATE TABLE IF NOT EXISTS `documentator`.`lp` (
   UNIQUE INDEX `loss_product` (`lp_loss_id` ASC, `lp_product_id` ASC),
   CONSTRAINT `fk_lp_loss`
     FOREIGN KEY (`lp_loss_id`)
-    REFERENCES `documentator`.`loss` (`loss_id`)
+    REFERENCES `loss` (`loss_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_lp_product`
     FOREIGN KEY (`lp_product_id`)
-    REFERENCES `documentator`.`product` (`product_id`)
+    REFERENCES `product` (`product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -390,9 +390,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`other_expenses`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`other_expenses` ;
+DROP TABLE IF EXISTS `other_expenses` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`other_expenses` (
+CREATE TABLE IF NOT EXISTS `other_expenses` (
   `other_expenses_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `other_expenses_title` VARCHAR(255) NOT NULL,
   `other_expenses_desc` VARCHAR(255) NULL,
@@ -404,9 +404,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`op`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`op` ;
+DROP TABLE IF EXISTS `op` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`op` (
+CREATE TABLE IF NOT EXISTS `op` (
   `op_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `op_other_id` INT(10) UNSIGNED NOT NULL,
   `op_product_id` INT(10) UNSIGNED NOT NULL,
@@ -418,12 +418,12 @@ CREATE TABLE IF NOT EXISTS `documentator`.`op` (
   UNIQUE INDEX `other_product` (`op_other_id` ASC, `op_product_id` ASC),
   CONSTRAINT `fk_op_other`
     FOREIGN KEY (`op_other_id`)
-    REFERENCES `documentator`.`other_expenses` (`other_expenses_id`)
+    REFERENCES `other_expenses` (`other_expenses_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_op_product`
     FOREIGN KEY (`op_product_id`)
-    REFERENCES `documentator`.`product` (`product_id`)
+    REFERENCES `product` (`product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -432,9 +432,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`solution`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`solution` ;
+DROP TABLE IF EXISTS `solution` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`solution` (
+CREATE TABLE IF NOT EXISTS `solution` (
   `solution_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `solution_title` VARCHAR(255) NOT NULL,
   `solution_desc` MEDIUMBLOB NULL,
@@ -446,9 +446,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`sp`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`sp` ;
+DROP TABLE IF EXISTS `sp` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`sp` (
+CREATE TABLE IF NOT EXISTS `sp` (
   `sp_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `sp_solution_id` INT(10) UNSIGNED NOT NULL,
   `sp_product_id` INT(10) UNSIGNED NOT NULL,
@@ -459,12 +459,12 @@ CREATE TABLE IF NOT EXISTS `documentator`.`sp` (
   UNIQUE INDEX `solution_product` (`sp_solution_id` ASC, `sp_product_id` ASC),
   CONSTRAINT `fk_sp_solution`
     FOREIGN KEY (`sp_solution_id`)
-    REFERENCES `documentator`.`solution` (`solution_id`)
+    REFERENCES `solution` (`solution_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_sp_product`
     FOREIGN KEY (`sp_product_id`)
-    REFERENCES `documentator`.`product` (`product_id`)
+    REFERENCES `product` (`product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -473,9 +473,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`parameter`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`parameter` ;
+DROP TABLE IF EXISTS `parameter` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`parameter` (
+CREATE TABLE IF NOT EXISTS `parameter` (
   `parameter_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `parameter_title` VARCHAR(255) NOT NULL,
   `parameter_desc` VARCHAR(255) NULL,
@@ -487,9 +487,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`papr`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`papr` ;
+DROP TABLE IF EXISTS `papr` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`papr` (
+CREATE TABLE IF NOT EXISTS `papr` (
   `papr_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `papr_parameter_id` INT(10) UNSIGNED NOT NULL,
   `papr_product_id` INT(10) UNSIGNED NOT NULL,
@@ -503,17 +503,17 @@ CREATE TABLE IF NOT EXISTS `documentator`.`papr` (
   UNIQUE INDEX `product_parameter` (`papr_parameter_id` ASC, `papr_product_id` ASC),
   CONSTRAINT `fk_papr_parameter`
     FOREIGN KEY (`papr_parameter_id`)
-    REFERENCES `documentator`.`parameter` (`parameter_id`)
+    REFERENCES `parameter` (`parameter_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_papr_product`
     FOREIGN KEY (`papr_product_id`)
-    REFERENCES `documentator`.`product` (`product_id`)
+    REFERENCES `product` (`product_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_papr_unit`
     FOREIGN KEY (`papr_unit_id`)
-    REFERENCES `documentator`.`unit` (`unit_id`)
+    REFERENCES `unit` (`unit_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -522,9 +522,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `documentator`.`calculation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `documentator`.`calculation` ;
+DROP TABLE IF EXISTS `calculation` ;
 
-CREATE TABLE IF NOT EXISTS `documentator`.`calculation` (
+CREATE TABLE IF NOT EXISTS `calculation` (
   `calculation_id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `calculation_product_id` INT(10) UNSIGNED NULL,
   `calculation_product_title` VARCHAR(255) NOT NULL,
@@ -548,7 +548,7 @@ CREATE TABLE IF NOT EXISTS `documentator`.`calculation` (
   INDEX `fk_calc_prod_idx` (`calculation_product_id` ASC),
   CONSTRAINT `fk_calc_prod`
     FOREIGN KEY (`calculation_product_id`)
-    REFERENCES `documentator`.`product` (`product_id`)
+    REFERENCES `product` (`product_id`)
     ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

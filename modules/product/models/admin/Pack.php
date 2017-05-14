@@ -14,21 +14,19 @@ use Yii;
  *
  * @property Pap[] $paps
  */
-class Pack extends \yii\db\ActiveRecord
-{
+class Pack extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'pack';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['pack_title', 'pack_price'], 'required'],
             [['pack_price', 'pack_weight'], 'number'],
@@ -39,8 +37,7 @@ class Pack extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'pack_id' => 'ID',
             'pack_title' => 'Название упаковки',
@@ -53,17 +50,23 @@ class Pack extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPaps()
-    {
+    public function getPaps() {
         return $this->hasMany(Pap::className(), ['pap_pack_id' => 'pack_id']);
     }
 
     /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPapsProducts() {
+        return $this->hasMany(Product::className(), ['product_id' => 'pap_product_id'])->viaTable('pap', ['pap_pack_id' => 'pack_id']);
+    }
+    
+    /**
      * @inheritdoc
      * @return PackQuery the active query used by this AR class.
      */
-    public static function find()
-    {
+    public static function find() {
         return new PackQuery(get_called_class());
     }
+
 }

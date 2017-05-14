@@ -34,15 +34,17 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="col-lg-2">
             <p>
-                <?= Html::a('Калькуляция', ['../calculation/calculation/create', 'id_product' => $model->product_id], ['class' => 'btn btn-success', 
+                <?=
+                Html::a('Калькуляция', ['../calculation/calculation/create', 'id_product' => $model->product_id], ['class' => 'btn btn-success',
                     'data' => [
                         'confirm' => 'Оно вам надо?',
                         'method' => 'post',
-                    ],]) ?>
+                    ],])
+                ?>
             </p>
         </div>
     </div>
-    
+
 
     <?=
     DetailView::widget([
@@ -98,7 +100,10 @@ $this->params['breadcrumbs'][] = $this->title;
 //            'product_length',
 //            'product_width',
 //            'product_thickness',
-//            'product_note:ntext',
+            [
+                'attribute' => 'product_note',
+                'format' => 'raw',
+            ],
             'product_vendor_code',
 //            'product_archiv:boolean',
         ],
@@ -107,12 +112,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h2 class="alert-info">Затраты</h2>
     <h3>Материалы</h3>
     <p>
-        <?= Html::a('Добавить материал', ['admin/pm/create', 'pm_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Добавить материал', ['admin/pm/create', 'pm_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
     </p>
     <?=
     GridView::widget([
         'dataProvider' => $dataProviderPm,
-        'filterModel' => $searchModel,
         'tableOptions' => [
             'class' => 'table table-striped table-bordered table-hover table-condensed'
         ],
@@ -140,10 +144,10 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     ?>
     <h3>Упаковка</h3>
-    <?php //if ($dataProviderPap->count < 1): ?>
-        <p>
-            <?= Html::a('Добавить Упаковку', ['admin/pap/create', 'pap_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
-        </p>
+        <?php //if ($dataProviderPap->count < 1):  ?>
+    <p>
+    <?= Html::a('Добавить Упаковку', ['admin/pap/create', 'pap_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+    </p>
     <?php //endif; ?>
     <?=
     GridView::widget([
@@ -170,12 +174,11 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
     <h3>Должности</h3>
     <p>
-        <?= Html::a('Добавить должность', ['admin/pop/create', 'pop_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Добавить должность', ['admin/pop/create', 'pop_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
     </p>
     <?=
     GridView::widget([
         'dataProvider' => $dataProviderPop,
-        'filterModel' => $searchModel,
         'tableOptions' => [
             'class' => 'table table-striped table-bordered table-hover table-condensed'
         ],
@@ -198,12 +201,11 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
     <h3>Прочие затраты</h3>
     <p>
-        <?= Html::a('Добавить статью затрат', ['admin/op/create', 'op_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+    <?= Html::a('Добавить статью затрат', ['admin/op/create', 'op_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
     </p>
     <?=
     GridView::widget([
         'dataProvider' => $dataProviderOp,
-        'filterModel' => $searchModel,
         'tableOptions' => [
             'class' => 'table table-striped table-bordered table-hover table-condensed'
         ],
@@ -231,7 +233,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?=
     GridView::widget([
         'dataProvider' => $dataProviderLp,
-        'filterModel' => $searchModel,
         'tableOptions' => [
             'class' => 'table table-striped table-bordered table-hover table-condensed'
         ],
@@ -292,7 +293,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?=
     GridView::widget([
         'dataProvider' => $dataProviderSp,
-        'filterModel' => $searchModel,
         'tableOptions' => [
             'class' => 'table table-striped table-bordered table-hover table-condensed'
         ],

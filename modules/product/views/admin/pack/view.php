@@ -13,7 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="pack-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <?php if ($product): ?>
+        <p class="alert alert-warning">Невозможно удалить упаковку. Удалите ее в продуктах: <?= $product ?></p>
+    <?php endif; ?>
     <p>
         <?= Html::a('Редактировать', ['update', 'id' => $model->pack_id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Удалить', ['delete', 'id' => $model->pack_id], [

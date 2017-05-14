@@ -61,7 +61,7 @@ class Material extends \yii\db\ActiveRecord {
             'material_category_id' => 'ID категории',
             'material_unit_id' => 'ID единицы измерения',
             'material_currency_type' => 'Валюта закупки',
-            'material_delivery' => 'Затраты на доставку, %',
+            'material_delivery' => 'Доставка, %',
         ];
     }
 

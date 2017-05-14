@@ -115,9 +115,18 @@ class ProductAggregator {
     public function getMaterials() {
         $materials = [];
         foreach ($this->materials as $material) {
+            $currencyRatio = 1;
+            if (!empty($material->pmMaterial->materialCurrencyType->currency_value)) {
+                $currencyRatio = $material->pmMaterial->materialCurrencyType->currency_value;
+            }
+            $delivery = 1;
+            if (!empty($material->pmMaterial->material_delivery)) {
+                $delivery += $material->pmMaterial->material_delivery / 100;
+            }
             $materials[$material->pm_material_id]['title'] = $material->pmMaterial->material_title;
-            $materials[$material->pm_material_id]['unit'] = $material->pmUnit->unit_title;
-            $materials[$material->pm_material_id]['price'] = $material->pmMaterial->material_price /
+            $materials[$material->pm_material_id]['unit'] = $material->pmUnit->unit_title;            
+            $materials[$material->pm_material_id]['price'] = 
+                    $material->pmMaterial->material_price * $currencyRatio * $delivery /
                     $material->pmMaterial->materialUnit->unit_ratio * $material->pmUnit->unit_ratio;
             $materials[$material->pm_material_id]['quantity'] = $this->calcQuantity($material);
             $materials[$material->pm_material_id]['summ'] = $materials[$material->pm_material_id]['price'] *
@@ -168,12 +177,21 @@ class ProductAggregator {
         $recipe = [];
         $recipe['title'] = $this->recipe->recipe_title;
         foreach ($this->recipe->mrs as $material) {
+            $currencyRatio = 1;
+            if (!empty($material->mrMaterial->materialCurrencyType->currency_value)) {
+                $currencyRatio = $material->mrMaterial->materialCurrencyType->currency_value;
+            }
+            $delivery = 1;
+            if (!empty($material->mrMaterial->material_delivery)) {
+                $delivery += $material->mrMaterial->material_delivery / 100;
+            }
             $recipe['materials'][$material->mrMaterial->material_id]['title'] = $material->mrMaterial->material_title;
             $recipe['materials'][$material->mrMaterial->material_id]['unit'] = 'гр';
             $recipe['materials'][$material->mrMaterial->material_id]['%'] = $material->mr_percentage;
             $recipe['materials'][$material->mrMaterial->material_id]['quantity'] = $this->getRecipeWeight() *
                     $material->mr_percentage / 100;
-            $recipe['materials'][$material->mrMaterial->material_id]['price'] = $material->mrMaterial->material_price /
+            $recipe['materials'][$material->mrMaterial->material_id]['price'] = 
+                    $material->mrMaterial->material_price * $currencyRatio * $delivery /
                     $material->mrMaterial->materialUnit->unit_ratio;
             $recipe['materials'][$material->mrMaterial->material_id]['summ'] = $recipe['materials'][$material->mrMaterial->material_id]['price'] *
                     $recipe['materials'][$material->mrMaterial->material_id]['quantity'];

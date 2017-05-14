@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="recipe-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php if ($product): ?>
+    <?php if (!empty($product)): ?>
     <p class="alert alert-warning">Невозможно удалить рецептуру. Удалите ее в продуктах: <?= $product ?></p>
     <?php endif; ?>
     <p></p>

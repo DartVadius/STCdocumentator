@@ -31,12 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'material_title',
             'material_price',
-            'material_article',
             [
-                'attribute' => 'material_category_id',
-                'label' => 'Категория',
-                'value' => 'materialCategory.category_title',
-                'filter' => Category::find()->select(['category_title', 'category_id'])->indexBy('category_id')->column(),
+                'attribute' => 'material_currency_type',
+                'label' => 'Валюта',
+                'value' => 'materialCurrencyType.currency_code',
+                'headerOptions' => ['width' => '100'],
             ],
             [
                 'attribute' => 'material_unit_id',                
@@ -44,6 +43,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'materialUnit.unit_title',
                 'headerOptions' => ['width' => '100'],
             ],
+            'material_delivery',
+            [                               
+                'label' => 'Цена с доставкой',
+                'value' => function ($model) {
+                    return $model->material_price + $model->material_price * $model->material_delivery / 100;
+                },
+            ],
+            [
+                'attribute' => 'material_category_id',
+                'label' => 'Категория',
+                'value' => 'materialCategory.category_title',
+                'filter' => Category::find()->select(['category_title', 'category_id'])->indexBy('category_id')->column(),
+            ],            
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => 'Действия',
