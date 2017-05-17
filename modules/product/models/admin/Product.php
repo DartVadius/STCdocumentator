@@ -1,6 +1,7 @@
 <?php
 
 namespace app\modules\product\models\admin;
+use yii\helpers\Url;
 
 use Yii;
 
@@ -23,6 +24,8 @@ use Yii;
  * @property string $product_recipe_id
  * @property string $product_vendor_code 
  * @property integer $product_archiv 
+ * @property string $product_tech_map
+ * @property string $product_tech_desc
  *
  * @property Calculation[] $calculations
  * @property File[] $files
@@ -62,7 +65,8 @@ class Product extends \yii\db\ActiveRecord {
             [['product_date', 'product_update'], 'safe'],
             [['product_price'], 'number'],
             [['product_title'], 'string', 'max' => 255],
-            [['product_note'], 'safe'],
+            [['product_note'], 'string'],
+            [['product_tech_map', 'product_tech_desc'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf'],
             [['product_vendor_code'], 'string', 'max' => 45],
             [['product_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => Unit::className(), 'targetAttribute' => ['product_unit_id' => 'unit_id']],
             [['product_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryProduct::className(), 'targetAttribute' => ['product_category_id' => 'category_product_id']],
@@ -91,6 +95,8 @@ class Product extends \yii\db\ActiveRecord {
             'product_recipe_id' => 'Рецептура',
             'product_vendor_code' => 'Артикул',
             'product_archiv' => 'Архив',
+            'product_tech_map' => 'Тех.карта',
+            'product_tech_desc' => 'Тех.описание',
         ];
     }
 
@@ -226,6 +232,34 @@ class Product extends \yii\db\ActiveRecord {
      */
     public static function find() {
         return new ProductQuery(get_called_class());
+    }
+
+    public function upload() {
+        if ($this->validate()) {
+            if (!empty($this->product_tech_map)) {
+                $path = 'pdf/tech_map/' . $this->product_id . '/';                
+                if (!file_exists($path)) {
+                    mkdir($path);
+                }                
+                $path .= 'tech_map' . '.' . $this->product_tech_map->extension;
+                $this->product_tech_map->saveAs($path);
+                $path = 'web/' . $path;
+                $this->product_tech_map = $path;
+            }
+            if (!empty($this->product_tech_desc)) {
+                $path = 'pdf/tech_desc/' . $this->product_id . '/';
+                if (!file_exists($path)) {
+                    mkdir($path);
+                }  
+                $path .= 'tech_desc' . '.' . $this->product_tech_desc->extension;
+                $this->product_tech_desc->saveAs($path);
+                $path = 'web/' . $path;
+                $this->product_tech_desc = $path;
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

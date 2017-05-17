@@ -15,7 +15,7 @@ use app\modules\product\models\admin\Recipe;
 
 <div class="product-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <?php
     $categorys = CategoryProduct::find()->all();
@@ -57,9 +57,13 @@ use app\modules\product\models\admin\Recipe;
 
     <?= $form->field($model, 'product_category_id')->dropDownList($category, $catParams)->label('Категория') ?>
 
-    <?= $form->field($model, 'product_vendor_code')->textInput(['maxlength' => true]) ?> 
-		 
-    <?= $form->field($model, 'product_archiv')->textInput()->checkbox() ?> 
+    <?= $form->field($model, 'product_vendor_code')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'product_archiv')->textInput()->checkbox() ?>
+
+    <?= $form->field($model, 'product_tech_map')->fileInput() ?>
+
+    <?= $form->field($model, 'product_tech_desc')->fileInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

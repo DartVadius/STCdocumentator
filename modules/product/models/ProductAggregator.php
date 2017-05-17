@@ -37,7 +37,8 @@ class ProductAggregator {
     private $positions = [];
     private $expenses = [];
     private $losses = [];
-    private $files = [];
+    private $tech_map;
+    private $tech_desc;
 
     public function __construct(Product $product) {
         $this->id = $product->product_id;
@@ -64,10 +65,8 @@ class ProductAggregator {
         $this->positions = $product->pops;
         $this->expenses = $product->ops;
         $this->losses = $product->lps;
-        /**
-         * @todo files
-         */
-        // $this->files =
+        $this->tech_map = $product->product_tech_map;
+        $this->tech_desc = $product->product_tech_desc;
     }
 
     /**

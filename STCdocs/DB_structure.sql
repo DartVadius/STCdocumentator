@@ -9,13 +9,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema documentator
--- -----------------------------------------------------
--- CREATE SCHEMA IF NOT EXISTS `documentator` DEFAULT CHARACTER SET utf8 ;
--- USE `documentator` ;
-
--- -----------------------------------------------------
--- Table `documentator`.`unit`
+-- Table `unit`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `unit` ;
 
@@ -30,7 +24,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`category`
+-- Table `category`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `category` ;
 
@@ -44,7 +38,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`currency`
+-- Table `currency`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `currency` ;
 
@@ -58,7 +52,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`material`
+-- Table `material`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `material` ;
 
@@ -95,7 +89,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`recipe`
+-- Table `recipe`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `recipe` ;
 
@@ -112,7 +106,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`mr`
+-- Table `mr`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `mr` ;
 
@@ -140,7 +134,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`category_product`
+-- Table `category_product`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `category_product` ;
 
@@ -155,7 +149,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`product`
+-- Table `product`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `product` ;
 
@@ -200,7 +194,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`pm`
+-- Table `pm`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `pm` ;
 
@@ -236,13 +230,13 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`file`
+-- Table `file`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `file` ;
 
 CREATE TABLE IF NOT EXISTS `file` (
   `file_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `file_data` MEDIUMBLOB NOT NULL,
+  `file_path` VARCHAR(255) NOT NULL,
   `file_product_id` INT(10) UNSIGNED NOT NULL,
   `file_title` VARCHAR(255) NOT NULL,
   `file_desc` VARCHAR(255) NULL,
@@ -258,7 +252,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`pack`
+-- Table `pack`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `pack` ;
 
@@ -274,7 +268,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`pap`
+-- Table `pap`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `pap` ;
 
@@ -302,7 +296,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`position`
+-- Table `position`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `position` ;
 
@@ -317,7 +311,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`pop`
+-- Table `pop`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `pop` ;
 
@@ -345,7 +339,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`loss`
+-- Table `loss`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `loss` ;
 
@@ -360,7 +354,7 @@ COMMENT = 'table for additional losses ';
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`lp`
+-- Table `lp`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `lp` ;
 
@@ -388,7 +382,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`other_expenses`
+-- Table `other_expenses`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `other_expenses` ;
 
@@ -402,7 +396,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`op`
+-- Table `op`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `op` ;
 
@@ -430,7 +424,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`solution`
+-- Table `solution`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `solution` ;
 
@@ -444,7 +438,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`sp`
+-- Table `sp`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `sp` ;
 
@@ -471,7 +465,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`parameter`
+-- Table `parameter`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `parameter` ;
 
@@ -485,7 +479,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`papr`
+-- Table `papr`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `papr` ;
 
@@ -520,7 +514,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentator`.`calculation`
+-- Table `calculation`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `calculation` ;
 

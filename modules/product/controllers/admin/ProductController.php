@@ -16,6 +16,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
+use yii\web\UploadedFile;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -57,6 +58,7 @@ class ProductController extends Controller {
      */
     public function actionView($id) {
         $model = $this->findModel($id);
+//        $model_file = 
         $dataProviderPm = new ActiveDataProvider(['query' => $model->getPms()->with('pmMaterial')]);
         $dataProviderPap = new ActiveDataProvider(['query' => $model->getPaps()->with('papPack')]);
         $dataProviderPapr = new ActiveDataProvider(['query' => $model->getPaprs()->with('paprParameter')]);
@@ -86,7 +88,10 @@ class ProductController extends Controller {
         if ($model->load(Yii::$app->request->post())) {
             $model->product_date = date('Y-m-d H:i:s');
             $model->product_update = date('Y-m-d H:i:s');
-            if ($model->save()) {
+            $model->product_tech_map = UploadedFile::getInstance($model, 'product_tech_map');
+            $model->product_tech_desc = UploadedFile::getInstance($model, 'product_tech_desc');
+            if ($model->save() && $model->upload()) {
+                $model->save(); //так надо
                 return $this->redirect(['view', 'id' => $model->product_id]);
             } else {
                 return $this->render('create', [
@@ -108,10 +113,11 @@ class ProductController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->findModel($id);
-
         if ($model->load(Yii::$app->request->post())) {
             $model->product_update = date('Y-m-d H:i:s');
-            if ($model->save()) {
+            $model->product_tech_map = UploadedFile::getInstance($model, 'product_tech_map');
+            $model->product_tech_desc = UploadedFile::getInstance($model, 'product_tech_desc');
+            if ($model->upload() && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->product_id]);
             } else {
                 return $this->render('create', [
