@@ -53,7 +53,7 @@ AppAsset::register($this);
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 blog-sidebar">
-                        <?php if (Yii::$app->user->identity->status > 30): ?>
+                        <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status > 30): ?>
                             <p class="btn btn-block btn-primary">Админпанель</p>
                         <?php else: ?>
                             

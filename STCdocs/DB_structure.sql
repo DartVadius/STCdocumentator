@@ -170,6 +170,8 @@ CREATE TABLE IF NOT EXISTS `product` (
   `product_recipe_id` INT(10) UNSIGNED NULL,
   `product_vendor_code` VARCHAR(45) NULL,
   `product_archiv` TINYINT(1) UNSIGNED NULL DEFAULT 0,
+  `product_tech_map` VARCHAR(255) NULL,
+  `product_tech_desc` VARCHAR(255) NULL,
   PRIMARY KEY (`product_id`),
   UNIQUE INDEX `product_id_UNIQUE` (`product_id` ASC),
   INDEX `fk_product_unit_idx` (`product_unit_id` ASC),
@@ -236,7 +238,7 @@ DROP TABLE IF EXISTS `file` ;
 
 CREATE TABLE IF NOT EXISTS `file` (
   `file_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `file_path` VARCHAR(255) NOT NULL,
+  `file_data` MEDIUMBLOB NOT NULL,
   `file_product_id` INT(10) UNSIGNED NOT NULL,
   `file_title` VARCHAR(255) NOT NULL,
   `file_desc` VARCHAR(255) NULL,
