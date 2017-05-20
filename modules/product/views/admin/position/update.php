@@ -10,12 +10,17 @@ $this->params['breadcrumbs'][] = ['label' => 'Должности', 'url' => ['in
 $this->params['breadcrumbs'][] = ['label' => $model->position_title, 'url' => ['view', 'id' => $model->position_id]];
 $this->params['breadcrumbs'][] = 'Редактировать';
 ?>
-<div class="position-update">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 position-update">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+        <?=
+        $this->render('_form', [
+            'model' => $model,
+        ])
+        ?>
+    </div>
 </div>

@@ -10,37 +10,40 @@ $this->title = $model->solution_title;
 $this->params['breadcrumbs'][] = ['label' => 'Решения', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="solution-view">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 solution-view">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <p>
+            <?= Html::a('Редактировать', ['update', 'id' => $model->solution_id], ['class' => 'btn btn-primary']) ?>
+            <?=
+            Html::a('Удалить', ['delete', 'id' => $model->solution_id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Вы уверены?',
+                    'method' => 'post',
+                ],
+            ])
+            ?>
+        </p>
 
-    <p>
-        <?= Html::a('Редактировать', ['update', 'id' => $model->solution_id], ['class' => 'btn btn-primary']) ?>
         <?=
-        Html::a('Удалить', ['delete', 'id' => $model->solution_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Вы уверены?',
-                'method' => 'post',
+        DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'solution_id',
+                'solution_title',
+                [
+                    'attribute' => 'solution_desc',
+                    'label' => 'Описание решения',
+                    'value' => $model->solution_desc,
+                    'format' => 'raw'
+                ],
             ],
         ])
         ?>
-    </p>
-
-    <?=
-    DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'solution_id',
-            'solution_title',
-            [
-                'attribute' => 'solution_desc',
-                'label' => 'Описание решения',
-                'value' => $model->solution_desc,
-                'format' => 'raw'
-            ],
-        ],
-    ])
-    ?>
-
+    </div>
 </div>

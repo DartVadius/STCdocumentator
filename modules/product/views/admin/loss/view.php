@@ -10,28 +10,35 @@ $this->title = $model->loss_title;
 $this->params['breadcrumbs'][] = ['label' => 'Потери', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="loss-view">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 loss-view">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <p>
+            <?= Html::a('Редактировать', ['update', 'id' => $model->loss_id], ['class' => 'btn btn-primary']) ?>
+            <?=
+            Html::a('Удалить', ['delete', 'id' => $model->loss_id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Вы уверены?',
+                    'method' => 'post',
+                ],
+            ])
+            ?>
+        </p>
 
-    <p>
-        <?= Html::a('Редактировать', ['update', 'id' => $model->loss_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->loss_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Вы уверены?',
-                'method' => 'post',
+        <?=
+        DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'loss_id',
+                'loss_title',
+                'loss_desc',
             ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'loss_id',
-            'loss_title',
-            'loss_desc',
-        ],
-    ]) ?>
-
+        ])
+        ?>
+    </div>
 </div>

@@ -26,11 +26,8 @@ AppAsset::register($this);
         <div class="wrap">
             <?php
             $menuItems = [];
-            if (Yii::$app->user->isGuest) {
-                $menuItems[] = ['label' => 'Signup', 'url' => ['/rbac/user/signup']];
-                $menuItems[] = ['label' => 'Login', 'url' => ['/rbac/user/login']];
-            } else {
-                $menuItems[] = ['label' => 'Главная', 'url' => ['/product/index']];
+            if (!Yii::$app->user->isGuest) {
+                $menuItems[] = ['label' => 'Главная', 'url' => ['/product/index/index']];
                 $menuItems[] = '<li>'
                         . Html::beginForm(['/site/logout'], 'post')
                         . Html::submitButton(
@@ -54,11 +51,30 @@ AppAsset::register($this);
             ?>
 
             <div class="container">
-                <?=
-                Breadcrumbs::widget([
-                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-                ])
-                ?>
+                <div class="row">
+                    <div class="col-lg-3 blog-sidebar">
+                        <?php if (Yii::$app->user->identity->status > 30): ?>
+                            <p class="btn btn-block btn-primary">Админпанель</p>
+                        <?php else: ?>
+                            
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-lg-9">
+                        <?php
+                        if (!Yii::$app->user->isGuest) {
+                            echo Breadcrumbs::widget([
+                                'homeLink' => [
+                                    'label' => Yii::t('yii', 'Главная'),
+                                    'url' => '/product/index/index',
+                                ],
+                                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                            ]);
+                        }
+                        ?>
+
+                    </div>
+                </div>
+
                 <?= $content ?>
             </div>
         </div>
@@ -75,26 +91,3 @@ AppAsset::register($this);
     </body>
 </html>
 <?php $this->endPage() ?>
-<script>
-    var $dropdowns = $('.dropdown');
-    $dropdowns.click(function () {
-        if ($(this).hasClass('active')) {
-            $(this).toggleClass('active');
-        } else {
-            $dropdowns.removeClass('active');
-            $(this).toggleClass('active');
-        }
-    });
-</script>
-<style>
-    .dropdown {
-        .my_dropdown-menu {
-            display: none;
-        }
-        &.active {
-            .my_dropdown-menu {
-                display: block;
-            }
-        }
-    }
-</style>

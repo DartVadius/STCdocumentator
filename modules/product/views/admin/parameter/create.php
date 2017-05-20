@@ -10,12 +10,15 @@ $this->title = 'Создать Параметр';
 $this->params['breadcrumbs'][] = ['label' => 'Параметры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="parameter-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 parameter-create">
+        <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
+    </div>
 </div>

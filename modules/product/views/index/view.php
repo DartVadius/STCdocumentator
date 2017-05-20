@@ -10,8 +10,10 @@ $this->title = 'Продукция';
     </div>
     <div class="col-lg-9">
         <h2><?=$product->title?></h2>
-        <object width="800px" height="1200px" type="application/pdf" data="<?= Yii::$app->getUrlManager()->createUrl($product->tech_desc) ?>" ></object>
         
+        <?php if ($product->tech_map != ''): ?>
+        <object width="800px" height="1200px" type="application/pdf" data="<?= Yii::$app->getUrlManager()->createUrl($product->tech_desc) ?>" ></object>
+        <?php endif; ?>
     </div>
 </div>
 

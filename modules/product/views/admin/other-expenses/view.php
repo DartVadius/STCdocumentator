@@ -10,28 +10,35 @@ $this->title = $model->other_expenses_title;
 $this->params['breadcrumbs'][] = ['label' => 'Прочие затраты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="other-expenses-view">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 other-expenses-view">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <p>
+            <?= Html::a('Редактировать', ['update', 'id' => $model->other_expenses_id], ['class' => 'btn btn-primary']) ?>
+            <?=
+            Html::a('Удалить', ['delete', 'id' => $model->other_expenses_id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Вы уверены?',
+                    'method' => 'post',
+                ],
+            ])
+            ?>
+        </p>
 
-    <p>
-        <?= Html::a('Редактировать', ['update', 'id' => $model->other_expenses_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->other_expenses_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Вы уверены?',
-                'method' => 'post',
+        <?=
+        DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'other_expenses_id',
+                'other_expenses_title',
+                'other_expenses_desc',
             ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'other_expenses_id',
-            'other_expenses_title',
-            'other_expenses_desc',
-        ],
-    ]) ?>
-
+        ])
+        ?>
+    </div>
 </div>

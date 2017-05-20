@@ -10,28 +10,35 @@ $this->title = $model->parameter_title;
 $this->params['breadcrumbs'][] = ['label' => 'Параметры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="parameter-view">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 parameter-view">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <p>
+            <?= Html::a('Редактировать', ['update', 'id' => $model->parameter_id], ['class' => 'btn btn-primary']) ?>
+            <?=
+            Html::a('Удалить', ['delete', 'id' => $model->parameter_id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Вы уверены?',
+                    'method' => 'post',
+                ],
+            ])
+            ?>
+        </p>
 
-    <p>
-        <?= Html::a('Редактировать', ['update', 'id' => $model->parameter_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->parameter_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Вы уверены?',
-                'method' => 'post',
+        <?=
+        DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'parameter_id',
+                'parameter_title',
+                'parameter_desc',
             ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'parameter_id',
-            'parameter_title',
-            'parameter_desc',
-        ],
-    ]) ?>
-
+        ])
+        ?>
+    </div>
 </div>

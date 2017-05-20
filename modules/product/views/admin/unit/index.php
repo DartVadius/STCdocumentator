@@ -10,36 +10,40 @@ use yii\grid\GridView;
 $this->title = 'Ед.измерения';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="unit-index">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 unit-index">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Создать', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?=
-    GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'tableOptions' => [
-            'class' => 'table table-striped table-bordered table-hover table-condensed'
-        ],
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'unit_title',
-            [
-                'attribute' => 'unit_parent_id',                
-                'label' => 'Базовая единица',
-                'value' => 'parent.unit_title',
+        <p>
+            <?= Html::a('Создать', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+        <?=
+        GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'tableOptions' => [
+                'class' => 'table table-striped table-bordered table-hover table-condensed'
             ],
-            'unit_ratio',
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'header' => 'Действия',
-                'headerOptions' => ['width' => '100'],
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'unit_title',
+                [
+                    'attribute' => 'unit_parent_id',
+                    'label' => 'Базовая единица',
+                    'value' => 'parent.unit_title',
+                ],
+                'unit_ratio',
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'header' => 'Действия',
+                    'headerOptions' => ['width' => '100'],
+                ],
             ],
-        ],
-    ]);
-    ?>
+        ]);
+        ?>
+    </div>
 </div>

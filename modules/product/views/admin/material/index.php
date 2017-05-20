@@ -12,56 +12,60 @@ use app\modules\product\models\admin\Unit;
 $this->title = 'Материалы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="material-index">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 material-index">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Создать Материал', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?=
-    GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'tableOptions' => [
-            'class' => 'table table-striped table-bordered table-hover table-condensed'
-        ],
-        'columns' => [ 
-            ['class' => 'yii\grid\SerialColumn'],
-            'material_title',
-            'material_price',
-            [
-                'attribute' => 'material_currency_type',
-                'label' => 'Валюта',
-                'value' => 'materialCurrencyType.currency_code',
-                'headerOptions' => ['width' => '100'],
+        <p>
+            <?= Html::a('Создать Материал', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+        <?=
+        GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'tableOptions' => [
+                'class' => 'table table-striped table-bordered table-hover table-condensed'
             ],
-            [
-                'attribute' => 'material_unit_id',                
-                'label' => 'Ед.изм.',
-                'value' => 'materialUnit.unit_title',
-                'headerOptions' => ['width' => '100'],
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'material_title',
+                'material_price',
+                [
+                    'attribute' => 'material_currency_type',
+                    'label' => 'Валюта',
+                    'value' => 'materialCurrencyType.currency_code',
+                    'headerOptions' => ['width' => '100'],
+                ],
+                [
+                    'attribute' => 'material_unit_id',
+                    'label' => 'Ед.изм.',
+                    'value' => 'materialUnit.unit_title',
+                    'headerOptions' => ['width' => '100'],
+                ],
+                'material_delivery',
+                [
+                    'label' => 'Цена с доставкой',
+                    'value' => function ($model) {
+                        return $model->material_price + $model->material_price * $model->material_delivery / 100;
+                    },
+                ],
+                [
+                    'attribute' => 'material_category_id',
+                    'label' => 'Категория',
+                    'value' => 'materialCategory.category_title',
+                    'filter' => Category::find()->select(['category_title', 'category_id'])->indexBy('category_id')->column(),
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'header' => 'Действия',
+                    'headerOptions' => ['width' => '100'],
+                ],
             ],
-            'material_delivery',
-            [                               
-                'label' => 'Цена с доставкой',
-                'value' => function ($model) {
-                    return $model->material_price + $model->material_price * $model->material_delivery / 100;
-                },
-            ],
-            [
-                'attribute' => 'material_category_id',
-                'label' => 'Категория',
-                'value' => 'materialCategory.category_title',
-                'filter' => Category::find()->select(['category_title', 'category_id'])->indexBy('category_id')->column(),
-            ],            
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'header' => 'Действия',
-                'headerOptions' => ['width' => '100'],
-            ],
-        ],
-    ]);
-    ?>
+        ]);
+        ?>
+    </div>
 </div>

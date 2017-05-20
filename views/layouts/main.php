@@ -32,7 +32,9 @@ AppAsset::register($this);
                 $menuItems[] = ['label' => 'Signup', 'url' => ['/rbac/user/signup']];
                 $menuItems[] = ['label' => 'Login', 'url' => ['/rbac/user/login']];
             } else {
-                $menuItems[] = ['label' => 'Админка', 'url' => ['/product/index']];
+                if (Yii::$app->user->identity->status > 10) {
+                    $menuItems[] = ['label' => 'Админка', 'url' => ['/product/index']];
+                }
                 $menuItems[] = '<li>'
                             . Html::beginForm(['/site/logout'], 'post')
                             . Html::submitButton(

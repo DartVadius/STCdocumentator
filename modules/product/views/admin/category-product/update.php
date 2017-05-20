@@ -10,12 +10,17 @@ $this->params['breadcrumbs'][] = ['label' => 'Категории Продукт�
 $this->params['breadcrumbs'][] = ['label' => $model->category_product_title, 'url' => ['view', 'id' => $model->category_product_id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
-<div class="category-product-update">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 category-product-update">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+        <?=
+        $this->render('_form', [
+            'model' => $model,
+        ])
+        ?>
+    </div>
 </div>

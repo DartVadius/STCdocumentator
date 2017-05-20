@@ -32,7 +32,6 @@ class IndexController extends Controller {
     public function actionView($id) {
         $product = new Product();
         $productAggregator = new ProductAggregator($product->findOne($id));
-        
         return $this->render('view', ['product' => $productAggregator]);
     }
     

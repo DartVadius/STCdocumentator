@@ -10,31 +10,35 @@ use yii\grid\GridView;
 $this->title = 'Потери';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="loss-index">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 loss-index">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Добавить', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?=
-    GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'tableOptions' => [
-            'class' => 'table table-striped table-bordered table-hover table-condensed'
-        ],
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-            'loss_title',
-            'loss_desc',
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'header' => 'Действия',
-                'headerOptions' => ['width' => '100'],
+        <p>
+            <?= Html::a('Добавить', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+        <?=
+        GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'tableOptions' => [
+                'class' => 'table table-striped table-bordered table-hover table-condensed'
             ],
-        ],
-    ]);
-    ?>
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'loss_title',
+                'loss_desc',
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'header' => 'Действия',
+                    'headerOptions' => ['width' => '100'],
+                ],
+            ],
+        ]);
+        ?>
+    </div>
 </div>
