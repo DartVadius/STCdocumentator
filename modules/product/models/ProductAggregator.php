@@ -123,9 +123,8 @@ class ProductAggregator {
                 $delivery += $material->pmMaterial->material_delivery / 100;
             }
             $materials[$material->pm_material_id]['title'] = $material->pmMaterial->material_title;
-            $materials[$material->pm_material_id]['unit'] = $material->pmUnit->unit_title;            
-            $materials[$material->pm_material_id]['price'] = 
-                    $material->pmMaterial->material_price * $currencyRatio * $delivery /
+            $materials[$material->pm_material_id]['unit'] = $material->pmUnit->unit_title;
+            $materials[$material->pm_material_id]['price'] = $material->pmMaterial->material_price * $currencyRatio * $delivery /
                     $material->pmMaterial->materialUnit->unit_ratio * $material->pmUnit->unit_ratio;
             $materials[$material->pm_material_id]['quantity'] = $this->calcQuantity($material);
             $materials[$material->pm_material_id]['summ'] = $materials[$material->pm_material_id]['price'] *
@@ -189,8 +188,7 @@ class ProductAggregator {
             $recipe['materials'][$material->mrMaterial->material_id]['%'] = $material->mr_percentage;
             $recipe['materials'][$material->mrMaterial->material_id]['quantity'] = $this->getRecipeWeight() *
                     $material->mr_percentage / 100;
-            $recipe['materials'][$material->mrMaterial->material_id]['price'] = 
-                    $material->mrMaterial->material_price * $currencyRatio * $delivery /
+            $recipe['materials'][$material->mrMaterial->material_id]['price'] = $material->mrMaterial->material_price * $currencyRatio * $delivery /
                     $material->mrMaterial->materialUnit->unit_ratio;
             $recipe['materials'][$material->mrMaterial->material_id]['summ'] = $recipe['materials'][$material->mrMaterial->material_id]['price'] *
                     $recipe['materials'][$material->mrMaterial->material_id]['quantity'];
@@ -246,7 +244,7 @@ class ProductAggregator {
         }
         return $expenses;
     }
-    
+
     public function getLosses() {
         $losses = [];
         foreach ($this->losses as $loss) {
@@ -254,6 +252,22 @@ class ProductAggregator {
             $losses[$loss->lpLoss->loss_id]['%'] = $loss->lp_percentage;
         }
         return $losses;
+    }
+
+    public function getTechMap() {
+
+        if (file_exists($this->tech_map)) {
+            
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/pdf');
+//            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+//            header('Content-Length: ' . filesize('../uploads/tech_map/1/14001.jpg'));
+            echo file_get_contents($this->tech_map);
+            exit();
+        }
     }
 
 }

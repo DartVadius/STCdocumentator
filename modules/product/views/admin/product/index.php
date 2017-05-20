@@ -11,9 +11,12 @@ use app\modules\product\models\admin\CategoryProduct;
 $this->title = 'Продукция';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 product-index">
+        <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -57,4 +60,5 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]);
     ?>
+    </div>
 </div>

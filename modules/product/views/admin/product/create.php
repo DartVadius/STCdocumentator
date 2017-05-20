@@ -10,12 +10,17 @@ $this->title = 'Создать Продукт';
 $this->params['breadcrumbs'][] = ['label' => 'Продукты', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="product-create">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 product-create">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+        <?=
+        $this->render('_form', [
+            'model' => $model,
+        ])
+        ?>
+    </div>
 </div>

@@ -10,12 +10,17 @@ $this->params['breadcrumbs'][] = ['label' => 'Калькуляции', 'url' => 
 $this->params['breadcrumbs'][] = ['label' => $calculation->calculation_product_title, 'url' => ['view', 'id' => $calculation->calculation_id]];
 $this->params['breadcrumbs'][] = 'Редактировать';
 ?>
-<div class="category-update">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 category-update">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'calculation' => $calculation,
-    ]) ?>
-
+        <?=
+        $this->render('_form', [
+            'calculation' => $calculation,
+        ])
+        ?>
+    </div>
 </div>

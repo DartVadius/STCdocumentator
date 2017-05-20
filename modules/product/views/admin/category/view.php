@@ -10,28 +10,36 @@ $this->title = $model->category_title;
 $this->params['breadcrumbs'][] = ['label' => 'Категории', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="category-view">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="category-view col-lg-9">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+        <p>
+            <?= Html::a('Редактировать', ['update', 'id' => $model->category_id], ['class' => 'btn btn-primary']) ?>
+            <?=
+            Html::a('Удалить', ['delete', 'id' => $model->category_id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Вы уверены?',
+                    'method' => 'post',
+                ],
+            ])
+            ?>
+        </p>
 
-    <p>
-        <?= Html::a('Редактировать', ['update', 'id' => $model->category_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Удалить', ['delete', 'id' => $model->category_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
+        <?=
+        DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'category_id',
+                'category_title',
+                'category_desc',
             ],
-        ]) ?>
-    </p>
+        ])
+        ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'category_id',
-            'category_title',
-            'category_desc',
-        ],
-    ]) ?>
-
+    </div>
 </div>

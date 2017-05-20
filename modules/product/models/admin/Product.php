@@ -236,15 +236,16 @@ class Product extends \yii\db\ActiveRecord {
 
     public function upload() {
         if ($this->validate()) {
-            if (!empty($this->product_tech_map)) {
-                $path = 'pdf/tech_map/' . $this->product_id . '/';                
+            if (!empty($this->product_tech_map)) {               
+                $path = '../uploads/tech_map/' . $this->product_id . '/';                
                 if (!file_exists($path)) {
                     mkdir($path);
                 }                
                 $path .= 'tech_map' . '.' . $this->product_tech_map->extension;
                 $this->product_tech_map->saveAs($path);
-                $path = 'web/' . $path;
                 $this->product_tech_map = $path;
+            } else {
+                unset($this->product_tech_map);
             }
             if (!empty($this->product_tech_desc)) {
                 $path = 'pdf/tech_desc/' . $this->product_id . '/';
@@ -255,6 +256,8 @@ class Product extends \yii\db\ActiveRecord {
                 $this->product_tech_desc->saveAs($path);
                 $path = 'web/' . $path;
                 $this->product_tech_desc = $path;
+            } else {
+                unset($this->product_tech_desc);
             }
             return true;
         } else {

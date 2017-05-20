@@ -31,55 +31,13 @@ AppAsset::register($this);
                 $menuItems[] = ['label' => 'Login', 'url' => ['/rbac/user/login']];
             } else {
                 $menuItems[] = ['label' => 'Главная', 'url' => ['/product/index']];
-                $menuItems[] =  [
-                    'label' => 'Управление номенклатурой',
-                        'items' => [
-                            ['label' => 'Продукция', 'url' => ['/product/admin/product/index']],
-                            ['label' => 'Рецептуры', 'url' => ['/product/admin/recipe/index']],
-                            ['label' => 'Калькуляции', 'url' => ['/calculation/calculation/index']],
-                        ]
-                ];
-                $menuItems[] = [
-                        'label' => 'Справочники',
-                        'items' => [
-                            '<li class="divider"></li>',
-                            '<li class="dropdown-header">Базовые справочники</li>',
-                            '<li class="divider"></li>',
-                            ['label' => 'Ед.изм', 'url' => ['/product/admin/unit/index']],
-                            ['label' => 'Валюта', 'url' => ['/product/admin/currency/index']],
-                            ['label' => 'Категории материалов', 'url' => ['/product/admin/category/index']],
-                            ['label' => 'Категории продуктов', 'url' => ['/product/admin/category-product/index']],
-                            '<li class="divider"></li>',
-                            '<li class="dropdown-header">Расходные материалы и затраты</li>',
-                            '<li class="divider"></li>',
-                            ['label' => 'Материалы', 'url' => ['/product/admin/material/index']],
-                            ['label' => 'Упаковка', 'url' => ['/product/admin/pack/index']],
-                            ['label' => 'Прочие затраты', 'url' => ['/product/admin/other-expenses/index']],
-                            ['label' => 'Должности', 'url' => ['/product/admin/position/index']],
-                            ['label' => 'Плановые потери', 'url' => ['/product/admin/loss/index']],
-                            '<li class="divider"></li>',
-                            '<li class="dropdown-header">Продукция</li>',
-                            '<li class="divider"></li>',
-                            ['label' => 'Свойства и параметры', 'url' => ['/product/admin/parameter/index']],
-                            ['label' => 'Решения', 'url' => ['/product/admin/solution/index']],
-                        ],
-                    ];
-                $menuItems[] = [
-                        'label' => 'Управление доступом',
-                        'items' => [
-                            ['label' => 'Пользователи', 'url' => ['/rbac/user']],
-                            ['label' => 'Назначения', 'url' => ['/rbac/assignment']],
-                            ['label' => 'Маршруты', 'url' => ['/rbac/route']],
-                            ['label' => 'Роли', 'url' => ['/rbac/role']],
-                        ],
-                    ];
                 $menuItems[] = '<li>'
-                            . Html::beginForm(['/site/logout'], 'post')
-                            . Html::submitButton(
-                                    'Logout (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout']
-                            )
-                            . Html::endForm()
-                            . '</li>';
+                        . Html::beginForm(['/site/logout'], 'post')
+                        . Html::submitButton(
+                                'Logout (' . Yii::$app->user->identity->username . ')', ['class' => 'btn btn-link logout']
+                        )
+                        . Html::endForm()
+                        . '</li>';
             }
             NavBar::begin([
                 'brandLabel' => 'Documentator',
@@ -107,7 +65,7 @@ AppAsset::register($this);
 
         <footer class="footer">
             <div class="container">
-                <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+                <p class="pull-left">&copy; STC Ltd <?= date('Y') ?></p>
 
                 <p class="pull-right"><?= Yii::powered() ?></p>
             </div>
@@ -117,3 +75,26 @@ AppAsset::register($this);
     </body>
 </html>
 <?php $this->endPage() ?>
+<script>
+    var $dropdowns = $('.dropdown');
+    $dropdowns.click(function () {
+        if ($(this).hasClass('active')) {
+            $(this).toggleClass('active');
+        } else {
+            $dropdowns.removeClass('active');
+            $(this).toggleClass('active');
+        }
+    });
+</script>
+<style>
+    .dropdown {
+        .my_dropdown-menu {
+            display: none;
+        }
+        &.active {
+            .my_dropdown-menu {
+                display: block;
+            }
+        }
+    }
+</style>

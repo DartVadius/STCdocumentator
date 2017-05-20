@@ -10,37 +10,51 @@ use yii\grid\GridView;
 $this->title = 'Рецептуры';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="recipe-index">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 recipe-index">
+        <h1><?= Html::encode($this->title) ?></h1>
+        <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('Добавить Рецептуру', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <div class="table-responsive">
-        <?=
-        GridView::widget([
-            'dataProvider' => $dataProvider,
-            'filterModel' => $searchModel,
-            'tableOptions' => [
-                'class' => 'table table-striped table-bordered table-hover table-condensed'
-            ],
-            'columns' => [
-                ['class' => 'yii\grid\SerialColumn'],
-                'recipe_title',
-                'recipe_date',
-                'recipe_update',
-                'recipe_note:ntext',
-                'recipe_approved:boolean',
-                [
-                    'class' => 'yii\grid\ActionColumn',
-                    'header' => 'Действия',
-                    'headerOptions' => ['width' => '100'],
-                    'template' => '{view}&nbsp;&nbsp;{delete}',
+        <p>
+            <?= Html::a('Добавить Рецептуру', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+        <div class="table-responsive">
+            <?=
+            GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'tableOptions' => [
+                    'class' => 'table table-striped table-bordered table-hover table-condensed'
                 ],
-            ],
-        ]);
-        ?>
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
+                    'recipe_title',
+                    'recipe_date',
+                    'recipe_update',
+                    'recipe_note:ntext',
+                    [
+                        'attribute' => 'recipe_approved',
+                        'label' => 'Утверждено',
+                        'value' => function ($model) {
+                            if ($model->recipe_approved === 0) {
+                                return 'нет';
+                            }
+                            return 'да';
+                        },
+                        'filter' => ['нет', 'да'],
+                    ],
+                    [
+                        'class' => 'yii\grid\ActionColumn',
+                        'header' => 'Действия',
+                        'headerOptions' => ['width' => '100'],
+                        'template' => '{view}&nbsp;&nbsp;{delete}',
+                    ],
+                ],
+            ]);
+            ?>
+        </div>
     </div>
 </div>

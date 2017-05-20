@@ -91,7 +91,7 @@ class ProductController extends Controller {
             $model->product_tech_map = UploadedFile::getInstance($model, 'product_tech_map');
             $model->product_tech_desc = UploadedFile::getInstance($model, 'product_tech_desc');
             if ($model->save() && $model->upload()) {
-                $model->save(); //так надо
+                $model->save(); //так надо чтобы получить id
                 return $this->redirect(['view', 'id' => $model->product_id]);
             } else {
                 return $this->render('create', [
