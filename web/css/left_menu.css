@@ -10,4 +10,9 @@
 
 #w0 ul{
     width: 100%;
+    margin-bottom: 20px;
+}
+
+#w0 ul li {
+    padding: 0px, 5px;
 }
