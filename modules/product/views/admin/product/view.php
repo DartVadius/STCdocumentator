@@ -68,7 +68,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'product_tech_map',
                     'label' => 'Тех.карта',
                     'value' => function ($model) {
-                        return '<p><a href="/product/index/pdf?id=' . $model->product_id . '" target="_blank">Тех.карта</a></p>';
+                        if (!empty($model->product_tech_map)) {
+                            return '<p><a href="/product/index/pdf?id=' . $model->product_id . '" target="_blank">Тех.карта</a></p>';
+                        }
+                        return FALSE;
                     },
                     'format' => 'raw',
                 ],
@@ -76,7 +79,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'product_tech_desc',
                     'label' => 'Тех.описание',
                     'value' => function ($model) {
-                        return '<p><a href="/' . $model->product_tech_desc . '" target="_blank">Тех.описание</a></p>';
+                        if (!empty($model->product_tech_desc)) {
+                            return '<p><a href="/' . $model->product_tech_desc . '" target="_blank">Тех.описание</a></p>';
+                        }
+                        return FALSE;
                     },
                     'format' => 'raw',
                 ],
@@ -145,11 +151,11 @@ $this->params['breadcrumbs'][] = $this->title;
         ]);
         ?>
         <h3>Упаковка</h3>
-        <?php //if ($dataProviderPap->count < 1):  ?>
+        <?php //if ($dataProviderPap->count < 1):   ?>
         <p>
             <?= Html::a('Добавить Упаковку', ['admin/pap/create', 'pap_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
         </p>
-        <?php //endif; ?>
+        <?php //endif;  ?>
         <?=
         GridView::widget([
             'dataProvider' => $dataProviderPap,

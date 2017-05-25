@@ -100,5 +100,19 @@ class Unit extends \yii\db\ActiveRecord {
     public static function find() {
         return new UnitQuery(get_called_class());
     }
+    
+    /**
+     * get array of units with same type (length, weigth, etc.)
+     * 
+     * @param integer $id   unit Id
+     * @return UnitQuery
+     */
+    public static function findUnitByType($id) {
+        $unit = self::findOne(['unit_id' => $id]);
+        if ($unit->unit_parent_id) {
+            return $unit->find()->where(['unit_parent_id' => $unit->unit_parent_id])->orWhere(['unit_id' => $unit->unit_parent_id])->all();
+        }
+        return $unit->find()->where(['unit_parent_id' => $unit->unit_id])->orWhere(['unit_id' => $unit->unit_id])->all();
+    }
 
 }

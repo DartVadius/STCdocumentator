@@ -9,12 +9,17 @@ $this->title = 'Редактировать Параметр: ' . $model->paprPar
 $this->params['breadcrumbs'][] = ['label' => $model->paprProduct->product_title, 'url' => ['admin/product/view', 'id' => $model->papr_product_id]];
 $this->params['breadcrumbs'][] = 'Редактировать';
 ?>
-<div class="papr-update">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 papr-update">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+        <?=
+        $this->render('_form', [
+            'model' => $model,
+        ])
+        ?>
+    </div>
 </div>

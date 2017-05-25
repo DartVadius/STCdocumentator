@@ -21,8 +21,13 @@ use app\modules\product\models\admin\Unit;
     $params = [
         'prompt' => 'Выберите материал',
     ];
-    $units = Unit::find()->all();
-    $unit = ArrayHelper::map($units, 'unit_id', 'unit_title');
+
+    $unit = [];
+    if (!empty($model->pm_unit_id)) {
+        $units = Unit::findUnitByType($model->pm_unit_id);
+        $unit = ArrayHelper::map($units, 'unit_id', 'unit_title');
+    }
+
     $paramsUnit = [
         'prompt' => 'Выберите учетную единицу',
     ];
