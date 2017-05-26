@@ -1,7 +1,6 @@
 <?php
 
 use yii\bootstrap\Nav;
-use yii\helpers\Html;
 
 $this->registerCssFile('@web/css/left_menu.css');
 $adminMenuItems = [];
@@ -58,13 +57,11 @@ if (Yii::$app->user->identity->status == 100) {
 
 <?php
 
-//if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status > 30) {
-    echo Nav::widget([
-        'options' => [
-            'class' => 'nav nav-pills nav-stacked'
-        ],
-        'items' => $adminMenuItems,
-    ]);
-//}
+echo Nav::widget([
+    'options' => [
+        'class' => 'nav nav-pills nav-stacked'
+    ],
+    'items' => $adminMenuItems,
+]);
 ?>
 <?php // $this->registerJsFile('@web/js/left_menu.js'); ?>

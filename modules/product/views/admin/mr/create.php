@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Mr */
 
@@ -10,12 +9,17 @@ $this->title = 'Добавить Материал';
 $this->params['breadcrumbs'][] = ['label' => 'Рецептуры', 'url' => ['admin/recipe/view', 'id' => $model->mr_recipe_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="mr-create">
+<div class="row">
+    <div class="col-lg-3">
+        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+    </div>
+    <div class="col-lg-9 mr-create">
+        <h1><?= Html::encode($this->title) ?></h1>
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+        <?=
+        $this->render('_form', [
+            'model' => $model,
+        ])
+        ?>
+    </div>
 </div>

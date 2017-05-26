@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 use dosamigos\tinymce\TinyMce;
 use app\modules\product\models\admin\CategoryProduct;
 use app\modules\product\models\admin\Unit;
@@ -37,27 +37,50 @@ use app\modules\product\models\admin\Recipe;
 
     <?= $form->field($model, 'product_title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'product_note')->textarea(['maxlength' => true])->widget(TinyMce::className()) ?>
+    <?= $form->field($model, 'product_note')->textarea(['maxlength' => true])->widget(TinyMce::className(), ['options' => ['rows' => 10],]) ?>
 
-    <?= $form->field($model, 'product_capacity_hour')->textInput(['maxlength' => true]) ?>
+    <div class="row">
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_capacity_hour')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_unit_id')->dropDownList($unit, $unitParams)->label('Ед.изм.') ?>
+        </div>
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_recipe_id')->dropDownList($recipe, $recipeParams)->label('Рецептура') ?>
+        </div>
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_category_id')->dropDownList($category, $catParams)->label('Категория') ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_weight')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_length')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_width')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_thickness')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_price')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_vendor_code')->textInput(['maxlength' => true]) ?>
+        </div>
+        <div class="col-lg-3">
 
-    <?= $form->field($model, 'product_recipe_id')->dropDownList($recipe, $recipeParams)->label('Рецептура') ?>
+        </div>
+        <div class="col-lg-3">
 
-    <?= $form->field($model, 'product_price')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'product_unit_id')->dropDownList($unit, $unitParams)->label('Ед.изм.') ?>
-
-    <?= $form->field($model, 'product_weight')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'product_length')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'product_width')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'product_thickness')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'product_category_id')->dropDownList($category, $catParams)->label('Категория') ?>
-
-    <?= $form->field($model, 'product_vendor_code')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
 
     <?= $form->field($model, 'product_archiv')->textInput()->checkbox() ?>
 
