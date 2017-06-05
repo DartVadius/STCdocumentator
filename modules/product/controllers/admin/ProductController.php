@@ -17,6 +17,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\data\ActiveDataProvider;
 use yii\web\UploadedFile;
+use app\modules\product\models\ProductAggregator;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -137,7 +138,7 @@ class ProductController extends Controller {
      * @param string $id
      * @return mixed
      */
-    public function actionDelete($id) {        
+    public function actionDelete($id) {
         $transaction = Yii::$app->db->beginTransaction();
         $model = $this->findModel($id);
         try {
@@ -157,6 +158,36 @@ class ProductController extends Controller {
         return $this->redirect(['index']);
     }
 
+    public function actionClone($id) {
+        $product = new Product();
+        $model = $product->findOne($id);
+        unset($model->product_tech_map);
+        unset($model->product_tech_desc);
+        $productAggregator = new ProductAggregator($model);
+        unset($model->product_id);
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $newProduct = $this->copy($model, $product);
+            $newProduct->product_date = date('Y-m-d H:i:s');
+            $newProduct->product_update = date('Y-m-d H:i:s');
+            $newProduct->save();
+
+            $this->copyMaterials($productAggregator->materials, $newProduct->product_id);
+            $this->copyPacks($productAggregator->packs, $newProduct->product_id);
+            $this->copyPositions($productAggregator->positions, $newProduct->product_id);
+            $this->copyExpenses($productAggregator->expenses, $newProduct->product_id);
+            $this->copyLosses($productAggregator->losses, $newProduct->product_id);
+            $this->copyParameters($productAggregator->parameters, $newProduct->product_id);
+            $this->copySolutions($productAggregator->solutions, $newProduct->product_id);
+
+            $transaction->commit();
+        } catch (Exception $e) {
+            $transaction->rollback();
+            $this->actionIndex();
+        }
+        return $this->redirect(['view', 'id' => $newProduct->product_id]);
+    }
+
     /**
      * Finds the Product model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -169,6 +200,98 @@ class ProductController extends Controller {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    private function copy($oldModel, $newModel) {
+        $data = $oldModel->toArray();
+        foreach ($data as $key => $value) {
+            $newModel->$key = $value;
+        }
+        return $newModel;
+    }
+
+    private function copyMaterials($materials, $id) {
+        if (!empty($materials)) {
+            foreach ($materials as $maretial) {
+                $productMaterial = new Pm();
+                $newProductMaterial = $this->copy($maretial, $productMaterial);
+                unset($newProductMaterial->pm_id);
+                $newProductMaterial->pm_product_id = $id;
+                $newProductMaterial->save();
+            }
+        }
+    }
+
+    private function copyPacks($packs, $id) {
+        if (!empty($packs)) {
+            foreach ($packs as $pack) {
+                $productPack = new Pap();
+                $newProductPack = $this->copy($pack, $productPack);
+                unset($newProductPack->pap_id);
+                $newProductPack->pap_product_id = $id;
+                $newProductPack->save();
+            }
+        }
+    }
+
+    private function copyPositions($positions, $id) {
+        if (!empty($positions)) {
+            foreach ($positions as $position) {
+                $productPosition = new Pop();
+                $newProductPosition = $this->copy($position, $productPosition);
+                unset($newProductPosition->pop_id);
+                $newProductPosition->pop_product_id = $id;
+                $newProductPosition->save();
+            }
+        }
+    }
+    
+    private function copyExpenses($expenses, $id) {
+        if (!empty($expenses)) {
+            foreach ($expenses as $expense) {
+                $productExpense = new Op();
+                $newProductExpense = $this->copy($expense, $productExpense);
+                unset($newProductExpense->op_id);
+                $newProductExpense->op_product_id = $id;
+                $newProductExpense->save();
+            }
+        }
+    }
+    
+    private function copyLosses($losses, $id) {
+        if (!empty($losses)) {
+            foreach ($losses as $loss) {
+                $productLoss = new Lp();
+                $newProductLoss = $this->copy($loss, $productLoss);
+                unset($newProductLoss->lp_id);
+                $newProductLoss->lp_product_id = $id;
+                $newProductLoss->save();
+            }
+        }
+    }
+    
+    private function copyParameters($parameters, $id) {
+        if (!empty($parameters)) {
+            foreach ($parameters as $parameter) {
+                $productParameter = new Papr();
+                $newProductParameter = $this->copy($parameter, $productParameter);
+                unset($newProductParameter->papr_id);
+                $newProductParameter->papr_product_id = $id;
+                $newProductParameter->save();
+            }
+        }
+    }
+    
+    private function copySolutions($solutions, $id) {
+        if (!empty($solutions)) {
+            foreach ($solutions as $solution) {
+                $productSolution = new Sp();
+                $newProductSolution = $this->copy($solution, $productSolution);
+                unset($newProductSolution->sp_id);
+                $newProductSolution->sp_product_id = $id;
+                $newProductSolution->save();
+            }
         }
     }
 

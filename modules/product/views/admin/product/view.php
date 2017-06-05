@@ -31,14 +31,22 @@ $this->params['breadcrumbs'][] = $this->title;
                             'confirm' => 'Вы уверены?',
                             'method' => 'post',
                         ],
-                    ])
-                    ?>            
+                    ]);
+                    ?>
+                    <?=
+                    Html::a('Сделать копию', ['clone', 'id' => $model->product_id], [
+                        'class' => 'btn btn-success',
+                        'data' => [
+                            'method' => 'post',
+                        ],
+                    ]);
+                    ?>
                 </p>
             </div>
             <div class="col-lg-2">
                 <p>
                     <?=
-                    Html::a('Калькуляция', ['../calculation/calculation/create', 'id_product' => $model->product_id], ['class' => 'btn btn-success',
+                    Html::a('Калькуляция', ['/calculation/calculation/create', 'id_product' => $model->product_id], ['class' => 'btn btn-success',
                         'data' => [
                             'method' => 'post',
                         ],])
@@ -119,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h2 class="alert-info">Затраты</h2>
         <h3>Материалы</h3>
         <p>
-            <?= Html::a('Добавить материал', ['admin/pm/create', 'pm_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить материал', ['admin/pm/create', 'pm_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
         </p>
         <?=
         GridView::widget([
@@ -151,9 +159,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ]);
         ?>
         <h3>Упаковка</h3>
-        <?php //if ($dataProviderPap->count < 1):   ?>
+            <?php //if ($dataProviderPap->count < 1):    ?>
         <p>
-            <?= Html::a('Добавить Упаковку', ['admin/pap/create', 'pap_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить Упаковку', ['admin/pap/create', 'pap_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
         </p>
         <?php //endif;  ?>
         <?=
@@ -181,7 +189,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
         <h3>Должности</h3>
         <p>
-            <?= Html::a('Добавить должность', ['admin/pop/create', 'pop_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить должность', ['admin/pop/create', 'pop_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
         </p>
         <?=
         GridView::widget([
@@ -208,7 +216,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
         <h3>Прочие затраты</h3>
         <p>
-            <?= Html::a('Добавить статью затрат', ['admin/op/create', 'op_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить статью затрат', ['admin/op/create', 'op_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
         </p>
         <?=
         GridView::widget([
@@ -235,7 +243,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
         <h3>Плановые потери</h3>
         <p>
-            <?= Html::a('Добавить статью плановых потерь', ['admin/lp/create', 'lp_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить статью плановых потерь', ['admin/lp/create', 'lp_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
         </p>
         <?=
         GridView::widget([
@@ -263,7 +271,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <h2 class="alert-info">Дополнительные сведенья о продукте</h2>
         <h3>Дополнительные свойства и характеристики</h3>
         <p>
-            <?= Html::a('Добавить параметр', ['admin/papr/create', 'papr_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить параметр', ['admin/papr/create', 'papr_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
         </p>
         <?=
         GridView::widget([
@@ -295,7 +303,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
         <h3>Решения</h3>
         <p>
-            <?= Html::a('Управление Решениями', ['admin/sp/create', 'sp_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Управление Решениями', ['admin/sp/create', 'sp_product_id' => $model->product_id], ['class' => 'btn btn-success']) ?>
         </p>
         <?=
         GridView::widget([

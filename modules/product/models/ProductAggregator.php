@@ -7,9 +7,32 @@ use app\modules\product\models\admin\Product;
 use app\modules\product\models\admin\Pm;
 
 /**
- * Description of Product
+ * Description of ProductAggregator
  *
  * @author DartVadius
+ * 
+ * @property string $id
+ * @property string $title
+ * @property string $capacity
+ * @property string $price
+ * @property string $weight
+ * @property string $length
+ * @property string $width
+ * @property string $square
+ * @property string $thickness
+ * @property string $note
+ * @property string $vendorCode
+ * @property string $archive
+ *
+ * @property Unit $unit
+ * @property CategoryProduct $category
+ * @property array $materials           array of Pm objects
+ * @property array $packs               array of Pap objects
+ * @property array $solutions
+ * @property array $positions           array of Pop objects
+ * @property array $expenses            array of Op objects
+ * @property array $losses              array of Lp objects
+ * @property array $parameters          array of Papr objects
  */
 class ProductAggregator {
 
@@ -86,6 +109,18 @@ class ProductAggregator {
         }
         return FALSE;
     }
+
+    public function __unset($name) {
+        unset($this->$name);
+    }
+
+//    public function __set($name, $value) {
+//        if ($this->$name) {
+//            $this->$name = $value;
+//            return TRUE;
+//        }
+//        return FALSE;
+//    }
 
     /**
      * get base params of product
@@ -257,7 +292,7 @@ class ProductAggregator {
     public function getTechMap() {
 
         if (file_exists($this->tech_map)) {
-            
+
             header('Content-Description: File Transfer');
             header('Content-Type: application/pdf');
 //            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
