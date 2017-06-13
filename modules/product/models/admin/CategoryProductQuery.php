@@ -7,19 +7,17 @@ namespace app\modules\product\models\admin;
  *
  * @see CategoryProduct
  */
-class CategoryProductQuery extends \yii\db\ActiveQuery
-{
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
+class CategoryProductQuery extends \yii\db\ActiveQuery {
+    /* public function active()
+      {
+      return $this->andWhere('[[status]]=1');
+      } */
 
     /**
      * @inheritdoc
      * @return CategoryProduct[]|array
      */
-    public function all($db = null)
-    {
+    public function all($db = null) {
         return parent::all($db);
     }
 
@@ -27,8 +25,8 @@ class CategoryProductQuery extends \yii\db\ActiveQuery
      * @inheritdoc
      * @return CategoryProduct|array|null
      */
-    public function one($db = null)
-    {
+    public function one($db = null) {
         return parent::one($db);
     }
+
 }

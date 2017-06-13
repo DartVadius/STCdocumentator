@@ -292,14 +292,11 @@ class ProductAggregator {
     public function getTechMap() {
 
         if (file_exists($this->tech_map)) {
-
             header('Content-Description: File Transfer');
             header('Content-Type: application/pdf');
-//            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
             header('Expires: 0');
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
-//            header('Content-Length: ' . filesize('../uploads/tech_map/1/14001.jpg'));
             echo file_get_contents($this->tech_map);
             exit();
         }

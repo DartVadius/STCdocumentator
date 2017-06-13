@@ -7,6 +7,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\modules\product\models\admin\CategoryProduct;
 
 AppAsset::register($this);
 ?>
@@ -29,6 +30,7 @@ AppAsset::register($this);
             $menuItems = [];
             if (!Yii::$app->user->isGuest) {
                 $menuItems[] = ['label' => 'Главная', 'url' => ['/product/index/index']];
+                $menuItems[] = CategoryProduct::getCategoryToMenu();
                 $menuItems[] = '<li>'
                         . Html::beginForm(['/site/logout'], 'post')
                         . Html::submitButton(

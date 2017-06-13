@@ -14,9 +14,15 @@ use yii\data\Pagination;
  */
 class IndexController extends Controller {
 
-    public function actionIndex() {
+    public function actionIndex($id = NULL) {
         $product = new Product();
         $query = $product->find()->where(['product_archiv' => 0]);
+        if ($id) {
+            $query->andWhere(['product_category_id' => $id]);
+        }
+        if ($id === '0') {
+            $query->andWhere(['product_category_id' => '']);
+        }
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => \Yii::$app->params['page_size']]);
         $pages->pageSizeParam = false;
@@ -40,5 +46,4 @@ class IndexController extends Controller {
         $productAggregator = new ProductAggregator($product->findOne($id));
         $productAggregator->getTechMap();
     }
-
 }
