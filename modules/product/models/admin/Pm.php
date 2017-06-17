@@ -34,7 +34,7 @@ class Pm extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['pm_product_id', 'pm_material_id', 'pm_quantity', 'pm_unit_id'], 'required'],
+            [['pm_product_id', 'pm_material_id', 'pm_quantity', 'pm_unit_id', 'pm_square'], 'required'],
             [['pm_product_id', 'pm_material_id', 'pm_unit_id', 'pm_square'], 'integer'],
             [['pm_quantity'], 'number'],
             [['pm_product_id', 'pm_material_id'], 'unique', 'targetAttribute' => ['pm_product_id', 'pm_material_id'], 'message' => 'The combination of Pm Product ID and Pm Material ID has already been taken.'],

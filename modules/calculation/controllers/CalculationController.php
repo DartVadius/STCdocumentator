@@ -67,6 +67,7 @@ class CalculationController extends Controller {
         $calculation->calculation_positions_data = serialize($calculationAggregator->positions);
         $calculation->calculation_expenses_data = serialize($calculationAggregator->expenses);
         $calculation->calculation_losses_data = serialize($calculationAggregator->losses);
+        
         if ($calculation->load(Yii::$app->request->post()) && $calculation->save()) {
             return $this->redirect(['view', 'id' => $calculation->calculation_id]);
         } else {

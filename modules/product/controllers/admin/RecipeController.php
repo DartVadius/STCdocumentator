@@ -53,6 +53,9 @@ class RecipeController extends Controller {
         $model = $this->findModel($id);
         $dataProvider = new ActiveDataProvider(['query' => $model->getMrs()->with('mrMaterial')]);
         $total = $model->getMrs()->with('mrMaterial')->sum('mr_percentage');
+        if (empty($total)) {
+            $total = '0';
+        }
         return $this->render('view', [
                     'model' => $model,
                     'dataProvider' => $dataProvider,
@@ -124,10 +127,15 @@ class RecipeController extends Controller {
             }
             $prod[strlen($prod) - 2] = '';
             $dataProvider = new ActiveDataProvider(['query' => $model->getMrs()->with('mrMaterial')]);
+            $total = $model->getMrs()->with('mrMaterial')->sum('mr_percentage');
+            if (empty($total)) {
+                $total = '0';
+            }
             return $this->render('view', [
                         'model' => $model,
                         'dataProvider' => $dataProvider,
                         'product' => trim($prod),
+                        'total' => $total,
             ]);
         }
         Mr::deleteAll('mr_recipe_id = :id', [':id' => $id]);

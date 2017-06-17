@@ -61,9 +61,9 @@ class Product extends \yii\db\ActiveRecord {
     public function rules() {
         return [
             [['product_title', 'product_capacity_hour', 'product_date', 'product_update', 'product_unit_id'], 'required'],
-            [['product_capacity_hour', 'product_unit_id', 'product_category_id', 'product_weight', 'product_length', 'product_width', 'product_thickness', 'product_recipe_id', 'product_archiv'], 'integer'],
+            [['product_capacity_hour', 'product_unit_id', 'product_category_id', 'product_weight', 'product_recipe_id', 'product_archiv'], 'integer'],
             [['product_date', 'product_update'], 'safe'],
-            [['product_price'], 'number'],
+            [['product_price', 'product_length', 'product_width', 'product_thickness', ], 'number'],
             [['product_title'], 'string', 'max' => 255],
             [['product_note'], 'string'],
             [['product_tech_map', 'product_tech_desc'], 'file', 'skipOnEmpty' => true, 'extensions' => 'pdf'],

@@ -40,11 +40,9 @@ use app\modules\product\models\admin\Unit;
     <?= $form->field($model, 'pm_quantity')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'pm_unit_id')->dropDownList($unit, $paramsUnit) ?>
-
-    <?= $form->field($model, 'pm_square')->radio(['label' => 'Расход на ед.продукции', 'value' => 0, 'uncheck' => $model->pm_square]) ?>
-
-    <?= $form->field($model, 'pm_square')->radio(['label' => 'Расход на м2', 'value' => 1, 'uncheck' => $model->pm_square]) ?>
-
+    
+    <?= $form->field($model, 'pm_square')->radioList([0 => 'Расход на ед.продукции', 1 => 'Расход на м2'])->label(FALSE)?>
+    
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

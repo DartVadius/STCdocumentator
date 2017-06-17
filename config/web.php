@@ -23,6 +23,10 @@ $config = [
         'authManager' => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
         ],
+//        'formatter' => [
+//            'decimalSeparator' => ',',
+//            'thousandSeparator' => ' ',
+//        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'Kp854lTO_xsgl4VplFzdFRJxiw8NYKFO',
