@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
     <div class="col-lg-3">
-        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+        <?= $this->render('@app/views/partials/side_menu') ?>
     </div>
     <div class="col-lg-9 category-product-create">
         <h1><?= Html::encode($this->title) ?></h1>

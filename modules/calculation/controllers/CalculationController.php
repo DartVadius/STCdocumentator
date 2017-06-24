@@ -97,8 +97,12 @@ class CalculationController extends Controller {
     }
 
     public function actionDelete($id) {
-        $model = $this->findModel($id)->delete();
+        $this->findModel($id)->delete();
         return $this->redirect(['index']);
+    }
+    
+    public function actionMenu() {
+        return $this->render('menu');
     }
 
     protected function findModel($id) {

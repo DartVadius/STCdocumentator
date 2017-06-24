@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="row">
     <div class="col-lg-3">
-        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+        <?= $this->render('@app/views/partials/side_menu') ?>
     </div>
     <div class="col-lg-9 currency-update">
         <h1><?= Html::encode($this->title) ?></h1>

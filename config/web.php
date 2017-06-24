@@ -18,6 +18,9 @@ $config = [
         'product' => [
             'class' => 'app\modules\product\ProductModule',
         ],
+        'directory' => [
+            'class' => 'app\modules\directory\DirectoryModule',
+        ],
     ],
     'components' => [
         'authManager' => [

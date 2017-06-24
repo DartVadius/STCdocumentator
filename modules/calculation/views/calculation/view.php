@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 $this->title = $calculation->calculation_product_title;
-
+$this->params['breadcrumbs'][] = ['label' => 'Меню', 'url' => ['menu']];
 $this->params['breadcrumbs'][] = ['label' => 'Калькуляции', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Просмотр';
 ?>
 <div class="row">
     <div class="col-lg-3">
-        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+        <?= $this->render('@app/views/partials/side_menu') ?>
     </div>
     <div class="col-lg-9 ">
         <p>

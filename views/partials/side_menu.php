@@ -11,16 +11,7 @@ if (Yii::$app->user->identity->status > 30) {
         'items' => [
             ['label' => 'Продукция', 'url' => ['/product/admin/product/index']],
             ['label' => 'Рецептуры', 'url' => ['/product/admin/recipe/index']],
-            ['label' => 'Калькуляции', 'url' => ['/calculation/calculation/index']],
-        ]
-    ];
-    $adminMenuItems[] = [
-        'label' => 'Базовые справочники',
-        'items' => [
-            ['label' => 'Ед.изм', 'url' => ['/product/admin/unit/index']],
-            ['label' => 'Валюта', 'url' => ['/product/admin/currency/index']],
-            ['label' => 'Категории материалов', 'url' => ['/product/admin/category/index']],
-            ['label' => 'Категории продуктов', 'url' => ['/product/admin/category-product/index']],
+            ['label' => 'Отчеты', 'url' => ['/calculation/calculation/menu']],
         ]
     ];
     $adminMenuItems[] = [
@@ -39,6 +30,16 @@ if (Yii::$app->user->identity->status > 30) {
             ['label' => 'Свойства и параметры', 'url' => ['/product/admin/parameter/index']],
             ['label' => 'Решения', 'url' => ['/product/admin/solution/index']],
         ],
+    ];
+    $adminMenuItems[] = [
+        'label' => 'Базовые справочники',
+        'items' => [
+            ['label' => 'Ед.изм', 'url' => ['/product/admin/unit/index']],
+            ['label' => 'Валюта', 'url' => ['/product/admin/currency/index']],
+            ['label' => 'Категории материалов', 'url' => ['/product/admin/category/index']],
+            ['label' => 'Категории продуктов', 'url' => ['/product/admin/category-product/index']],
+            ['label' => 'Настройки приложения', 'url' => ['/directory/index/config']],
+        ]
     ];
 }
 if (Yii::$app->user->identity->status == 100) {

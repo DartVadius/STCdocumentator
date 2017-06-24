@@ -765,6 +765,19 @@ CREATE TABLE IF NOT EXISTS `pma` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `config`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `config` (
+  `config_id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `config_name` VARCHAR(45) NOT NULL,
+  `config_system_name` VARCHAR(45) NOT NULL,
+  `config_value` VARCHAR(45) NULL,
+  PRIMARY KEY (`config_id`),
+  UNIQUE INDEX `config_id_UNIQUE` (`config_id` ASC))
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

@@ -6,7 +6,7 @@ $this->title = 'Продукция';
 ?>
 <div class="row">
     <div class="col-lg-3">
-        <?= $this->render('@app/modules/product/views/partials/side_menu') ?>
+        <?= $this->render('@app/views/partials/side_menu') ?>
     </div>
     <div class="col-lg-9">
         <h2><?=$product->title?></h2>
