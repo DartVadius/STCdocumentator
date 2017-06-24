@@ -7,18 +7,18 @@ namespace app\modules\calculation\models\calculation;
  *
  * @author DartVadius
  */
-class Materials implements iCalculation {
+class MaterialsAdditional implements iCalculation {
 
-    private $materials;
+    private $materialsAdditional;
 
-    public function __construct($materials) {
-        $this->materials = $materials;
+    public function __construct($materialsAdditional) {
+        $this->materialsAdditional = $materialsAdditional;
     }
 
     public function summ() {
         $summ = 0;
-        if (!empty($this->materials)) {
-            foreach ($this->materials as $material) {
+        if (!empty($this->materialsAdditional)) {
+            foreach ($this->materialsAdditional as $material) {
                 if (empty($material['loss'])) {
                     $summ += $material['summ'];
                 } else {
@@ -31,8 +31,8 @@ class Materials implements iCalculation {
 
     public function summWithoutLosses() {
         $summ = 0;
-        if (!empty($this->materials)) {
-            foreach ($this->materials as $material) {
+        if (!empty($this->materialsAdditional)) {
+            foreach ($this->materialsAdditional as $material) {
                 $summ += $material['summ'];
             }
         }
@@ -40,15 +40,15 @@ class Materials implements iCalculation {
     }
 
     public function count() {
-        return count($this->materials);
+        return count($this->materialsAdditional);
     }
 
     public function get() {
-        return $this->materials;
+        return $this->materialsAdditional;
     }
     
     public function lossesValidate() {
-        foreach ($this->materials as $material) {
+        foreach ($this->materialsAdditional as $material) {
             if (!empty($material['loss'])) {
                 return TRUE;
             }

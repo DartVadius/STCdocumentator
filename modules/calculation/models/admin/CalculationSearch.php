@@ -19,7 +19,7 @@ class CalculationSearch extends Calculation
     {
         return [
             [['calculation_id', 'calculation_product_id', 'calculation_product_capacity_hour', 'calculation_weight', 'calculation_length', 'calculation_width', 'calculation_thickness', 'calculation_archive'], 'integer'],
-            [['calculation_product_title', 'calculation_date', 'calculation_note', 'calculation_unit', 'calculation_materials_data', 'calculation_recipe_data', 'calculation_packs_data', 'calculation_positions_data', 'calculation_expenses_data', 'calculation_losses_data'], 'safe'],
+            [['calculation_product_title', 'calculation_date', 'calculation_note', 'calculation_unit', 'calculation_materials_data', 'calculation_materials_additional_data', 'calculation_recipe_data', 'calculation_packs_data', 'calculation_positions_data', 'calculation_expenses_data', 'calculation_losses_data'], 'safe'],
         ];
     }
 

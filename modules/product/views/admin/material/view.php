@@ -17,10 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-lg-9 material-view">
         <h1><?= Html::encode($this->title) ?></h1>
-        <?php if ($product): ?>
+        <?php if (!empty($product)): ?>
             <p class="alert alert-warning">Невозможно удалить материал. Удалите его в продуктах: <?= $product ?></p>
         <?php endif; ?>
-        <?php if ($recipe): ?>
+        <?php if (!empty($recipe)): ?>
             <p class="alert alert-warning">Невозможно удалить материал. Удалите его в рецептурах: <?= $recipe ?></p>
         <?php endif; ?>
         <p>

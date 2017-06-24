@@ -2,16 +2,17 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\modules\product\models\admin\Material;
 use yii\helpers\ArrayHelper;
+use app\modules\product\models\admin\Material;
+use app\modules\product\models\admin\Unit;
 use app\modules\product\models\admin\Category;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Mr */
+/* @var $model app\modules\product\models\admin\Pma */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="mr-form">
+<div class="pma-form">
 
     <?php $form = ActiveForm::begin(); ?>
     
@@ -19,7 +20,7 @@ use app\modules\product\models\admin\Category;
     $category = Category::find()->all();
     $categories = ArrayHelper::map($category, 'category_id', 'category_title');
     try {
-        $activ = $model->mrMaterial->material_category_id;
+        $activ = $model->pmaMaterial->material_category_id;
     } catch (Exception $ex) {
         $activ = NULL;
     }
@@ -33,6 +34,17 @@ use app\modules\product\models\admin\Category;
     $params = [
         'prompt' => 'Выберите материал',
     ];
+
+
+    $unit = [];
+    if (!empty($model->pma_unit_id)) {
+        $units = Unit::findUnitByType($model->pma_unit_id);
+        $unit = ArrayHelper::map($units, 'unit_id', 'unit_title');
+    }
+
+    $paramsUnit = [
+        'prompt' => 'Выберите учетную единицу',
+    ];
     ?>
     
     <label name="product_category">Категория</label>
@@ -43,12 +55,16 @@ use app\modules\product\models\admin\Category;
             <option value="<?= $key ?>" <?= (!empty($activ) && $activ == $key) ? 'selected' : ''; ?>><?= $value ?></option>
         <?php endforeach; ?>
     </select>
-    
-    <?= $form->field($model, 'mr_recipe_id')->textInput(['maxlength' => true])->hiddenInput()->label('') ?>
 
-    <?= $form->field($model, 'mr_material_id')->dropDownList($material, $params) ?>
-    
-    <?= $form->field($model, 'mr_percentage')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'pma_product_id')->textInput(['maxlength' => true])->hiddenInput()->label(FALSE) ?>
+
+    <?= $form->field($model, 'pma_material_id')->dropDownList($material, $params) ?>
+
+    <?= $form->field($model, 'pma_quantity')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'pma_unit_id')->dropDownList($unit, $paramsUnit) ?>
+
+    <?= $form->field($model, 'pma_loss')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

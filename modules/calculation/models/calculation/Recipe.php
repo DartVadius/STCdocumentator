@@ -38,5 +38,15 @@ class Recipe implements iCalculation {
     public function get() {
         return $this->materials;
     }
+    
+    public function getPercent() {
+        $summ = 0;
+        if (!empty($this->materials)) {
+            foreach ($this->materials as $material) {
+                $summ += $material['%'];
+            }
+        }
+        return $summ;
+    }
 
 }

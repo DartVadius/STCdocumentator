@@ -5,6 +5,7 @@ namespace app\modules\calculation\models;
 use Yii;
 use app\modules\calculation\models\calculation\Params;
 use app\modules\calculation\models\calculation\Materials;
+use app\modules\calculation\models\calculation\MaterialsAdditional;
 use app\modules\calculation\models\calculation\Recipe;
 use app\modules\calculation\models\calculation\Packs;
 use app\modules\calculation\models\calculation\Positions;
@@ -29,15 +30,17 @@ class CalculationAggregator {
     private $id;
     private $params;    
     private $materials;
+    private $materialsAdditional;
     private $recipe;
     private $packs;
     private $positions;
     private $expenses;
     private $losses;
 
-    public function __construct($params, $materials, $recipe, $packs, $positions, $expenses, $losses) {
+    public function __construct($params, $materials, $materialsAdditional, $recipe, $packs, $positions, $expenses, $losses) {
         $this->params = new Params($params);
         $this->materials = new Materials($materials);
+        $this->materialsAdditional = new MaterialsAdditional($materialsAdditional);
         $this->recipe = new Recipe($recipe);
         $this->packs = new Packs($packs);
         $this->positions = new Positions($positions);        
@@ -57,6 +60,7 @@ class CalculationAggregator {
     
     private function summRealExpenses() {
         return $this->materials->summ() + 
+                $this->materialsAdditional->summ() +
                 $this->recipe->summ() + 
                 $this->packs->summ() + 
                 $this->expenses->summ() +

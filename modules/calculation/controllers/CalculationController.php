@@ -45,13 +45,15 @@ class CalculationController extends Controller {
         $productAggregator = new ProductAggregator($product->findOne($id_product));
         $params = $productAggregator->getParams();
         $materials = $productAggregator->getMaterials();
+        $materialsAdditional = $productAggregator->getMaterialsAdditional();
         $recipe = $productAggregator->getRecipe();
         $packs = $productAggregator->getPacks();
         $positions = $productAggregator->getPositions();
         $expenses = $productAggregator->getExpenses();
         $losses = $productAggregator->getLosses();
-        $calculationAggregator = new CalculationAggregator($params, $materials, $recipe, $packs, $positions, $expenses, $losses);
-
+        $calculationAggregator = new CalculationAggregator($params, $materials, $materialsAdditional, $recipe, $packs, $positions, $expenses, $losses);
+//print_r($calculationAggregator);
+//        die;
         $calculation->calculation_product_title = $calculationAggregator->params->title;
         $calculation->calculation_product_id = $calculationAggregator->params->product_id;
         $calculation->calculation_date = date('Y-m-d H:i:s');
@@ -63,6 +65,7 @@ class CalculationController extends Controller {
         $calculation->calculation_unit = $calculationAggregator->params->unit;
         $calculation->calculation_recipe_data = serialize($calculationAggregator->recipe);
         $calculation->calculation_materials_data = serialize($calculationAggregator->materials);
+        $calculation->calculation_materials_additional_data = serialize($calculationAggregator->materialsAdditional);
         $calculation->calculation_packs_data = serialize($calculationAggregator->packs);
         $calculation->calculation_positions_data = serialize($calculationAggregator->positions);
         $calculation->calculation_expenses_data = serialize($calculationAggregator->expenses);

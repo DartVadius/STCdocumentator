@@ -3,13 +3,13 @@
     <?php if (!empty($calculation->calculation_recipe_data)): ?>
         <?php $recipeMaterials = unserialize($calculation->calculation_recipe_data); ?>
         <tr>
-            <th>Материалы (рецептура <?=$recipeMaterials->getTitle()?>)</th>
+            <th>Герметик (<?= $recipeMaterials->getTitle() ?>)</th>
             <th style="text-align: center">Ед.изм.</th>
             <th style="text-align: center">Количество</th>
             <th style="text-align: center">Цена</th>
             <th style="text-align: center">Сумма</th>
         </tr>
-        
+
         <?php if (!empty($recipeMaterials->get())): ?>
             <?php $recipe_weight = 0 ?>
             <?php foreach ($recipeMaterials->get() as $material): ?>
@@ -17,30 +17,35 @@
                 <tr>
                     <td><?= $material['title'] ?></td>
                     <td style="text-align: right"><?= $material['unit'] ?></td>
-                    <td style="text-align: right"><?= round($material['quantity'], 4) ?></td>
+                    <td style="text-align: right"><?= round($material['quantity'], 4) ?> / <?= $material['%'] ?> %</td>
                     <td style="text-align: right"><?= round($material['price'], 2) ?></td>
                     <td style="text-align: right"><?= round($material['summ'], 2) ?></td>
                 </tr>
             <?php endforeach; ?>
+            <tr><td></td><td></td><td></td><td></td><td></td></tr>
         <?php endif; ?>
         <tr>
-            <th>Итого (материалы рецептуры)</th>
+            <th>Итого герметика на ед.продукции</th>
             <td style="text-align: right">кг</td>
-            <th style="text-align: right"><?= round($recipe_weight, 4) ?></th>
+            <th style="text-align: right"><?= round($recipe_weight, 4) ?> / <?= $recipeMaterials->getPercent() ?> %</th>
             <th style="text-align: right"><?= round(($recipeMaterials->summ() / $recipe_weight), 2); ?></th>
             <th style="text-align: right"><?= round($recipeMaterials->summ(), 2) ?></th>
         </tr>
         <tr><td></td><td></td><td></td><td></td><td></td></tr>
     <?php endif; ?>
-    <?php if (!empty($calculation->calculation_materials_data)): ?>            
+    <?php if (!empty($calculation->calculation_materials_data)): ?>
+        <?php $materials = unserialize($calculation->calculation_materials_data) ?>            
         <tr>
             <th>Материалы</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <th style="text-align: center">Ед.изм.</th>
+            <th style="text-align: center">Количество</th>
+            <th style="text-align: center">Цена</th>
+            <th style="text-align: center">Сумма</th>
+            <?php if ($materials->lossesValidate()): ?>
+                <th style="text-align: center">% потерь</th>
+                <th style="text-align: center">Сумма с потерями</th>
+            <?php endif; ?>
         </tr>
-        <?php $materials = unserialize($calculation->calculation_materials_data) ?>
         <?php foreach ($materials->get() as $material): ?>
             <tr>
                 <td><?= $material['title'] ?></td>
@@ -48,14 +53,60 @@
                 <td style="text-align: right"><?= round($material['quantity'], 4) ?></td>
                 <td style="text-align: right"><?= round($material['price'], 2) ?></td>
                 <td style="text-align: right"><?= round($material['summ'], 2) ?></td>
+                <?php if ($materials->lossesValidate()): ?>
+                    <td style="text-align: right"><?= $material['loss'] ?></td>
+                    <td style="text-align: right"><?= round(app\modules\classes\MyFunctions::plusPercent($material['summ'], $material['loss']), 2) ?></td>
+                <?php endif; ?>
             </tr>
         <?php endforeach; ?>
         <tr>
             <th>Итого (материалы)</th><td></td><td></td><td></td>
-            <th style="text-align: right"><?= round($materials->summ(), 2) ?></th>
+            <th style="text-align: right"><?= round($materials->summWithoutLosses(), 2) ?></th>
+            <?php if ($materials->lossesValidate()): ?>
+                <th style="text-align: right"></th>
+                <th style="text-align: right"><?= round($materials->summ(), 2) ?></th>
+            <?php endif; ?>
         </tr>
         <tr><td></td><td></td><td></td><td></td><td></td></tr>
     <?php endif; ?>
+
+    <?php if (!empty($calculation->calculation_materials_additional_data)): ?>
+        <?php $materials = unserialize($calculation->calculation_materials_additional_data) ?>            
+        <tr>
+            <th>Вспомогательные материалы</th>
+            <th style="text-align: center">Ед.изм.</th>
+            <th style="text-align: center">Количество</th>
+            <th style="text-align: center">Цена</th>
+            <th style="text-align: center">Сумма</th>
+            <?php if ($materials->lossesValidate()): ?>
+                <th style="text-align: center">% потерь</th>
+                <th style="text-align: center">Сумма с потерями</th>
+            <?php endif; ?>
+        </tr>
+        <?php foreach ($materials->get() as $material): ?>
+            <tr>
+                <td><?= $material['title'] ?></td>
+                <td style="text-align: right"><?= $material['unit'] ?></td>
+                <td style="text-align: right"><?= round($material['quantity'], 4) ?></td>
+                <td style="text-align: right"><?= round($material['price'], 4) ?></td>
+                <td style="text-align: right"><?= round($material['summ'], 2) ?></td>
+                <?php if ($materials->lossesValidate()): ?>
+                    <td style="text-align: right"><?= $material['loss'] ?></td>
+                    <td style="text-align: right"><?= round(app\modules\classes\MyFunctions::plusPercent($material['summ'], $material['loss']), 2) ?></td>
+                <?php endif; ?>
+            </tr>
+        <?php endforeach; ?>
+        <tr>
+            <th>Итого (вспомогательные материалы)</th><td></td><td></td><td></td>
+            <th style="text-align: right"><?= round($materials->summWithoutLosses(), 2) ?></th>
+            <?php if ($materials->lossesValidate()): ?>
+                <th style="text-align: right"></th>
+                <th style="text-align: right"><?= round($materials->summ(), 2) ?></th>
+            <?php endif; ?>
+        </tr>
+        <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    <?php endif; ?>
+
     <?php if (!empty($calculation->calculation_materials_data)): ?>            
         <tr>
             <th>Упаковка</th>

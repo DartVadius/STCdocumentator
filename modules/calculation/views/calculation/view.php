@@ -67,6 +67,7 @@ $this->params['breadcrumbs'][] = 'Просмотр';
                 ],
             ])
             ?>
+            <br>
             <?= $this->render('@app/modules/calculation/views/partials/calculation_static_part', ['calculation' => $calculation]) ?>
         </div>
     </div>
@@ -75,7 +76,7 @@ $this->params['breadcrumbs'][] = 'Просмотр';
     $(document).ready(function () {
         $('#print_button').click(function (e) {
             e.preventDefault();
-            var printing_css = '<style media="print">td, th {border-bottom:0.2px solid grey;} th {text-align: left} h2, th, td {font-size: 75%;}</style>';
+            var printing_css = '<style media="print">table {border-collapse: collapse} td, th {border:0.2px solid grey;} th {text-align: left} h2, th, td {font-size: 75%;}</style>';
             var html = printing_css + $('#print').html();
             var iframe = $('<iframe id="print_frame">');
             $('body').append(iframe);

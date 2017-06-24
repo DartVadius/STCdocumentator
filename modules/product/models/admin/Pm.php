@@ -12,7 +12,8 @@ use Yii;
  * @property string $pm_material_id
  * @property string $pm_quantity
  * @property string $pm_unit_id
- * @property integer $pm_square
+ * @property decimal $pm_square
+ * @property decimal $pm_loss
  *
  * @property Unit $pmUnit
  * @property Material $pmMaterial
@@ -36,7 +37,7 @@ class Pm extends \yii\db\ActiveRecord
         return [
             [['pm_product_id', 'pm_material_id', 'pm_quantity', 'pm_unit_id', 'pm_square'], 'required'],
             [['pm_product_id', 'pm_material_id', 'pm_unit_id', 'pm_square'], 'integer'],
-            [['pm_quantity'], 'number'],
+            [['pm_quantity', 'pm_loss'], 'number'],
             [['pm_product_id', 'pm_material_id'], 'unique', 'targetAttribute' => ['pm_product_id', 'pm_material_id'], 'message' => 'The combination of Pm Product ID and Pm Material ID has already been taken.'],
             [['pm_unit_id'], 'exist', 'skipOnError' => true, 'targetClass' => Unit::className(), 'targetAttribute' => ['pm_unit_id' => 'unit_id']],
             [['pm_material_id'], 'exist', 'skipOnError' => true, 'targetClass' => Material::className(), 'targetAttribute' => ['pm_material_id' => 'material_id']],
@@ -56,6 +57,7 @@ class Pm extends \yii\db\ActiveRecord
             'pm_quantity' => 'Расход',
             'pm_unit_id' => 'Ед.учета',
             'pm_square' => 'Расход на м2',
+            'pm_loss' => 'Плановые потери %',
         ];
     }
 

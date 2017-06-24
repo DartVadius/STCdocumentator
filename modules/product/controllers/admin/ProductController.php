@@ -12,6 +12,7 @@ use app\modules\product\models\admin\Papr;
 use app\modules\product\models\admin\Pop;
 use app\modules\product\models\admin\Op;
 use app\modules\product\models\admin\Lp;
+use app\modules\product\models\admin\Pma;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -67,6 +68,7 @@ class ProductController extends Controller {
         $dataProviderPop = new ActiveDataProvider(['query' => $model->getPops()->with('popPosition')]);
         $dataProviderOp = new ActiveDataProvider(['query' => $model->getOps()->with('opOther')]);
         $dataProviderLp = new ActiveDataProvider(['query' => $model->getLps()->with('lpLoss')]);
+        $dataProviderPma = new ActiveDataProvider(['query' => $model->getPmas()->with('pmaMaterial')]);
         return $this->render('view', [
                     'model' => $model,
                     'dataProviderPm' => $dataProviderPm,
@@ -76,6 +78,7 @@ class ProductController extends Controller {
                     'dataProviderPop' => $dataProviderPop,
                     'dataProviderOp' => $dataProviderOp,
                     'dataProviderLp' => $dataProviderLp,
+                    'dataProviderPma' => $dataProviderPma,
         ]);
     }
 

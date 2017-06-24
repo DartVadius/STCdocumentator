@@ -176,6 +176,22 @@ class Product extends \yii\db\ActiveRecord {
     public function getPmMaterials() {
         return $this->hasMany(Material::className(), ['material_id' => 'pm_material_id'])->viaTable('pm', ['pm_product_id' => 'product_id']);
     }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPmas()
+    {
+        return $this->hasMany(Pma::className(), ['pma_product_id' => 'product_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPmaMaterials()
+    {
+        return $this->hasMany(Material::className(), ['material_id' => 'pma_material_id'])->viaTable('pma', ['pma_product_id' => 'product_id']);
+    }
 
     /**
      * @return \yii\db\ActiveQuery

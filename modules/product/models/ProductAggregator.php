@@ -55,6 +55,7 @@ class ProductAggregator {
     private $updateDate;
     private $parameters = [];
     private $materials = [];
+    private $materialsAdditional = [];
     private $packs = [];
     private $solutions = [];
     private $positions = [];
@@ -83,6 +84,7 @@ class ProductAggregator {
         $this->updateDate = $product->product_update;
         $this->parameters = $product->paprs;
         $this->materials = $product->pms;
+        $this->materialsAdditional = $product->pmas;
         $this->packs = $product->paps;
         $this->solutions = $product->sps;
         $this->positions = $product->pops;
@@ -167,6 +169,45 @@ class ProductAggregator {
             $materials[$material->pm_material_id]['quantity'] = $this->calcQuantity($material) * $ratio / 1000;
             $materials[$material->pm_material_id]['summ'] = $materials[$material->pm_material_id]['price'] *
                     $materials[$material->pm_material_id]['quantity'];
+            if (!empty($material->pm_loss)) {
+                $materials[$material->pm_material_id]['loss'] = $material->pm_loss;
+            } else {
+                $materials[$material->pm_material_id]['loss'] = 0;
+            }
+        }
+        return $materials;
+    }
+
+    public function getMaterialsAdditional() {
+        $unitModel = new admin\Unit();
+        $materials = [];
+        foreach ($this->materialsAdditional as $material) {
+            $currencyRatio = 1;
+            if (!empty($material->pmaMaterial->materialCurrencyType->currency_value)) {
+                $currencyRatio = $material->pmaMaterial->materialCurrencyType->currency_value;
+            }
+            $delivery = 1;
+            if (!empty($material->pmaMaterial->material_delivery)) {
+                $delivery += $material->pmaMaterial->material_delivery / 100;
+            }
+            $materials[$material->pma_material_id]['title'] = $material->pmaMaterial->material_title;
+            $materials[$material->pma_material_id]['unit'] = $material->pmaUnit->unit_title;
+
+            $unit = $unitModel->findOne($material->pma_unit_id);
+            $ratio = $unit->unit_ratio;
+
+            $materials[$material->pma_material_id]['price'] = $material->pmaMaterial->material_price *
+                    $currencyRatio * $delivery /
+                    $material->pmaMaterial->materialUnit->unit_ratio * $ratio;
+
+            $materials[$material->pma_material_id]['quantity'] = $material->pma_quantity;
+            $materials[$material->pma_material_id]['summ'] = $materials[$material->pma_material_id]['price'] *
+                    $materials[$material->pma_material_id]['quantity'];
+            if (!empty($material->pma_loss)) {
+                $materials[$material->pma_material_id]['loss'] = $material->pma_loss;
+            } else {
+                $materials[$material->pma_material_id]['loss'] = 0;
+            }
         }
         return $materials;
     }

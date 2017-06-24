@@ -206,18 +206,14 @@ CREATE TABLE IF NOT EXISTS `pm` (
   `pm_material_id` INT(10) UNSIGNED NOT NULL,
   `pm_quantity` DECIMAL(12,4) UNSIGNED NOT NULL,
   `pm_unit_id` INT(10) UNSIGNED NOT NULL,
-  `pm_square` TINYINT(1) UNSIGNED NULL,
+  `pm_square` TINYINT(1) UNSIGNED NULL DEFAULT NULL,
+  `pm_loss` DECIMAL(5,2) UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`pm_id`),
   UNIQUE INDEX `pm_id_UNIQUE` (`pm_id` ASC),
+  UNIQUE INDEX `product_material` (`pm_product_id` ASC, `pm_material_id` ASC),
   INDEX `fk_pm_unit_idx` (`pm_unit_id` ASC),
   INDEX `fk_pm_material_idx` (`pm_material_id` ASC),
   INDEX `fk_pm_product_idx` (`pm_product_id` ASC),
-  UNIQUE INDEX `product_material` (`pm_product_id` ASC, `pm_material_id` ASC),
-  CONSTRAINT `fk_pm_unit`
-    FOREIGN KEY (`pm_unit_id`)
-    REFERENCES `unit` (`unit_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `fk_pm_material`
     FOREIGN KEY (`pm_material_id`)
     REFERENCES `material` (`material_id`)
@@ -227,8 +223,14 @@ CREATE TABLE IF NOT EXISTS `pm` (
     FOREIGN KEY (`pm_product_id`)
     REFERENCES `product` (`product_id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pm_unit`
+    FOREIGN KEY (`pm_unit_id`)
+    REFERENCES `unit` (`unit_id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
