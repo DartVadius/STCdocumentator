@@ -12,10 +12,7 @@ $this->title = 'Продукция';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 product-index">
+    <div class="col-lg-12 product-index">
         <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 

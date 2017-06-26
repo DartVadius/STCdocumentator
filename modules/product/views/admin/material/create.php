@@ -10,10 +10,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Материалы', 'url' => ['in
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 material-create">
+    <div class="col-lg-12 material-create">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?=

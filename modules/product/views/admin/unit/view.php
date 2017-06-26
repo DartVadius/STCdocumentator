@@ -11,10 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Ед.изм', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $model->unit_id;
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 unit-view">
+    <div class="col-lg-12 unit-view">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <p>

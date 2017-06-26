@@ -11,10 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => $calculation->calculation_product_t
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 ">
+    <div class="col-lg-12">
         <div class="row">            
             <div class="col-lg-12">
                 <div class="calculation-create">

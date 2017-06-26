@@ -9,6 +9,7 @@ use app\modules\product\models\admin\Product;
 use app\modules\calculation\models\CalculationAggregator;
 use app\modules\calculation\models\admin\Calculation;
 use app\modules\calculation\models\admin\CalculationSearch;
+use app\modules\classes\Connector;
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
@@ -41,36 +42,10 @@ class CalculationController extends Controller {
 
     public function actionCreate($id_product = null) {
         $product = new Product();
-        $calculation = new Calculation();
         $productAggregator = new ProductAggregator($product->findOne($id_product));
-        $params = $productAggregator->getParams();
-        $materials = $productAggregator->getMaterials();
-        $materialsAdditional = $productAggregator->getMaterialsAdditional();
-        $recipe = $productAggregator->getRecipe();
-        $packs = $productAggregator->getPacks();
-        $positions = $productAggregator->getPositions();
-        $expenses = $productAggregator->getExpenses();
-        $losses = $productAggregator->getLosses();
-        $calculationAggregator = new CalculationAggregator($params, $materials, $materialsAdditional, $recipe, $packs, $positions, $expenses, $losses);
-//print_r($calculationAggregator);
-//        die;
-        $calculation->calculation_product_title = $calculationAggregator->params->title;
-        $calculation->calculation_product_id = $calculationAggregator->params->product_id;
-        $calculation->calculation_date = date('Y-m-d H:i:s');
-        $calculation->calculation_product_capacity_hour = $calculationAggregator->params->capacity;
-        $calculation->calculation_weight = $calculationAggregator->params->weight;
-        $calculation->calculation_length = $calculationAggregator->params->length;
-        $calculation->calculation_width = $calculationAggregator->params->width;
-        $calculation->calculation_thickness = $calculationAggregator->params->thickness;
-        $calculation->calculation_unit = $calculationAggregator->params->unit;
-        $calculation->calculation_recipe_data = serialize($calculationAggregator->recipe);
-        $calculation->calculation_materials_data = serialize($calculationAggregator->materials);
-        $calculation->calculation_materials_additional_data = serialize($calculationAggregator->materialsAdditional);
-        $calculation->calculation_packs_data = serialize($calculationAggregator->packs);
-        $calculation->calculation_positions_data = serialize($calculationAggregator->positions);
-        $calculation->calculation_expenses_data = serialize($calculationAggregator->expenses);
-        $calculation->calculation_losses_data = serialize($calculationAggregator->losses);
-        
+        $calculationAggregator = Connector::getCalculationAggregator($productAggregator);
+        $calculation = Connector::setCalculationModel($calculationAggregator);
+
         if ($calculation->load(Yii::$app->request->post()) && $calculation->save()) {
             return $this->redirect(['view', 'id' => $calculation->calculation_id]);
         } else {
@@ -79,7 +54,7 @@ class CalculationController extends Controller {
             ]);
         }
     }
-    
+
     public function actionUpdate($id) {
         $calculation = $this->findModel($id);
         if ($calculation->load(Yii::$app->request->post()) && $calculation->save()) {
@@ -100,9 +75,19 @@ class CalculationController extends Controller {
         $this->findModel($id)->delete();
         return $this->redirect(['index']);
     }
-    
+
     public function actionMenu() {
         return $this->render('menu');
+    }
+
+    public function actionConsolidatedStatement() {
+        $aggregat = CalculationAggregator::findCalculationByCategoryId();
+        $count = CalculationAggregator::findMaxPacksCount($aggregat);
+        $data = CalculationAggregator::getDataForConsolidatedStatement($aggregat);
+        return $this->render('consolidated-statement', [
+                    'aggregat' => $data,
+                    'pack_count' => $count,
+        ]);
     }
 
     protected function findModel($id) {

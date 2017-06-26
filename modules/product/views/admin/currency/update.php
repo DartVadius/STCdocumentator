@@ -11,10 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->currency_code, 'url' => ['v
 $this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 currency-update">
+    <div class="col-lg-12 currency-update">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?=

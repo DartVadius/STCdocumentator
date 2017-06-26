@@ -11,10 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Потери', 'url' => ['index']]
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 loss-view">
+    <div class="col-lg-12 loss-view">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <p>

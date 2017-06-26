@@ -11,10 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->recipe_title, 'url' => ['vi
 $this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 recipe-update">
+    <div class="col-lg-12 recipe-update">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?=

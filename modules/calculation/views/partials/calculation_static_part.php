@@ -23,7 +23,6 @@
                 </tr>
             <?php endforeach; ?>
             <tr><td></td><td></td><td></td><td></td><td></td></tr>
-        <?php endif; ?>
         <tr>
             <th>Итого герметика на ед.продукции</th>
             <td style="text-align: right">кг</td>
@@ -31,6 +30,8 @@
             <th style="text-align: right"><?= round(($recipeMaterials->summ() / $recipe_weight), 2); ?></th>
             <th style="text-align: right"><?= round($recipeMaterials->summ(), 2) ?></th>
         </tr>
+        
+        <?php endif; ?>
         <tr><td></td><td></td><td></td><td></td><td></td></tr>
     <?php endif; ?>
     <?php if (!empty($calculation->calculation_materials_data)): ?>

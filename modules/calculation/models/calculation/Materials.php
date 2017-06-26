@@ -47,6 +47,11 @@ class Materials implements iCalculation {
         return $this->materials;
     }
     
+    /**
+     * check of presence of planned losses at additional materials
+     * 
+     * @return boolean
+     */
     public function lossesValidate() {
         foreach ($this->materials as $material) {
             if (!empty($material['loss'])) {
@@ -54,6 +59,17 @@ class Materials implements iCalculation {
             }
         }
         return FALSE;
+    }
+    
+    public function getSummWeight() {
+        if (empty($this->materials)) {
+            return FALSE;
+        }
+        $weight = 0;
+        foreach ($this->materials as $material) {
+            $weight += $material['quantity'];
+        }
+        return $weight;
     }
 
 }

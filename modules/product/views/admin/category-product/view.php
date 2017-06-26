@@ -11,10 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Категория', 'url' => ['in
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 category-product-view">
+    <div class="col-lg-12 category-product-view">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <p>

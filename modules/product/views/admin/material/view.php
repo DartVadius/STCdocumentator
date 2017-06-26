@@ -12,10 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Материалы', 'url' => ['in
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 material-view">
+    <div class="col-lg-12 material-view">
         <h1><?= Html::encode($this->title) ?></h1>
         <?php if (!empty($product)): ?>
             <p class="alert alert-warning">Невозможно удалить материал. Удалите его в продуктах: <?= $product ?></p>

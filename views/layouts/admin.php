@@ -24,7 +24,6 @@ AppAsset::register($this);
     </head>
     <body>
         <?php $this->beginBody() ?>
-
         <div class="wrap">
             <?php
             $menuItems = [];
@@ -43,7 +42,7 @@ AppAsset::register($this);
                 'brandLabel' => 'Documentator',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
-                    'class' => 'navbar-inverse navbar-fixed-top',
+                    'class' => 'navbar-inverse navbar-fixed-top', //navbar-fixed-top
                 ],
             ]);
             echo Nav::widget([
@@ -52,15 +51,16 @@ AppAsset::register($this);
             ]);
             NavBar::end();
             ?>
-
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-3 blog-sidebar">
-                        <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status > 30): ?>
-                            <p class="btn btn-block btn-primary">Админпанель</p>
-                        <?php endif; ?>
+                    <div class="col-lg-3">
+                        <?php
+                        if (!Yii::$app->user->isGuest) {
+                            echo $this->render('@app/views/partials/side_menu');
+                        }
+                        ?>
                     </div>
-                    <div class="col-lg-9">
+                    <div class="col-lg-9 top-margin">
                         <?php
                         if (!Yii::$app->user->isGuest) {
                             echo Breadcrumbs::widget([
@@ -72,23 +72,21 @@ AppAsset::register($this);
                             ]);
                         }
                         ?>
-
+<?= $content ?>
                     </div>
                 </div>
-
-                <?= $content ?>
             </div>
-        </div>
 
+        </div>
         <footer class="footer">
-            <div class="container">
+            <div class="container-fluid">
                 <p class="pull-left">&copy; STC Ltd <?= date('Y') ?></p>
 
                 <p class="pull-right"><?= Yii::powered() ?></p>
             </div>
         </footer>
 
-        <?php $this->endBody() ?>
+<?php $this->endBody() ?>
     </body>
 </html>
 <?php $this->endPage() ?>

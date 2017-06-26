@@ -11,10 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->category_product_title, 'ur
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 category-product-update">
+    <div class="col-lg-12 category-product-update">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?=

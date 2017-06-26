@@ -21,7 +21,7 @@ class Packs implements iCalculation {
             foreach ($this->packs as $pack) {
                 $summ += $pack['value'];
             }
-        }        
+        }
         return $summ;
     }
 
@@ -32,5 +32,17 @@ class Packs implements iCalculation {
     public function get() {
         return $this->packs;
     }
-    
+
+    public function sortPacksByCapacity() {
+        if (empty($this->packs)) {
+            return FALSE;
+        }
+        $sort = [];
+        foreach ($this->packs as $pack) {
+            $sort[(int) $pack['capacity']] = $pack;
+        }
+        ksort($sort);
+        $this->packs = $sort;
+    }
+
 }

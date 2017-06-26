@@ -171,6 +171,7 @@ class ProductController extends Controller {
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $newProduct = $this->copy($model, $product);
+            $newProduct->product_title .= ' (копия)';
             $newProduct->product_date = date('Y-m-d H:i:s');
             $newProduct->product_update = date('Y-m-d H:i:s');
             $newProduct->save();

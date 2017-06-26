@@ -12,10 +12,7 @@ $this->params['breadcrumbs'][] = ['label' => $calculation->calculation_product_t
 $this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 category-update">
+    <div class="col-lg-12 category-update">
         <h1><?= Html::encode($this->title) ?></h1>
 
         <?=

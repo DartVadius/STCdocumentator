@@ -8,11 +8,11 @@
     float: right
 }
 
-#w0 ul{
+#menu_left_custom ul{
     width: 100%;
     margin-bottom: 20px;
 }
 
-#w0 ul li {
+#menu_left_custom ul li {
     padding: 0px, 5px;
 }

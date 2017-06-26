@@ -9,10 +9,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Калькуляции', 'url' => 
 $this->params['breadcrumbs'][] = 'Просмотр';
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 ">
+    <div class="col-lg-12">
         <p>
             <?=
             Html::a('Удалить', ['delete', 'id' => $calculation->calculation_id], [

@@ -11,10 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Упаковка', 'url' => ['inde
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 pack-view">
+    <div class="col-lg-12 pack-view">
         <h1><?= Html::encode($this->title) ?></h1>
         <?php if (!empty($product)): ?>
             <p class="alert alert-warning">Невозможно удалить упаковку. Удалите ее в продуктах: <?= $product ?></p>

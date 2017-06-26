@@ -4,6 +4,7 @@ namespace app\modules\calculation\models\admin;
 
 use Yii;
 use app\modules\product\models\admin\Product;
+use app\modules\product\models\admin\CategoryProduct;
 
 /**
  * This is the model class for table "calculation".
@@ -26,27 +27,27 @@ use app\modules\product\models\admin\Product;
  * @property string $calculation_positions_data
  * @property string $calculation_expenses_data
  * @property string $calculation_losses_data
+ * @property string $calculation_archive
  *
  * @property Product $calculationProduct
+ * @property Calculation $calculation
  */
-class Calculation extends \yii\db\ActiveRecord
-{
+class Calculation extends \yii\db\ActiveRecord {
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'calculation';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['calculation_product_id', 'calculation_product_capacity_hour', 'calculation_weight',], 'integer'],
-            [['calculation_length', 'calculation_width', 'calculation_thickness', ], 'number'],
+            [['calculation_length', 'calculation_width', 'calculation_thickness',], 'number'],
             [['calculation_product_title', 'calculation_date', 'calculation_product_capacity_hour'], 'required'],
             [['calculation_date', 'calculation_archive'], 'safe'],
             [['calculation_note', 'calculation_materials_data', 'calculation_materials_additional_data', 'calculation_recipe_data', 'calculation_packs_data', 'calculation_positions_data', 'calculation_expenses_data', 'calculation_losses_data'], 'string'],
@@ -58,8 +59,7 @@ class Calculation extends \yii\db\ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'calculation_id' => 'Calculation ID',
             'calculation_product_id' => 'Calculation Product ID',
@@ -86,8 +86,7 @@ class Calculation extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCalculationProduct()
-    {
+    public function getCalculationProduct() {
         return $this->hasOne(Product::className(), ['product_id' => 'calculation_product_id']);
     }
 
@@ -95,8 +94,7 @@ class Calculation extends \yii\db\ActiveRecord
      * @inheritdoc
      * @return CalculationQuery the active query used by this AR class.
      */
-    public static function find()
-    {
+    public static function find() {
         return new CalculationQuery(get_called_class());
     }
 }

@@ -5,7 +5,6 @@ use yii\bootstrap\Nav;
 $this->registerCssFile('@web/css/left_menu.css');
 $adminMenuItems = [];
 if (Yii::$app->user->identity->status > 30) {
-
     $adminMenuItems[] = [
         'label' => 'Управление номенклатурой',
         'items' => [
@@ -54,15 +53,17 @@ if (Yii::$app->user->identity->status == 100) {
     ];
 }
 ?>
-
-
-<?php
-
-echo Nav::widget([
-    'options' => [
-        'class' => 'nav nav-pills nav-stacked'
-    ],
-    'items' => $adminMenuItems,
-]);
-?>
-<?php // $this->registerJsFile('@web/js/left_menu.js'); ?>
+<div id="my-left-menu" class="col-lg-3 navbar-fixed-top top-margin">
+    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status > 30): ?>
+        <p class="list-group-item active">Админпанель</p>
+    <?php endif; ?>
+    <?php
+    echo Nav::widget([
+        'options' => [
+            'class' => 'nav nav-pills nav-stacked',
+            'id' => 'menu_left_custom'
+        ],
+        'items' => $adminMenuItems,
+    ]);
+    ?>
+</div>

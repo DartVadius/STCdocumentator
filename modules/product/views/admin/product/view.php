@@ -8,14 +8,11 @@ use yii\grid\GridView;
 /* @var $model app\models\admin\Product */
 
 $this->title = $model->product_title;
-$this->params['breadcrumbs'][] = ['label' => 'Продукты', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Продукция', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
-    <div class="col-lg-3">
-        <?= $this->render('@app/views/partials/side_menu') ?>
-    </div>
-    <div class="col-lg-9 view">
+    <div class="col-lg-12 view">
         <h1><?= Html::encode($this->title) ?>
             <?php if (!empty($model->productRecipe)): ?> 
                 <span class="small"><?= Html::encode($model->productRecipe->recipe_title) ?></span>
