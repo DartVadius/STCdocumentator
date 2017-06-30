@@ -134,7 +134,6 @@ class ProductAggregator {
         $params['title'] = $this->title;
         $params['capacity'] = $this->capacity;
         $params['date'] = $this->updateDate;
-        $params['note'] = $this->note;
         $params['weight'] = $this->weight;
         $params['length'] = $this->length;
         $params['width'] = $this->width;

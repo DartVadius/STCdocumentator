@@ -24,11 +24,13 @@ use app\modules\product\models\admin\Category;
     } catch (Exception $ex) {
         $activ = NULL;
     }
-
     $material = [];
     if (!empty($activ)) {
         $where = ['material_category_id' => $activ];
         $materials = Material::find()->where($where)->all();
+        $material = ArrayHelper::map($materials, 'material_id', 'material_title');
+    } elseif (!empty($model->pma_material_id)) {
+        $materials = Material::find()->where(['material_id' => $model->pma_material_id])->all();
         $material = ArrayHelper::map($materials, 'material_id', 'material_title');
     }
     $params = [
@@ -50,7 +52,7 @@ use app\modules\product\models\admin\Category;
     <label name="product_category">Категория</label>
     <select name="product_category" id="product_category" class="form-control">
         <option>Выберите категорию</option>
-        <option value="0">Без категории</option>
+        <option value="0" <?= (empty($activ) && !empty($model->pma_material_id)) ? 'selected' : ''; ?>>Без категории</option>
         <?php foreach ($categories as $key => $value): ?>
             <option value="<?= $key ?>" <?= (!empty($activ) && $activ == $key) ? 'selected' : ''; ?>><?= $value ?></option>
         <?php endforeach; ?>
@@ -65,6 +67,8 @@ use app\modules\product\models\admin\Category;
     <?= $form->field($model, 'pma_unit_id')->dropDownList($unit, $paramsUnit) ?>
 
     <?= $form->field($model, 'pma_loss')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'pma_weight')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

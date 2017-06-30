@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-lg-12 calculation-index">
         <h1><?= Html::encode($this->title) ?></h1>
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+        <?= Html::a('Переформировать калькуляции', ['recreate'], ['class' => 'btn btn-danger']) ?>
         <?=
         GridView::widget([
             'dataProvider' => $dataProvider,

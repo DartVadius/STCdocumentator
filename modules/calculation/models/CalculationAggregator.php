@@ -14,6 +14,9 @@ use app\modules\calculation\models\calculation\Losses;
 use app\modules\product\models\admin\Product;
 use app\modules\product\models\admin\CategoryProduct;
 use app\modules\directory\models\Config;
+use app\modules\classes\Connector;
+use app\modules\product\models\ProductAggregator;
+use app\modules\calculation\models\admin\CalculationRepo;
 
 /**
  * Description of CalculationAggregator
@@ -49,10 +52,12 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
         $this->positions = new Positions($positions);
         $this->expenses = new Expenses($expenses);
         $this->losses = new Losses($losses, $this->summRealExpenses());
+        return $this;
     }
 
     public function setId($id) {
         $this->id = $id;
+        return $this;
     }
 
     public function __get($name) {
@@ -142,6 +147,11 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
         return $count;
     }
 
+    /**
+     * 
+     * @param array $aggregat
+     * @return boolean | array
+     */
     public static function getDataForConsolidatedStatement($aggregat) {
         $config = new Config();
         $data = [];
@@ -164,6 +174,25 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
             }
         }
         return $data;
+    }
+
+    /**
+     * make all old calculations archival and create new of not archival products
+     * 
+     * @return boolean
+     */
+    public static function recreateCalculations() {
+        $productModel = new Product();
+        $repo = new CalculationRepo();
+        $repo->saveAllasArchived();
+        $allProducts = $productModel->find()->where(['product_archiv' => '0'])->all();
+        foreach ($allProducts as $product) {
+            $productAggregator = new ProductAggregator($product);
+            $calculationAggregator = Connector::getCalculationAggregator($productAggregator);
+            $calculation = Connector::setCalculationModel($calculationAggregator);
+            $calculation->save();
+        }
+        return TRUE;
     }
 
 }

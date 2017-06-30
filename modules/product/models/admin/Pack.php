@@ -11,7 +11,10 @@ use Yii;
  * @property string $pack_title
  * @property string $pack_desc
  * @property string $pack_price
+ * @property string $pack_weight 
+ * @property string $pack_category_id 
  *
+ * @property CategoryPack $packCategory
  * @property Pap[] $paps
  */
 class Pack extends \yii\db\ActiveRecord {
@@ -30,7 +33,9 @@ class Pack extends \yii\db\ActiveRecord {
         return [
             [['pack_title', 'pack_price'], 'required'],
             [['pack_price', 'pack_weight'], 'number'],
+            [['pack_category_id'], 'integer'],
             [['pack_title', 'pack_desc'], 'string', 'max' => 255],
+            [['pack_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryPack::className(), 'targetAttribute' => ['pack_category_id' => 'category_pack_id']],
         ];
     }
 
@@ -43,7 +48,8 @@ class Pack extends \yii\db\ActiveRecord {
             'pack_title' => 'Название упаковки',
             'pack_desc' => 'Описание',
             'pack_price' => 'Цена',
-            'pack_weight' => 'Вес упаковки, гр'
+            'pack_weight' => 'Вес упаковки, гр',
+            'pack_category_id' => 'Категория',
         ];
     }
 
@@ -60,7 +66,11 @@ class Pack extends \yii\db\ActiveRecord {
     public function getPapsProducts() {
         return $this->hasMany(Product::className(), ['product_id' => 'pap_product_id'])->viaTable('pap', ['pap_pack_id' => 'pack_id']);
     }
-    
+
+    public function getPackCategory() {
+        return $this->hasOne(CategoryPack::className(), ['category_pack_id' => 'pack_category_id']);
+    }
+
     /**
      * @inheritdoc
      * @return PackQuery the active query used by this AR class.

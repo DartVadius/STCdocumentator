@@ -30,12 +30,14 @@ class Connector {
             $params['width'] = $product->calculation_width;
             $params['thickness'] = $product->calculation_thickness;
             $params['unit'] = $product->calculation_unit;
+            $params['calculation_archive'] = $product->calculation_archive;
             $materialsData = unserialize($product->calculation_materials_data);
             $materials = $materialsData->get();
             $materialsAdditionalData = unserialize($product->calculation_materials_additional_data);
             $materialsAdditional = $materialsAdditionalData->get();
             $recipeData = unserialize($product->calculation_recipe_data);
-            $recipe = $recipeData->get();
+            $recipe['title'] = $recipeData->getTitle();
+            $recipe['materials'] = $recipeData->get();
             $packsData = unserialize($product->calculation_packs_data);
             $packs = $packsData->get();
             $positionsData = unserialize($product->calculation_positions_data);
@@ -68,6 +70,7 @@ class Connector {
         $calculation->calculation_positions_data = serialize($calculationAggregator->positions);
         $calculation->calculation_expenses_data = serialize($calculationAggregator->expenses);
         $calculation->calculation_losses_data = serialize($calculationAggregator->losses);
+        $calculation->calculation_archive = $calculationAggregator->params->calculation_archive;
         return $calculation;
     }
 

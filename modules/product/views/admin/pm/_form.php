@@ -30,6 +30,9 @@ use app\modules\product\models\admin\Category;
         $where = ['material_category_id' => $activ];
         $materials = Material::find()->where($where)->all();
         $material = ArrayHelper::map($materials, 'material_id', 'material_title');
+    } elseif (!empty($model->pm_material_id)) {
+        $materials = Material::find()->where(['material_id' => $model->pm_material_id])->all();
+        $material = ArrayHelper::map($materials, 'material_id', 'material_title');
     }
     $params = [
         'prompt' => 'Выберите материал',
@@ -49,7 +52,7 @@ use app\modules\product\models\admin\Category;
     <label name="product_category">Категория</label>
     <select name="product_category" id="product_category" class="form-control">
         <option>Выберите категорию</option>
-        <option value="0">Без категории</option>
+        <option value="0" <?= (empty($activ) && !empty($model->pm_material_id)) ? 'selected' : ''; ?>>Без категории</option>
         <?php foreach ($categories as $key => $value): ?>
             <option value="<?= $key ?>" <?= (!empty($activ) && $activ == $key) ? 'selected' : ''; ?>><?= $value ?></option>
         <?php endforeach; ?>

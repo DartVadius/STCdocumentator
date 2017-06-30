@@ -7,6 +7,7 @@ use yii\web\Controller;
 use app\modules\product\models\admin\Unit;
 use app\modules\product\models\admin\Material;
 use app\modules\product\models\admin\Category;
+use app\modules\product\models\admin\Pack;
 use yii\web\Response;
 
 /**
@@ -41,6 +42,21 @@ class AjaxController extends Controller {
             }
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ['material' => $materialById];
+        }
+    }
+    
+    public function actionPackList() {
+        if (Yii::$app->request->isAjax) {
+            $post = Yii::$app->request->post();
+            $pack = new Pack();
+            $packById = NULL;
+            if ($post['category_id']) {
+                $packById = $pack->find()->where(['pack_category_id' => $post['category_id']])->all();
+            } elseif ($post['category_id'] == '0') {
+                $packById = $pack->find()->where(['pack_category_id' => NULL])->all();
+            }
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['pack' => $packById];
         }
     }
 

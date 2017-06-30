@@ -183,6 +183,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => 'pmaUnit.unit_title'
                 ],
                 'pma_loss',
+                'pma_weight',
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'controller' => 'admin\pma',

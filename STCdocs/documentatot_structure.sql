@@ -450,6 +450,18 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
+-- Table `category_pack`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `category_pack` (
+  `category_pack_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `category_pack_title` VARCHAR(255) NOT NULL,
+  `category_pack_desc` VARCHAR(255) NULL,
+  PRIMARY KEY (`category_pack_id`),
+  UNIQUE INDEX `category_pack_id_UNIQUE` (`category_pack_id` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `pack`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pack` (
@@ -458,8 +470,15 @@ CREATE TABLE IF NOT EXISTS `pack` (
   `pack_desc` VARCHAR(255) NULL DEFAULT NULL,
   `pack_price` DECIMAL(12,4) UNSIGNED NOT NULL,
   `pack_weight` DECIMAL(12,4) UNSIGNED NULL DEFAULT NULL,
+  `pack_category_id` INT(10) UNSIGNED NULL,
   PRIMARY KEY (`pack_id`),
-  UNIQUE INDEX `pack_id_UNIQUE` (`pack_id` ASC))
+  UNIQUE INDEX `pack_id_UNIQUE` (`pack_id` ASC),
+  INDEX `fk_category_pack_idx` (`pack_category_id` ASC),
+  CONSTRAINT `fk_category_pack`
+    FOREIGN KEY (`pack_category_id`)
+    REFERENCES `category_pack` (`category_pack_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 AUTO_INCREMENT = 4
 DEFAULT CHARACTER SET = utf8;
@@ -741,6 +760,7 @@ CREATE TABLE IF NOT EXISTS `pma` (
   `pma_quantity` DECIMAL(12,4) UNSIGNED NOT NULL,
   `pma_unit_id` INT(10) UNSIGNED NOT NULL,
   `pma_loss` DECIMAL(5,2) UNSIGNED NOT NULL,
+  `pma_weight` DECIMAL(12,4) UNSIGNED NULL,
   PRIMARY KEY (`pma_id`),
   UNIQUE INDEX `pma_id_UNIQUE` (`pma_id` ASC),
   INDEX `fk_pma_material_idx` (`pma_material_id` ASC),

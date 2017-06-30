@@ -13,6 +13,7 @@ use Yii;
  * @property string $pma_quantity
  * @property string $pma_unit_id
  * @property string $pma_loss
+ * @property string $pma_weight 
  *
  * @property Material $pmaMaterial
  * @property Product $pmaProduct
@@ -36,7 +37,7 @@ class Pma extends \yii\db\ActiveRecord
         return [
             [['pma_product_id', 'pma_material_id', 'pma_quantity', 'pma_unit_id'], 'required'],
             [['pma_product_id', 'pma_material_id', 'pma_unit_id'], 'integer'],
-            [['pma_quantity', 'pma_loss'], 'number'],
+            [['pma_quantity', 'pma_loss', 'pma_weight'], 'number'],
             [['pma_product_id', 'pma_material_id'], 'unique', 'targetAttribute' => ['pma_product_id', 'pma_material_id'], 'message' => 'The combination of Pma Product ID and Pma Material ID has already been taken.'],
             [['pma_material_id'], 'exist', 'skipOnError' => true, 'targetClass' => Material::className(), 'targetAttribute' => ['pma_material_id' => 'material_id']],
             [['pma_product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::className(), 'targetAttribute' => ['pma_product_id' => 'product_id']],
@@ -56,6 +57,7 @@ class Pma extends \yii\db\ActiveRecord
             'pma_quantity' => 'Расход',
             'pma_unit_id' => 'Ед.учета',
             'pma_loss' => 'Плановые потери, %',
+            'pma_weight' => 'Вес на ед.продукции, гр',
         ];
     }
 

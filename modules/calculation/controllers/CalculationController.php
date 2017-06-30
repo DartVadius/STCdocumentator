@@ -76,6 +76,11 @@ class CalculationController extends Controller {
         return $this->redirect(['index']);
     }
 
+    public function actionRecreate() {
+        CalculationAggregator::recreateCalculations();
+        return $this->redirect(['index']);
+    }
+
     public function actionMenu() {
         return $this->render('menu');
     }

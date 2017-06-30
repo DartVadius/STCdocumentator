@@ -37,6 +37,7 @@ if (Yii::$app->user->identity->status > 30) {
             ['label' => 'Валюта', 'url' => ['/product/admin/currency/index']],
             ['label' => 'Категории материалов', 'url' => ['/product/admin/category/index']],
             ['label' => 'Категории продуктов', 'url' => ['/product/admin/category-product/index']],
+            ['label' => 'Категории упаковки', 'url' => ['/product/admin/category-pack/index']],
             ['label' => 'Настройки приложения', 'url' => ['/directory/index/config']],
         ]
     ];

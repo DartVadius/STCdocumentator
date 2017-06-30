@@ -17,6 +17,7 @@ namespace app\modules\calculation\models\calculation;
  * @property integer $width
  * @property integer $thickness
  * @property integer $unit
+ * @property integer $calculation_archive
  */
 class Params {
 
@@ -30,6 +31,7 @@ class Params {
     private $width = NULL;
     private $thickness = NULL;
     private $unit = NULL;
+    private $calculation_archive = NULL;
 
     public function __construct($params) {
         foreach ($params as $key => $value) {

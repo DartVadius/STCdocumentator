@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\modules\product\models\admin\CategoryPack;
+use app\modules\product\models\admin\CategoryProduct;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\admin\PackSearch */
@@ -30,6 +32,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'pack_title',
                 'pack_price',
                 'pack_weight',
+                [
+                    'attribute' => 'pack_category_id',
+                    'label' => 'Категория',
+                    'value' => 'packCategory.category_pack_title',
+                    'filter' => CategoryPack::find()->select(['category_pack_title', 'category_pack_id'])->indexBy('category_pack_id')->column(),
+                ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'header' => 'Действия',
