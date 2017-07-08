@@ -18,9 +18,9 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['product_id', 'product_capacity_hour', 'product_unit_id', 'product_category_id', 'product_weight', 'product_length', 'product_width', 'product_thickness', 'product_recipe_id', 'product_archiv'], 'integer'],
+            [['product_id', 'product_unit_id', 'product_category_id', 'product_weight', 'product_length', 'product_width', 'product_thickness', 'product_recipe_id', 'product_recipe_weight', 'product_archiv'], 'integer'],
             [['product_title', 'product_date', 'product_update', 'product_note', 'product_vendor_code'], 'safe'],
-            [['product_price'], 'number'],
+            [['product_capacity_hour', 'product_price'], 'number'],
         ];
     }
 
@@ -75,6 +75,7 @@ class ProductSearch extends Product
             'product_width' => $this->product_width,
             'product_thickness' => $this->product_thickness,
             'product_recipe_id' => $this->product_recipe_id,
+            'product_recipe_weight' => $this->product_recipe_weight,
             'product_archiv' => $this->product_archiv,
         ]);
 

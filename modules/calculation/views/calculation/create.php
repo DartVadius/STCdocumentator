@@ -16,6 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="col-lg-12">
                 <div class="calculation-create">
                     <h1><?= Html::encode($this->title) ?></h1>
+                    <?php if (!empty($msg)): ?>
+                    <p class="alert alert-danger"><?=$msg?></p>
+                    <?php endif; ?>
                     <?= $this->render('_form', ['calculation' => $calculation,]) ?>
                 </div>
             </div>

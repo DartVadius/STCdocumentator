@@ -15,7 +15,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-lg-12 calculation-index">
         <h1><?= Html::encode($this->title) ?></h1>
         <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-        <?= Html::a('Переформировать калькуляции', ['recreate'], ['class' => 'btn btn-danger']) ?>
+        <?=
+        Html::a('Переформировать калькуляции', ['recreate'], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                    'confirm' => 'Вы уверены?',
+                ],
+        ])
+        ?>
         <?=
         GridView::widget([
             'dataProvider' => $dataProvider,
@@ -48,6 +55,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                     'filter' => ['нет', 'да'],
                     'headerOptions' => ['width' => '100'],
+                ],
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{delete}',
                 ],
             ],
         ]);

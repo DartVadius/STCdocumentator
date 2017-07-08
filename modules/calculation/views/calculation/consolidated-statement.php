@@ -11,18 +11,19 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php if (!empty($aggregat)): ?>
             <p>
                 <button id="print_button" class="glyphicon glyphicon-print btn btn-success"></button>
+                <button id="export_button" class="glyphicon glyphicon-export btn btn-success"></button>
             </p>
             <div id="print">
                 <h3>Сводная ведомость</h3>
-                <table class="table table-bordered table-responsive table-striped table-condensed table-consolidated-statement">
+                <table id="table2excel" class="table table-bordered table-responsive table-striped table-condensed table-consolidated-statement">
                     <tr>
                         <th>Наименование продукции</th>
-                        <th>Себест. <br> грн</th>
-                        <th>Произв. <br> ед/час</th>
-                        <th>Произв. <br> ед/см.</th>
+                        <th>Себест. грн</th>
+                        <th>Произв. ед/час</th>
+                        <th>Произв. ед/см.</th>
                         <th>Рецептура</th>
-                        <th>Вес <br> нетто <br> ед., кг</th>
-                        <th>Масса <br> герм., кг</th>
+                        <th>Вес нетто ед., кг</th>
+                        <th>Масса герм., кг</th>
                         <?php if ($pack_count > 0): ?>
                             <?php for ($i = 1; $i <= $pack_count; $i++): ?>
                                 <th>Уп. <?= $i ?></th>
@@ -45,22 +46,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <?= $product['name'] ?>
                                     </td>
                                     <td style="text-align: right">
-                                        <?= $product['summ'] ?>
+                                        <?= number_format($product['summ'], 2, ',', '') ?>
                                     </td>
                                     <td style="text-align: right">
-                                        <?= $product['capacity_hour'] ?>
+                                        <?= number_format($product['capacity_hour'], 2, ',', '') ?>
                                     </td>
                                     <td style="text-align: right">
-                                        <?= $product['capacity_shift'] ?>
+                                        <?= number_format($product['capacity_shift'], 2, ',', '') ?>
                                     </td>
                                     <td>
                                         <?= $product['recipe'] ?>
                                     </td>
                                     <td style="text-align: right">
-                                        <?= $product['brutto'] ?>
+                                        <?= number_format($product['brutto'], 3, ',', '') ?>
                                     </td>
                                     <td style="text-align: right">
-                                        <?= $product['sealant_weight'] ?>
+                                        <?= number_format($product['sealant_weight'], 3, ',', '') ?>
                                     </td>
                                     <?php if (!empty($product['packs'])): ?>
                                         <?php $count = 1 ?>
@@ -70,11 +71,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </td>
                                             <?php if ($count == 1): ?>
                                                 <td style="text-align: right">
-                                                    <?= $pack['capacity'] ?>
+                                                    <?= number_format($pack['capacity'], 0, ',', '') ?>
                                                 </td>
                                             <?php else: ?>
                                                 <td style="text-align: right">
-                                                    <?= $pack['capacity'] / $tmp['capacity'] ?>
+                                                    <?= number_format($pack['capacity'] / $tmp['capacity'], 0, ',', '') ?>
                                                 </td>
                                             <?php endif; ?>
                                             <?php
@@ -82,7 +83,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                             $tmp = $pack;
                                             ?>
                                         <?php endforeach; ?>
+                                        <?php $td = $pack_count - $count + 1; ?>
+                                        <?php if ($td > 0): ?>
+                                            <?php for ($i = 1; $i <= $td; $i++): ?>
+                                                <td></td><td></td>
+                                            <?php endfor; ?>
+                                        <?php endif; ?> 
                                     <?php endif; ?>
+
                                 </tr>
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -106,6 +114,14 @@ $this->params['breadcrumbs'][] = $this->title;
             doc.getElementsByTagName('body')[0].innerHTML = html;
             win.print();
             $('iframe').remove();
+        });
+        $("#export_button").click(function () {
+            $("#table2excel").table2excel({
+                // exclude CSS class
+                exclude: ".noExl",
+                name: "Worksheet Name",
+                filename: "export" //do not include extension
+            });
         });
     });
 

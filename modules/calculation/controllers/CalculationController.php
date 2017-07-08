@@ -9,6 +9,7 @@ use app\modules\product\models\admin\Product;
 use app\modules\calculation\models\CalculationAggregator;
 use app\modules\calculation\models\admin\Calculation;
 use app\modules\calculation\models\admin\CalculationSearch;
+use app\modules\product\models\admin\CategoryProduct;
 use app\modules\classes\Connector;
 use yii\web\NotFoundHttpException;
 use yii\data\ActiveDataProvider;
@@ -42,15 +43,19 @@ class CalculationController extends Controller {
 
     public function actionCreate($id_product = null) {
         $product = new Product();
+        $msg = NULL;
         $productAggregator = new ProductAggregator($product->findOne($id_product));
         $calculationAggregator = Connector::getCalculationAggregator($productAggregator);
         $calculation = Connector::setCalculationModel($calculationAggregator);
-
-        if ($calculation->load(Yii::$app->request->post()) && $calculation->save()) {
+        if (!$productAggregator->weight && !$productAggregator->recipe_weight) {
+            $msg = 'Укажите вес продукции или вес герметика';
+        }
+        if ($calculation->load(Yii::$app->request->post()) && ($productAggregator->weight || $productAggregator->recipe_weight) && $calculation->save()) {
             return $this->redirect(['view', 'id' => $calculation->calculation_id]);
         } else {
             return $this->render('create', [
                         'calculation' => $calculation,
+                        'msg' => $msg,
             ]);
         }
     }
@@ -92,6 +97,18 @@ class CalculationController extends Controller {
         return $this->render('consolidated-statement', [
                     'aggregat' => $data,
                     'pack_count' => $count,
+        ]);
+    }
+
+    public function actionGroupStatement() {
+        $categories = CategoryProduct::find()->asArray()->all();
+        return $this->render('group-statement', [
+                    'categories' => $categories,
+        ]);
+    }
+
+    public function actionProfitability() {
+        return $this->render('profitability', [
         ]);
     }
 

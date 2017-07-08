@@ -17,6 +17,11 @@ class Losses implements iCalculation {
         $this->summ = $summ;
     }
 
+    /**
+     * summ of losses
+     * 
+     * @return string
+     */
     public function summ() {
         $summ = 0;
         if (!empty($this->losses)) {
@@ -43,8 +48,28 @@ class Losses implements iCalculation {
         return $losses;
     }
     
+    /**
+     * summ of real expenses without losses
+     * 
+     * @return string
+     */
     public function getSumm() {
         return $this->summ;
+    }
+    
+    /**
+     * get total % of losses
+     * 
+     * @return string
+     */
+    public function lossesTotal() {
+        $losses = 0;
+        if (!empty($this->losses)) {
+            foreach ($this->losses as $loss) {
+                $losses += $loss['%'];
+            }
+        }
+        return $losses;
     }
 
 }

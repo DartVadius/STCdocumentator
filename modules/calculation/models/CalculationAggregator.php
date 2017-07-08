@@ -79,6 +79,10 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
     public function summ() {
         return $this->summRealExpenses() + $this->losses->summ();
     }
+    
+    public function getNetto() {
+        
+    }
 
     /**
      * get array of unarchived calculations grouped by categories or by one category
@@ -125,6 +129,25 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
     }
 
     /**
+     * 
+     * @param array $ids
+     * @return array
+     */
+    public static function findCalculationByCategoryIds($ids) {
+        $data = [];
+        if (!empty($ids)) {
+            foreach ($ids as $category_id) {
+                $val = self::findCalculationByCategoryId($category_id);
+                $data[] = $val;
+//                foreach ($val as $key => $value) {
+//                    $data[$key] = $value;
+//                }
+            }
+        }
+        return $data;
+    }
+
+    /**
      * get array from findCalculationByCategoryId() and return maximum number
      * of packs in product
      * 
@@ -139,7 +162,7 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
         foreach ($aggregat as $calculations) {
             foreach ($calculations as $calculation) {
                 $calc = unserialize($calculation->calculation_packs_data);
-                if ($calc->count() > $count) {
+                if (!empty($calc) && ($calc->count() > $count)) {
                     $count = $calc->count();
                 }
             }
@@ -167,8 +190,8 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
                 $shift = $config->find()->where(['config_system_name' => 'shift_duration'])->one()['config_value'];
                 $data[$group][$key]['capacity_shift'] = $agg->params->capacity * $shift;
                 $data[$group][$key]['recipe'] = $agg->recipe->getTitle();
-                $data[$group][$key]['brutto'] = $agg->params->weight / 1000;
-                $data[$group][$key]['sealant_weight'] = $agg->params->weight / 1000 - $agg->materials->getSummWeight();
+                $data[$group][$key]['brutto'] = $agg->recipe->getNetto() + $agg->materials->getNetto() + $agg->materialsAdditional->getNetto();
+                $data[$group][$key]['sealant_weight'] = $agg->recipe->getNetto();
                 $agg->packs->sortPacksByCapacity();
                 $data[$group][$key]['packs'] = $agg->packs->get();
             }

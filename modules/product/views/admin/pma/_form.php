@@ -69,6 +69,8 @@ use app\modules\product\models\admin\Category;
     <?= $form->field($model, 'pma_loss')->textInput(['maxlength' => true]) ?>
     
     <?= $form->field($model, 'pma_weight')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'pma_brutto')->textInput()->checkbox() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Добавить' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

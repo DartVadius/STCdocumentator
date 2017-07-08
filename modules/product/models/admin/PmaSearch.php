@@ -18,7 +18,7 @@ class PmaSearch extends Pma
     public function rules()
     {
         return [
-            [['pma_id', 'pma_product_id', 'pma_material_id', 'pma_unit_id'], 'integer'],
+            [['pma_id', 'pma_product_id', 'pma_material_id', 'pma_unit_id', 'pma_brutto'], 'integer'],
             [['pma_quantity', 'pma_loss'], 'number'],
         ];
     }
@@ -65,6 +65,7 @@ class PmaSearch extends Pma
             'pma_quantity' => $this->pma_quantity,
             'pma_unit_id' => $this->pma_unit_id,
             'pma_loss' => $this->pma_loss,
+            'pma_brutto' => $this->pma_brutto
         ]);
 
         return $dataProvider;

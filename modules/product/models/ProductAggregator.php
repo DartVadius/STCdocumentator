@@ -23,8 +23,10 @@ use app\modules\product\models\admin\Pm;
  * @property string $note
  * @property string $vendorCode
  * @property string $archive
+ * @property string $recipe_weight
  *
  * @property Unit $unit
+ * @property Recipe $recipe
  * @property CategoryProduct $category
  * @property array $materials           array of Pm objects
  * @property array $packs               array of Pap objects
@@ -42,13 +44,14 @@ class ProductAggregator {
     private $unit; //object
     private $price;
     private $category; //object
-    private $weight;
+    private $weight = 0;
     private $length;
     private $width;
     private $square;
     private $thickness;
     private $note;
     private $recipe; //object
+    private $recipe_weight;
     private $vendorCode;
     private $archive;
     private $createDate;
@@ -78,6 +81,7 @@ class ProductAggregator {
         $this->thickness = $product->product_thickness;
         $this->note = $product->product_note;
         $this->recipe = $product->productRecipe;
+        $this->recipe_weight = $product->product_recipe_weight;
         $this->vendorCode = $product->product_vendor_code;
         $this->archive = $product->product_archiv;
         $this->createDate = $product->product_date;
@@ -207,6 +211,16 @@ class ProductAggregator {
             } else {
                 $materials[$material->pma_material_id]['loss'] = 0;
             }
+            if (!empty($material->pma_weight)) {
+                $materials[$material->pma_material_id]['weight'] = $material->pma_weight / 1000;
+            } else {
+                $materials[$material->pma_material_id]['weight'] = 0;
+            }
+            if (!empty($material->pma_brutto)) {
+                $materials[$material->pma_material_id]['brutto'] = $material->pma_brutto;
+            } else {
+                $materials[$material->pma_material_id]['brutto'] = 0;
+            }
         }
         return $materials;
     }
@@ -214,15 +228,23 @@ class ProductAggregator {
     /**
      * get sealant weight in gramms
      * 
-     * @return int|boolean
+     * @return int | boolean
      */
     private function getRecipeWeight() {
         $weightOther = 0;
-        if (empty($this->weight)) {
+        if (empty($this->weight) && empty($this->recipe_weight)) {
             return FALSE;
+        }
+        if (!empty($this->recipe_weight)) {
+            return $this->recipe_weight;
         }
         foreach ($this->materials as $material) {
             $weightOther += $material->pmUnit->unit_ratio * $this->calcQuantity($material);
+        }
+        foreach ($this->materialsAdditional as $addMaterial) {
+            if (empty($addMaterial->pma_brutto)) {
+                $weightOther += $addMaterial->pma_weight;
+            }
         }
         return $this->weight - $weightOther;
     }

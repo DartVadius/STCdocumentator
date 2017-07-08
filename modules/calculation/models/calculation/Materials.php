@@ -61,7 +61,7 @@ class Materials implements iCalculation {
         return FALSE;
     }
     
-    public function getSummWeight() {
+    public function getNetto() {
         if (empty($this->materials)) {
             return FALSE;
         }

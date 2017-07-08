@@ -46,7 +46,38 @@ class MaterialsAdditional implements iCalculation {
     public function get() {
         return $this->materialsAdditional;
     }
+
+    public function getNetto() {
+        $netto = 0;
+        if (empty($this->materialsAdditional)) {
+            return $netto;
+        }
+        foreach ($this->materialsAdditional as $material) {
+            if (empty($material['brutto'])) {
+                $netto += $material['weight'];
+            }
+        }
+        return $netto;
+    }
     
+    public function getBrutto() {
+        $brutto = 0;
+        foreach ($this->materialsAdditional as $material) {
+            if (!empty($material['brutto'])) {
+                $brutto += $material['weight'];
+            }
+        }
+        return $brutto;
+    }
+
+    /**
+     * проверяем наличие дополнительных потерь в материалах,
+     * если есть хоть одно совпадение, возвращаем TRUE
+     * используется для определения необходимости отрисовки дополнительных полей в калькуляции
+     * 
+     * 
+     * @return boolean
+     */
     public function lossesValidate() {
         foreach ($this->materialsAdditional as $material) {
             if (!empty($material['loss'])) {

@@ -50,7 +50,7 @@ use app\modules\product\models\admin\Recipe;
             <?= $form->field($model, 'product_recipe_id')->dropDownList($recipe, $recipeParams)->label('Рецептура') ?>
         </div>
         <div class="col-lg-3">
-            <?= $form->field($model, 'product_category_id')->dropDownList($category, $catParams)->label('Категория') ?>
+            <?= $form->field($model, 'product_recipe_weight')->textInput(['maxlength' => true])->hint('Если указан, нетто продукта рассчитывается прямым методом') ?>            
         </div>
     </div>
     <div class="row">
@@ -69,13 +69,13 @@ use app\modules\product\models\admin\Recipe;
     </div>
     <div class="row">
         <div class="col-lg-3">
+            <?= $form->field($model, 'product_category_id')->dropDownList($category, $catParams)->label('Категория') ?>
+        </div>
+        <div class="col-lg-3">
             <?= $form->field($model, 'product_price')->textInput(['maxlength' => true]) ?>
         </div>
         <div class="col-lg-3">
             <?= $form->field($model, 'product_vendor_code')->textInput(['maxlength' => true]) ?>
-        </div>
-        <div class="col-lg-3">
-
         </div>
         <div class="col-lg-3">
 
@@ -95,3 +95,17 @@ use app\modules\product\models\admin\Recipe;
     <?php ActiveForm::end(); ?>
 
 </div>
+<script>
+    $(document).ready(function () {
+        if ($('#product-product_recipe_id').val() === '') {
+            $('#product-product_recipe_weight').prop('disabled', true);
+        }
+        $('#product-product_recipe_id').change(function () {
+            if ($('#product-product_recipe_id').val() === '') {
+                $('#product-product_recipe_weight').prop('disabled', true);
+            } else {
+                $('#product-product_recipe_weight').prop('disabled', false);
+            }
+        });
+    });
+</script>

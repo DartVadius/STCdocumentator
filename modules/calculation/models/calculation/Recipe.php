@@ -23,22 +23,22 @@ class Recipe implements iCalculation {
             foreach ($this->materials as $material) {
                 $summ += $material['summ'];
             }
-        }        
+        }
         return $summ;
     }
 
     public function count() {
         return count($this->materials);
     }
-    
+
     public function getTitle() {
         return $this->title;
     }
-    
+
     public function get() {
         return $this->materials;
     }
-    
+
     public function getPercent() {
         $summ = 0;
         if (!empty($this->materials)) {
@@ -47,6 +47,14 @@ class Recipe implements iCalculation {
             }
         }
         return $summ;
+    }
+
+    public function getNetto() {
+        $netto = 0;
+        foreach ($this->materials as $material) {
+            $netto += $material['quantity'];
+        }
+        return $netto;
     }
 
 }

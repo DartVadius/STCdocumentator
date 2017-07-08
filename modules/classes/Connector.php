@@ -32,20 +32,41 @@ class Connector {
             $params['unit'] = $product->calculation_unit;
             $params['calculation_archive'] = $product->calculation_archive;
             $materialsData = unserialize($product->calculation_materials_data);
-            $materials = $materialsData->get();
+            $materials = NULL;
+            if (!empty($materialsData)) {
+                $materials = $materialsData->get();
+            }
             $materialsAdditionalData = unserialize($product->calculation_materials_additional_data);
-            $materialsAdditional = $materialsAdditionalData->get();
+            $materialsAdditional = NULL;
+            if (!empty($materialsAdditionalData)) {
+                $materialsAdditional = $materialsAdditionalData->get();
+            }
             $recipeData = unserialize($product->calculation_recipe_data);
-            $recipe['title'] = $recipeData->getTitle();
-            $recipe['materials'] = $recipeData->get();
+            $recipe = [];
+            if (!empty($recipeData)) {
+                $recipe['title'] = $recipeData->getTitle();
+                $recipe['materials'] = $recipeData->get();
+            }
             $packsData = unserialize($product->calculation_packs_data);
-            $packs = $packsData->get();
+            $packs = NULL;
+            if (!empty($packsData)) {
+                $packs = $packsData->get();
+            }
             $positionsData = unserialize($product->calculation_positions_data);
-            $positions = $positionsData->get();
+            $positions = NULL;
+            if (!empty($positionsData)) {
+                $positions = $positionsData->get();
+            }
             $expensesData = unserialize($product->calculation_expenses_data);
-            $expenses = $expensesData->get();
+            $expenses = NULL;
+            if (!empty($expensesData)) {
+                $expenses = $expensesData->get();
+            }
             $lossesData = unserialize($product->calculation_losses_data);
-            $losses = $lossesData->get();
+            $losses = NULL;
+            if (!empty($lossesData)) {
+                $losses = $lossesData->get();
+            }
             $calculationAggregator = new CalculationAggregator($params, $materials, $materialsAdditional, $recipe, $packs, $positions, $expenses, $losses);
             $calculationAggregator->setId($product->calculation_id);
             return $calculationAggregator;

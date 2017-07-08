@@ -10,25 +10,24 @@ use app\modules\product\models\admin\Pack;
 /**
  * PackSearch represents the model behind the search form about `app\models\admin\Pack`.
  */
-class PackSearch extends Pack
-{
+class PackSearch extends Pack {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
-            [['pack_id'], 'integer'],
+            [['pack_id', 'pack_category_id'], 'integer'],
             [['pack_title', 'pack_desc'], 'safe'],
             [['pack_price', 'pack_weight'], 'number'],
+            
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,14 +39,16 @@ class PackSearch extends Pack
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
-        $query = Pack::find();
+    public function search($params) {
+        $query = Pack::find()->with(['packCategory']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
         ]);
 
         $this->load($params);
@@ -62,11 +63,13 @@ class PackSearch extends Pack
         $query->andFilterWhere([
             'pack_id' => $this->pack_id,
             'pack_price' => $this->pack_price,
+            'pack_category_id' => $this->pack_category_id,
         ]);
 
         $query->andFilterWhere(['like', 'pack_title', $this->pack_title])
-            ->andFilterWhere(['like', 'pack_desc', $this->pack_desc]);
+                ->andFilterWhere(['like', 'pack_desc', $this->pack_desc]);
 
         return $dataProvider;
     }
+
 }

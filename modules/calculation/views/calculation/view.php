@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = 'Просмотр';
             ?>
             <?= Html::a('Редактировать', ['update', 'id' => $calculation->calculation_id], ['class' => 'btn btn-primary']) ?>
             <button id="print_button" class="glyphicon glyphicon-print btn btn-success"></button>
+            <button id="export_button" class="glyphicon glyphicon-export btn btn-success"></button>
         </p>
         <div id="print">
             <h2>Калькуляция <?= $calculation->calculation_product_title ?></h2>
@@ -30,6 +31,7 @@ $this->params['breadcrumbs'][] = 'Просмотр';
             <?=
             DetailView::widget([
                 'model' => $calculation,
+//                'options' => ['class' => 'table2excel table table-striped table-bordered detail-view'],
                 'attributes' => [
                     'calculation_note',
                     [
@@ -82,6 +84,14 @@ $this->params['breadcrumbs'][] = 'Просмотр';
             doc.getElementsByTagName('body')[0].innerHTML = html;
             win.print();
             $('iframe').remove();
+        });
+        $("#export_button").click(function () {
+            $("#table2excel").table2excel({
+                // exclude CSS class
+                exclude: ".noExl",
+                name: "Worksheet Name",
+                filename: "export" //do not include extension
+            });
         });
     });
 
