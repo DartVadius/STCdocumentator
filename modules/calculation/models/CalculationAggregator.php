@@ -129,6 +129,7 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
     }
 
     /**
+     * get array of unarchived calculations grouped by selected categories
      * 
      * @param array $ids
      * @return array
@@ -139,9 +140,6 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
             foreach ($ids as $category_id) {
                 $val = self::findCalculationByCategoryId($category_id);
                 $data[] = $val;
-//                foreach ($val as $key => $value) {
-//                    $data[$key] = $value;
-//                }
             }
         }
         return $data;

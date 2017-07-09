@@ -11,7 +11,7 @@ namespace app\modules\calculation\models\calculation;
  * @property string $title
  * @property date $date
  * @property string $note
- * @property integer $capacity
+ * @property decimal $capacity
  * @property integer $weight
  * @property integer $length
  * @property integer $width

@@ -6,7 +6,6 @@ use app\modules\calculation\models\CalculationAggregator;
 use Yii;
 use yii\web\Controller;
 use app\modules\classes\Connector;
-use app\modules\calculation\models\admin\Calculation;
 use app\modules\directory\models\Config;
 
 /**
@@ -15,8 +14,8 @@ use app\modules\directory\models\Config;
  * @author DartVadius
  */
 class AjaxController extends Controller {
-
-    public function actionGroupStatement() {
+    
+    public function actionPartial() {
         if (Yii::$app->request->isAjax) {
             $config = new Config();
             $shift = $config->find()->where(['config_system_name' => 'shift_duration'])->one()->config_value;
@@ -32,11 +31,12 @@ class AjaxController extends Controller {
                     }
                 }
             }
-//            print_r($aggregat);
-//            die;
-            return $this->renderAjax('@app/modules/calculation/views/partials/group-statement-partial', [
+            $partial = $c['partial'];
+            $discount = $c['discount'];
+            return $this->renderAjax("@app/modules/calculation/views/partials/$partial", [
                         'data' => $aggregat,
                         'shift' => $shift,
+                        'discount' => $discount,
             ]);
         }
     }

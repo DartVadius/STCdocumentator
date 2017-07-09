@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);
                     ?>
                     <?=
-                    Html::a('<span class="glyphicon glyphicon-transfer" aria-hidden="true"></span>', ['clone', 'id' => $model->product_id], [
+                    Html::a('<span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>', ['clone', 'id' => $model->product_id], [
                         'class' => 'btn btn-success',
                         'data' => [
                             'confirm' => 'Сделать копию?',
@@ -140,6 +140,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?=
         GridView::widget([
             'dataProvider' => $dataProviderPm,
+            'summary' => false,
             'tableOptions' => [
                 'class' => 'table table-striped table-bordered table-hover table-condensed'
             ],
@@ -171,6 +172,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?=
         GridView::widget([
             'dataProvider' => $dataProviderPma,
+            'summary' => false,
             'tableOptions' => [
                 'class' => 'table table-striped table-bordered table-hover table-condensed'
             ],
@@ -203,6 +205,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?=
         GridView::widget([
             'dataProvider' => $dataProviderPap,
+            'summary' => false,
             'tableOptions' => [
                 'class' => 'table table-striped table-bordered table-hover table-condensed'
             ],
@@ -227,6 +230,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?=
         GridView::widget([
             'dataProvider' => $dataProviderPop,
+            'summary' => false,
             'tableOptions' => [
                 'class' => 'table table-striped table-bordered table-hover table-condensed'
             ],
@@ -251,6 +255,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?=
         GridView::widget([
             'dataProvider' => $dataProviderOp,
+            'summary' => false,
             'tableOptions' => [
                 'class' => 'table table-striped table-bordered table-hover table-condensed'
             ],
@@ -275,6 +280,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?=
         GridView::widget([
             'dataProvider' => $dataProviderLp,
+            'summary' => false,
             'tableOptions' => [
                 'class' => 'table table-striped table-bordered table-hover table-condensed'
             ],
@@ -300,6 +306,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?=
         GridView::widget([
             'dataProvider' => $dataProviderPapr,
+            'summary' => false,
             'tableOptions' => [
                 'class' => 'table table-striped table-bordered table-hover table-condensed'
             ],
@@ -329,6 +336,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?=
         GridView::widget([
             'dataProvider' => $dataProviderSp,
+            'summary' => false,
             'tableOptions' => [
                 'class' => 'table table-striped table-bordered table-hover table-condensed'
             ],

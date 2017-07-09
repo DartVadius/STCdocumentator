@@ -14,17 +14,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <br>
 <div id="filter" class="row">
     <?php if (!empty($categories)): ?>
-    <input type="checkbox" id="select-all" name="select-all" value="0"><label name="select-all" style="text-decoration: underline">&nbsp;Выделить все / убрать выделение</label>
+        <input type="checkbox" id="select-all" name="select-all" value="0"><label name="select-all">&nbsp;Выделить все / убрать выделение</label>
         <form id="form-statement" method="POST" name="group-aggregat" class="form-group">
             <?php foreach ($categories as $value): ?>
                 <input type="checkbox" id="<?= $value['category_product_id'] ?>" name="category[]" value="<?= $value['category_product_id'] ?>"><label name="[category][<?= $value['category_product_title'] ?>]">&nbsp;<?= $value['category_product_title'] ?></label><br>
             <?php endforeach; ?>
+            <input type="text" name="partial" hidden="true" value="group-statement-partial">
             <button id="group-statement" class="btn btn-success">Сформировать</button>
         </form>
     <?php endif; ?>
 </div>
 <div id="ajax-response">
-    
+
 </div>
 <script>
     $(document).ready(function () {
@@ -36,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 data: c
             };
             $.ajax({
-                url: "/calculation/ajax/group-statement",
+                url: "/calculation/ajax/partial",
                 type: "POST",
                 data: data,
                 success: function (response) {
@@ -44,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             });
         });
-        $('#hide-show').click(function(){
+        $('#hide-show').click(function () {
             if ($('#hide-show').hasClass('glyphicon-minus-sign')) {
                 $('#hide-show').removeClass('glyphicon-minus-sign');
                 $('#hide-show').addClass('glyphicon-plus-sign');
@@ -53,10 +54,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 $('#hide-show').removeClass('glyphicon-plus-sign');
                 $('#hide-show').addClass('glyphicon-minus-sign');
                 $('#filter').show();
-            };
+            }
+            ;
         });
-        $('#select-all').change(function(){
-            if($("#select-all").prop("checked")) {
+        $('#select-all').change(function () {
+            if ($("#select-all").prop("checked")) {
                 $("input[type=checkbox]").prop('checked', true);
             } else {
                 $("input[type=checkbox]").prop('checked', false);

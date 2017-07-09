@@ -108,7 +108,9 @@ class CalculationController extends Controller {
     }
 
     public function actionProfitability() {
+        $categories = CategoryProduct::find()->asArray()->all();
         return $this->render('profitability', [
+            'categories' => $categories,
         ]);
     }
 

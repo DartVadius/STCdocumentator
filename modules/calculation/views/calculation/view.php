@@ -11,18 +11,23 @@ $this->params['breadcrumbs'][] = 'Просмотр';
 <div class="row">
     <div class="col-lg-12">
         <p>
+            <?= Html::a('<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>', ['update', 'id' => $calculation->calculation_id], [
+                'class' => 'btn btn-primary',
+                'title' => 'Редактировать',
+                ]) ?>
             <?=
-            Html::a('Удалить', ['delete', 'id' => $calculation->calculation_id], [
+            Html::a('<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>', ['delete', 'id' => $calculation->calculation_id], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => 'Вы уверены?',
                     'method' => 'post',
                 ],
+                'title' => 'Удалить',
             ])
             ?>
-            <?= Html::a('Редактировать', ['update', 'id' => $calculation->calculation_id], ['class' => 'btn btn-primary']) ?>
-            <button id="print_button" class="glyphicon glyphicon-print btn btn-success"></button>
-            <button id="export_button" class="glyphicon glyphicon-export btn btn-success"></button>
+            
+            <button id="print_button" class="glyphicon glyphicon-print btn btn-success" title="Печать"></button>
+            <button id="export_button" class="glyphicon glyphicon-export btn btn-success" title="Выгрузить в Excel"></button>
         </p>
         <div id="print">
             <h2>Калькуляция <?= $calculation->calculation_product_title ?></h2>

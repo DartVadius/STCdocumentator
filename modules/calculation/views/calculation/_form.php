@@ -14,12 +14,17 @@ use kartik\date\DatePicker;
     <?php $form = ActiveForm::begin(); ?>
 
     <div class="form-group">
-        <?= Html::submitButton($calculation->isNewRecord ? 'Сохранить' : 'Редактировать', ['class' => $calculation->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?=
+        Html::submitButton($calculation->isNewRecord ? '<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>' : '<span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>', [
+            'class' => $calculation->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
+            'title' => 'Сохранить',
+        ])
+        ?>
     </div>
 
     <?= $form->field($calculation, 'calculation_product_title')->textInput(['maxlength' => true]) ?>
     <?=
-    $form->field($calculation, 'calculation_note')->widget(DatePicker::className(), [        
+    $form->field($calculation, 'calculation_note')->widget(DatePicker::className(), [
         'value' => date('d-M-Y'),
         'options' => ['placeholder' => 'Выберите дату ...'],
         'pluginOptions' => [
