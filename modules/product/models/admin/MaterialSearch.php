@@ -41,12 +41,12 @@ class MaterialSearch extends Material {
     public function search($params) {
         $query = Material::find()->with(['materialCategory', 'materialUnit']);
 
-        // add conditions that should always apply here
+        $pageSize = \app\modules\classes\MyFunctions::setPageSize();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 20,
+                'pageSize' => $pageSize,
             ],
         ]);
 

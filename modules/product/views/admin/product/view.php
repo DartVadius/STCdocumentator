@@ -156,13 +156,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Ед.учета',
                     'value' => 'pmUnit.unit_title',
                 ],
-                'pm_square:boolean',
                 [
                     'attribute' => 'pm_loss',
                     'label' => 'Плановые потери, %',
                     'value' => 'pm_loss',
                     'contentOptions' => ['data-field' => 'pm_loss'],
                 ],
+                'pm_square:boolean',
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'controller' => 'admin\pm',
@@ -200,16 +200,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => 'pmaUnit.unit_title'
                 ],
                 [
-                    'attribute' => 'pma_loss',
-                    'label' => 'Плановые потери',
-                    'value' => 'pma_loss',
-                    'contentOptions' => ['data-field' => 'pma_loss'],
-                ],
-                [
                     'attribute' => 'pma_weight',
                     'label' => 'Вес на ед.продукции, гр',
                     'value' => 'pma_weight',
                     'contentOptions' => ['data-field' => 'pma_weight'],
+                ],
+                [
+                    'attribute' => 'pma_loss',
+                    'label' => 'Плановые потери',
+                    'value' => 'pma_loss',
+                    'contentOptions' => ['data-field' => 'pma_loss'],
                 ],
                 'pma_brutto:boolean',
                 [

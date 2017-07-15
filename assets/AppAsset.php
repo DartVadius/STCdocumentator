@@ -22,7 +22,7 @@ class AppAsset extends AssetBundle
         'css/my-css.css',
     ];
     public $js = [
-//        'js/bootstrap.min.js',
+        'js/my-js/my-js.js',
 //        'js/jquery.easing.min.js',
         'js/left_menu.js',
         'js/jquery.table2excel.js',

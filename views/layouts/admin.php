@@ -38,8 +38,14 @@ AppAsset::register($this);
                         . Html::endForm()
                         . '</li>';
             }
+            $xmlEur = simplexml_load_string(file_get_contents('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=EUR'));
+            $jsonEur = json_encode($xmlEur);
+            $eur = json_decode($jsonEur, TRUE);
+            $xmlUsd = simplexml_load_string(file_get_contents('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD'));
+            $jsonUsd = json_encode($xmlUsd);
+            $usd = json_decode($jsonUsd, TRUE);
             NavBar::begin([
-                'brandLabel' => 'Documentator',
+                'brandLabel' => 'Documentator' . '<font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EUR: ' . $eur['currency']['rate'] . ', USD: ' .$usd['currency']['rate'] . ' Дата: ' . $eur['currency']['exchangedate'] . '</font>',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top', //navbar-fixed-top

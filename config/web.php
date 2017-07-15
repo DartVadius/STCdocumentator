@@ -23,6 +23,10 @@ $config = [
         ],
     ],
     'components' => [
+        'formatter' => [            
+            'decimalSeparator' => ',',
+            'thousandSeparator' => '',
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
         ],

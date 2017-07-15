@@ -307,9 +307,13 @@ class ProductAggregator {
     public function getPacks() {
         $packs = [];
         foreach ($this->packs as $pack) {
+            $delivery = 1;
+            if (!empty($pack->papPack->pack_delivery)) {
+                $delivery += $pack->papPack->pack_delivery / 100;
+            }
             $packs[$pack->papPack->pack_id]['title'] = $pack->papPack->pack_title;
             $packs[$pack->papPack->pack_id]['capacity'] = $pack->pap_capacity;
-            $packs[$pack->papPack->pack_id]['price'] = $pack->papPack->pack_price;
+            $packs[$pack->papPack->pack_id]['price'] = $pack->papPack->pack_price * $delivery;
             $packs[$pack->papPack->pack_id]['value'] = $pack->papPack->pack_price / $pack->pap_capacity;
         }
         return $packs;

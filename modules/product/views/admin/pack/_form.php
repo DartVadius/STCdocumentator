@@ -31,6 +31,8 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'pack_weight')->textInput(['maxlength' => true]) ?>
     
     <?= $form->field($model, 'pack_category_id')->dropDownList($category, $catParams)->label('Категория') ?>
+    
+    <?= $form->field($model, 'pack_delivery')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

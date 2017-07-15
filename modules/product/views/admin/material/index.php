@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\modules\product\models\admin\Category;
 use app\modules\product\models\admin\Unit;
+use yii\i18n\Formatter;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MaterialSearch */
@@ -19,6 +20,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <p>
             <?= Html::a('Создать Материал', ['create'], ['class' => 'btn btn-success']) ?>
+            <button id="export_button" class="glyphicon glyphicon-export btn btn-success"></button>
+            <select style="float: right" id="page-size" class="btn btn-default">
+                <option disabled="true" selected="true">зап.на стр.</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+            </select>
         </p>
         <?=
         GridView::widget([
@@ -34,8 +44,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'material_price',
                     'label' => 'Цена',
-                    'value' => 'material_price',
-                    'contentOptions' => ['data-field' => 'material_price'],
+                    'value' => function ($model) {
+                        return Yii::$app->formatter->asDecimal($model->material_price);
+                    },
+                    'contentOptions' => [
+                        'data-field' => 'material_price',
+                        'style' => 'text-align:right'
+                    ],
+                    'format' => 'raw',
                 ],
                 [
                     'attribute' => 'material_currency_type',
@@ -52,14 +68,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'material_delivery',
                     'label' => 'Доставка',
-                    'value' => 'material_delivery',
-                    'contentOptions' => ['data-field' => 'material_delivery'],
+                    'value' => function ($model) {
+                        return Yii::$app->formatter->asDecimal($model->material_delivery);
+                    },
+                    'contentOptions' => [
+                        'data-field' => 'material_delivery',
+                        'style' => 'text-align:right',
+                        'width' => '100'
+                    ],
+                    'format' => 'raw',
                 ],
                 [
                     'label' => 'Цена с доставкой',
                     'value' => function ($model) {
-                        return $model->material_price + $model->material_price * $model->material_delivery / 100;
+                        return Yii::$app->formatter->asDecimal($model->material_price + $model->material_price * $model->material_delivery / 100);
                     },
+                    'contentOptions' => [
+                        'style' => 'text-align:right'
+                    ],
                 ],
                 [
                     'attribute' => 'material_category_id',
@@ -77,4 +103,17 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 </div>
+</div>
 <?php $this->registerJsFile('@web/js/edit_table.js'); ?>
+<script>
+    $(document).ready(function () {
+        $("#export_button").click(function () {
+            $("#Material").table2excel({
+                // exclude CSS class
+                exclude: ".noExl",
+                name: "Worksheet Name",
+                filename: "export" //do not include extension
+            });
+        });
+    });
+</script>

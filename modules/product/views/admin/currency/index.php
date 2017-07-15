@@ -22,12 +22,27 @@ $this->params['breadcrumbs'][] = $this->title;
         GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
+            'tableOptions' => [
+                'class' => 'table table-striped table-bordered table-hover table-condensed',
+                'id' => 'Currency'
+            ],
             'columns' => [
                 'currency_code',
-                'currency_value',
+                [
+                    'attribute' => 'currency_value',
+                    'label' => 'Курс',
+                    'value' => function ($model) {
+                        return Yii::$app->formatter->asDecimal($model->currency_value);
+                    },
+                    'contentOptions' => [
+                        'data-field' => 'currency_value',
+                        'style' => 'text-align:right'
+                    ],
+                ],
                 ['class' => 'yii\grid\ActionColumn'],
             ],
         ]);
         ?>
     </div>
 </div>
+<?php $this->registerJsFile('@web/js/edit_table.js'); ?>

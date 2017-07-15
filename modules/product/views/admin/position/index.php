@@ -23,13 +23,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'tableOptions' => [
-                'class' => 'table table-striped table-bordered table-hover table-condensed'
+                'class' => 'table table-striped table-bordered table-hover table-condensed',
+                'id' => 'Position'
             ],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 'position_title',
+                [
+                    'attribute' => 'position_salary_hour',
+                    'label' => 'Оплата в час, грн',
+                    'value' => function ($model) {
+                        return Yii::$app->formatter->asDecimal($model->position_salary_hour);
+                    },
+                    'contentOptions' => [
+                        'data-field' => 'position_salary_hour',
+                        'style' => 'text-align:right'
+                    ],
+                ],
                 'position_desc',
-                'position_salary_hour',
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'header' => 'Действия',
@@ -40,3 +51,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 </div>
+<?php $this->registerJsFile('@web/js/edit_table.js'); ?>

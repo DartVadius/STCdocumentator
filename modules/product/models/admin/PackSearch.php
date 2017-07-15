@@ -20,7 +20,6 @@ class PackSearch extends Pack {
             [['pack_id', 'pack_category_id'], 'integer'],
             [['pack_title', 'pack_desc'], 'safe'],
             [['pack_price', 'pack_weight'], 'number'],
-            
         ];
     }
 
@@ -42,12 +41,12 @@ class PackSearch extends Pack {
     public function search($params) {
         $query = Pack::find()->with(['packCategory']);
 
-        // add conditions that should always apply here
+        $pageSize = \app\modules\classes\MyFunctions::setPageSize();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 20,
+                'pageSize' => $pageSize,
             ],
         ]);
 

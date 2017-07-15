@@ -19,6 +19,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <p>
             <?= Html::a('Добавить упаковку', ['create'], ['class' => 'btn btn-success']) ?>
+            <button id="export_button" class="glyphicon glyphicon-export btn btn-success"></button>
+            <select style="float: right" id="page-size" class="btn btn-default">
+                <option disabled="true" selected="true">зап.на стр.</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="500">500</option>
+            </select>
         </p>
         <?=
         GridView::widget([
@@ -34,14 +43,48 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'pack_price',
                     'label' => 'Цена',
-                    'value' => 'pack_price',
-                    'contentOptions' => ['data-field' => 'pack_price'],
+                    'value' => function ($model) {
+                        return Yii::$app->formatter->asDecimal($model->pack_price);
+                    },
+                    'contentOptions' => [
+                        'data-field' => 'pack_price',
+                        'style' => 'text-align:right'
+                    ],
+                    'format' => 'raw',
                 ],
                 [
                     'attribute' => 'pack_weight',
                     'label' => 'Вес упаковки, гр',
-                    'value' => 'pack_weight',
-                    'contentOptions' => ['data-field' => 'pack_weight'],
+                    'value' => function ($model) {
+                        return Yii::$app->formatter->asDecimal($model->pack_weight);
+                    },
+                    'contentOptions' => [
+                        'data-field' => 'pack_weight',
+                        'style' => 'text-align:right'
+                    ],
+                    'format' => 'raw',
+                ],
+                [
+                    'attribute' => 'pack_delivery',
+                    'label' => 'Доставка',
+                    'value' => function ($model) {
+                        return Yii::$app->formatter->asDecimal($model->pack_delivery);
+                    },
+                    'contentOptions' => [
+                        'data-field' => 'pack_delivery',
+                        'style' => 'text-align:right',
+                        'width' => '100'
+                    ],
+                    'format' => 'raw',
+                ],
+                [
+                    'label' => 'Цена с доставкой',
+                    'value' => function ($model) {
+                        return Yii::$app->formatter->asDecimal($model->pack_price + $model->pack_price * $model->pack_delivery / 100);
+                    },
+                    'contentOptions' => [
+                        'style' => 'text-align:right'
+                    ],
                 ],
                 [
                     'attribute' => 'pack_category_id',
@@ -60,3 +103,15 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 </div>
 <?php $this->registerJsFile('@web/js/edit_table.js'); ?>
+<script>
+    $(document).ready(function () {
+        $("#export_button").click(function () {
+            $("#Pack").table2excel({
+                // exclude CSS class
+                exclude: ".noExl",
+                name: "Worksheet Name",
+                filename: "export" //do not include extension
+            });
+        });
+    });
+</script>

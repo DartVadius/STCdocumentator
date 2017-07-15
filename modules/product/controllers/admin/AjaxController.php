@@ -75,5 +75,14 @@ class AjaxController extends Controller {
             return ['res' => $model->update()];
         }
     }
+    
+    public function actionSetPage() {
+        if (Yii::$app->request->isAjax) {
+            $post = Yii::$app->request->post();
+            if (!empty($post['page']) && is_numeric($post['page'])) {
+                $_SESSION['page_size'] = $post['page'];
+            }
+        }
+    }
 
 }
