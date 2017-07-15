@@ -26,6 +26,7 @@ class AppAsset extends AssetBundle
 //        'js/jquery.easing.min.js',
         'js/left_menu.js',
         'js/jquery.table2excel.js',
+        'js/table-edits.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

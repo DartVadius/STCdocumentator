@@ -25,12 +25,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'tableOptions' => [
-                'class' => 'table table-striped table-bordered table-hover table-condensed'
+                'class' => 'table table-striped table-bordered table-hover table-condensed',
+                'id' => 'Material'
             ],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 'material_title',
-                'material_price',
+                [
+                    'attribute' => 'material_price',
+                    'label' => 'Цена',
+                    'value' => 'material_price',
+                    'contentOptions' => ['data-field' => 'material_price'],
+                ],
                 [
                     'attribute' => 'material_currency_type',
                     'label' => 'Валюта',
@@ -43,7 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => 'materialUnit.unit_title',
                     'headerOptions' => ['width' => '100'],
                 ],
-                'material_delivery',
+                [
+                    'attribute' => 'material_delivery',
+                    'label' => 'Доставка',
+                    'value' => 'material_delivery',
+                    'contentOptions' => ['data-field' => 'material_delivery'],
+                ],
                 [
                     'label' => 'Цена с доставкой',
                     'value' => function ($model) {
@@ -66,3 +77,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 </div>
+<?php $this->registerJsFile('@web/js/edit_table.js'); ?>

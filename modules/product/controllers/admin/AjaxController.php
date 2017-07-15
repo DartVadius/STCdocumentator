@@ -59,5 +59,21 @@ class AjaxController extends Controller {
             return ['pack' => $packById];
         }
     }
+    
+    public function actionQuickSave() {
+        if (Yii::$app->request->isAjax) {
+            $post = Yii::$app->request->post();
+            $table = "\app\modules\product\models\admin\\" . trim($post['table']);
+            $tableModel = new $table();
+            $model = $tableModel->findOne($post['id']);
+            foreach ($post['values'] as $key => $value) {
+                if (empty($value) || is_numeric($value)) {
+                    $model->$key = $value;
+                } 
+            }
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ['res' => $model->update()];
+        }
+    }
 
 }

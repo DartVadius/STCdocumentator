@@ -25,13 +25,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
             'tableOptions' => [
-                'class' => 'table table-striped table-bordered table-hover table-condensed'
+                'class' => 'table table-striped table-bordered table-hover table-condensed',
+                'id' => 'Pack',
             ],
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
                 'pack_title',
-                'pack_price',
-                'pack_weight',
+                [
+                    'attribute' => 'pack_price',
+                    'label' => 'Цена',
+                    'value' => 'pack_price',
+                    'contentOptions' => ['data-field' => 'pack_price'],
+                ],
+                [
+                    'attribute' => 'pack_weight',
+                    'label' => 'Вес упаковки, гр',
+                    'value' => 'pack_weight',
+                    'contentOptions' => ['data-field' => 'pack_weight'],
+                ],
                 [
                     'attribute' => 'pack_category_id',
                     'label' => 'Категория',
@@ -48,3 +59,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 </div>
+<?php $this->registerJsFile('@web/js/edit_table.js'); ?>

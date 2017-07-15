@@ -20,7 +20,18 @@ class Connector {
             $losses = $product->getLosses();
             return new CalculationAggregator($params, $materials, $materialsAdditional, $recipe, $packs, $positions, $expenses, $losses);
         } elseif ($product instanceof Calculation) {
-            $params['product_id'] = $product->calculation_product_id;
+            return self::getOne($product);
+        } elseif (is_array($product)) {
+            $data = [];
+            foreach ($product as $val) {
+                $data[] = self::getOne($val);
+            }
+            return $data;
+        }
+    }
+    
+    private static function getOne($product) {
+        $params['product_id'] = $product->calculation_product_id;
             $params['title'] = $product->calculation_product_title;
             $params['capacity'] = $product->calculation_product_capacity_hour;
             $params['date'] = $product->calculation_date;
@@ -70,7 +81,6 @@ class Connector {
             $calculationAggregator = new CalculationAggregator($params, $materials, $materialsAdditional, $recipe, $packs, $positions, $expenses, $losses);
             $calculationAggregator->setId($product->calculation_id);
             return $calculationAggregator;
-        }
     }
 
     public static function setCalculationModel(CalculationAggregator $calculationAggregator) {

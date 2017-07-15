@@ -10,13 +10,12 @@ use app\modules\calculation\models\admin\Calculation;
 /**
  * CalculationSearch represents the model behind the search form about `app\modules\calculation\models\admin\Calculation`.
  */
-class CalculationSearch extends Calculation
-{
+class CalculationSearch extends Calculation {
+
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['calculation_id', 'calculation_product_id', 'calculation_weight', 'calculation_length', 'calculation_width', 'calculation_thickness', 'calculation_archive'], 'integer'],
             [['calculation_product_title', 'calculation_date', 'calculation_note', 'calculation_unit', 'calculation_materials_data', 'calculation_materials_additional_data', 'calculation_recipe_data', 'calculation_packs_data', 'calculation_positions_data', 'calculation_expenses_data', 'calculation_losses_data'], 'safe'],
@@ -27,8 +26,7 @@ class CalculationSearch extends Calculation
     /**
      * @inheritdoc
      */
-    public function scenarios()
-    {
+    public function scenarios() {
         // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
@@ -40,8 +38,7 @@ class CalculationSearch extends Calculation
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
-    {
+    public function search($params) {
         $query = Calculation::find();
 
         // add conditions that should always apply here
@@ -50,6 +47,13 @@ class CalculationSearch extends Calculation
             'query' => $query,
             'pagination' => [
                 'pageSize' => 20,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'calculation_archive' => SORT_ASC,
+                    'calculation_product_title' => SORT_ASC,
+                    
+                ]
             ],
         ]);
 
@@ -75,15 +79,16 @@ class CalculationSearch extends Calculation
         ]);
 
         $query->andFilterWhere(['like', 'calculation_product_title', $this->calculation_product_title])
-            ->andFilterWhere(['like', 'calculation_note', $this->calculation_note])
-            ->andFilterWhere(['like', 'calculation_unit', $this->calculation_unit])
-            ->andFilterWhere(['like', 'calculation_materials_data', $this->calculation_materials_data])
-            ->andFilterWhere(['like', 'calculation_recipe_data', $this->calculation_recipe_data])
-            ->andFilterWhere(['like', 'calculation_packs_data', $this->calculation_packs_data])
-            ->andFilterWhere(['like', 'calculation_positions_data', $this->calculation_positions_data])
-            ->andFilterWhere(['like', 'calculation_expenses_data', $this->calculation_expenses_data])
-            ->andFilterWhere(['like', 'calculation_losses_data', $this->calculation_losses_data]);
+                ->andFilterWhere(['like', 'calculation_note', $this->calculation_note])
+                ->andFilterWhere(['like', 'calculation_unit', $this->calculation_unit])
+                ->andFilterWhere(['like', 'calculation_materials_data', $this->calculation_materials_data])
+                ->andFilterWhere(['like', 'calculation_recipe_data', $this->calculation_recipe_data])
+                ->andFilterWhere(['like', 'calculation_packs_data', $this->calculation_packs_data])
+                ->andFilterWhere(['like', 'calculation_positions_data', $this->calculation_positions_data])
+                ->andFilterWhere(['like', 'calculation_expenses_data', $this->calculation_expenses_data])
+                ->andFilterWhere(['like', 'calculation_losses_data', $this->calculation_losses_data]);
 
         return $dataProvider;
     }
+
 }

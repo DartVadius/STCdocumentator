@@ -69,13 +69,6 @@ $this->params['breadcrumbs'][] = $this->title;
         DetailView::widget([
             'model' => $model,
             'attributes' => [
-//            [
-//                'attribute' => 'product_unit_id',
-//                'label' => 'Ед.учета',
-//                'value' => $model->productUnit->unit_title . $model->productUnit->unit_title,
-////                'contentOptions' => ['class' => 'alert alert-success'],
-////                'captionOptions' => ['class' => 'alert alert-success'],
-//            ],
                 [
                     'attribute' => 'product_capacity_hour',
                     'label' => 'Выработка в час (учетная единица: ' . $model->productUnit->unit_title . ')',
@@ -142,7 +135,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProviderPm,
             'summary' => false,
             'tableOptions' => [
-                'class' => 'table table-striped table-bordered table-hover table-condensed'
+                'class' => 'table table-striped table-bordered table-hover table-condensed',
+                'id' => 'Pm',
             ],
             'columns' => [
                 [
@@ -150,14 +144,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Материал',
                     'value' => 'pmMaterial.material_title'
                 ],
-                'pm_quantity',
+//                'pm_quantity',
+                [
+                    'attribute' => 'pm_quantity',
+                    'label' => 'Расход',
+                    'value' => 'pm_quantity',
+                    'contentOptions' => ['data-field' => 'pm_quantity'],
+                ],
                 [
                     'attribute' => 'pm_unit_id',
                     'label' => 'Ед.учета',
-                    'value' => 'pmUnit.unit_title'
+                    'value' => 'pmUnit.unit_title',
                 ],
                 'pm_square:boolean',
-                'pm_loss',
+                [
+                    'attribute' => 'pm_loss',
+                    'label' => 'Плановые потери, %',
+                    'value' => 'pm_loss',
+                    'contentOptions' => ['data-field' => 'pm_loss'],
+                ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'controller' => 'admin\pm',
@@ -174,7 +179,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProviderPma,
             'summary' => false,
             'tableOptions' => [
-                'class' => 'table table-striped table-bordered table-hover table-condensed'
+                'class' => 'table table-striped table-bordered table-hover table-condensed',
+                'id' => 'Pma',
             ],
             'columns' => [
                 [
@@ -182,14 +188,29 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Материал',
                     'value' => 'pmaMaterial.material_title'
                 ],
-                'pma_quantity',
+                [
+                    'attribute' => 'pma_quantity',
+                    'label' => 'Расход',
+                    'value' => 'pma_quantity',
+                    'contentOptions' => ['data-field' => 'pma_quantity'],
+                ],
                 [
                     'attribute' => 'pma_unit_id',
                     'label' => 'Ед.учета',
                     'value' => 'pmaUnit.unit_title'
                 ],
-                'pma_loss',
-                'pma_weight',
+                [
+                    'attribute' => 'pma_loss',
+                    'label' => 'Плановые потери',
+                    'value' => 'pma_loss',
+                    'contentOptions' => ['data-field' => 'pma_loss'],
+                ],
+                [
+                    'attribute' => 'pma_weight',
+                    'label' => 'Вес на ед.продукции, гр',
+                    'value' => 'pma_weight',
+                    'contentOptions' => ['data-field' => 'pma_weight'],
+                ],
                 'pma_brutto:boolean',
                 [
                     'class' => 'yii\grid\ActionColumn',
@@ -207,7 +228,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProviderPap,
             'summary' => false,
             'tableOptions' => [
-                'class' => 'table table-striped table-bordered table-hover table-condensed'
+                'class' => 'table table-striped table-bordered table-hover table-condensed',
+                'id' => 'Pap',
             ],
             'columns' => [
                 [
@@ -215,7 +237,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Упаковка',
                     'value' => 'papPack.pack_title',
                 ],
-                'pap_capacity',
+                [
+                    'attribute' => 'pap_capacity',
+                    'label' => 'Емкость упаковки',
+                    'value' => 'pap_capacity',
+                    'contentOptions' => ['data-field' => 'pap_capacity'],
+                ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'controller' => 'admin\pap',
@@ -232,7 +259,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProviderPop,
             'summary' => false,
             'tableOptions' => [
-                'class' => 'table table-striped table-bordered table-hover table-condensed'
+                'class' => 'table table-striped table-bordered table-hover table-condensed',
+                'id' => 'Pop',
             ],
             'columns' => [
                 [
@@ -240,7 +268,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Должность',
                     'value' => 'popPosition.position_title',
                 ],
-                'pop_num',
+                [
+                    'attribute' => 'pop_num',
+                    'label' => 'Число сотрудников',
+                    'value' => 'pop_num',
+                    'contentOptions' => ['data-field' => 'pop_num'],
+                ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'controller' => 'admin\pop',
@@ -257,7 +290,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProviderOp,
             'summary' => false,
             'tableOptions' => [
-                'class' => 'table table-striped table-bordered table-hover table-condensed'
+                'class' => 'table table-striped table-bordered table-hover table-condensed',
+                'id' => 'Op',
             ],
             'columns' => [
                 [
@@ -265,7 +299,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Статья затрат',
                     'value' => 'opOther.other_expenses_title',
                 ],
-                'op_cost_hour',
+                [
+                    'attribute' => 'op_cost_hour',
+                    'label' => 'грн/час',
+                    'value' => 'op_cost_hour',
+                    'contentOptions' => ['data-field' => 'op_cost_hour'],
+                ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'controller' => 'admin\op',
@@ -282,7 +321,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProviderLp,
             'summary' => false,
             'tableOptions' => [
-                'class' => 'table table-striped table-bordered table-hover table-condensed'
+                'class' => 'table table-striped table-bordered table-hover table-condensed',
+                'id' => 'Lp',
             ],
             'columns' => [
                 [
@@ -290,7 +330,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Название',
                     'value' => 'lpLoss.loss_title',
                 ],
-                'lp_percentage',
+                [
+                    'attribute' => 'lp_percentage',
+                    'label' => '%',
+                    'value' => 'lp_percentage',
+                    'contentOptions' => ['data-field' => 'lp_percentage'],
+                ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'controller' => 'admin\lp',
@@ -358,3 +403,4 @@ $this->params['breadcrumbs'][] = $this->title;
         ?>
     </div>
 </div>
+<?php $this->registerJsFile('@web/js/edit_table.js'); ?>

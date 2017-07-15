@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <button id="export_button" class="glyphicon glyphicon-export btn btn-success"></button>
             </p>
             <div id="print">
-                <h3>Сводная ведомость</h3>
+                <h3>Сводный отчет</h3>
                 <table id="table2excel" class="table table-bordered table-responsive table-striped table-condensed table-consolidated-statement">
                     <tr>
                         <th>Наименование продукции</th>

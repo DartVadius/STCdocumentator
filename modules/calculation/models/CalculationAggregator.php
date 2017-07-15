@@ -79,7 +79,7 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
     public function summ() {
         return $this->summRealExpenses() + $this->losses->summ();
     }
-    
+
     public function getNetto() {
         
     }
@@ -90,7 +90,7 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
      * @param integer $categoryId
      * @return boolean | array
      */
-    public static function findCalculationByCategoryId($categoryId = NULL) {
+    public static function findCalculationByCategoryId($categoryId = NULL, $archive = 0) {
         $aggregat = [];
         if ($categoryId === NULL) {
             $categories = CategoryProduct::find()->all();
@@ -106,7 +106,7 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
                 }
                 $aggregat[$category->category_product_title] = admin\Calculation::find()
                         ->where(['calculation_product_id' => $products])
-                        ->andWhere(['calculation_archive' => '0'])
+                        ->andWhere(['calculation_archive' => $archive])
                         ->all();
             }
         } else {
@@ -129,19 +129,90 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
     }
 
     /**
-     * get array of unarchived calculations grouped by selected categories
+     * get array calculations grouped by selected categories
      * 
      * @param array $ids
      * @return array
      */
-    public static function findCalculationByCategoryIds($ids) {
+    public static function findCalculationByCategoryIds($ids, $archive = 0) {
         $data = [];
         if (!empty($ids)) {
             foreach ($ids as $category_id) {
-                $val = self::findCalculationByCategoryId($category_id);
-                $data[] = $val;
+                $val = self::findCalculationByCategoryId($category_id, $archive);
+                if (!empty($val)) {
+                    $data[] = $val;
+                }
             }
         }
+        return $data;
+    }
+
+    public static function findAggregatorByCategoryIds($data) {
+        $aggregat = [];
+        foreach ($data as $group) {
+            foreach ($group as $key => $calculations) {
+                foreach ($calculations as $calculation) {
+                    $aggregat[$key][] = Connector::getCalculationAggregator($calculation);
+                }
+            }
+        }
+        return $aggregat;
+    }
+
+    public static function findAggregatByPeriodAndCategory($categories, $from, $to) {
+        if (empty($categories)) {
+            return FALSE;
+        }
+        $aggregat = [];
+
+        foreach ($categories as $categoryId) {
+            $category = CategoryProduct::findOne($categoryId);
+            $products = self::findProductByCategory($category);
+            $resStart = self::findAggregatByPeriod($products, $from['start'], $from['end']);
+            $resEnd = self::findAggregatByPeriod($products, $to['start'], $to['end']);
+            $aggregat[$category->category_product_title] = self::formAggregatForStatistic($resStart, $resEnd);
+        }
+        if (empty($aggregat)) {
+            return FALSE;
+        }
+        return $aggregat;
+    }
+
+    private static function findProductByCategory(CategoryProduct $category) {
+        return Product::find()->where(['product_category_id' => $category->category_product_id])
+                        ->column();
+    }
+
+    private static function findAggregatByPeriod($products, $start, $end) {
+        if ($products == NULL) {
+            return NULL;
+        }
+        $aggregates = admin\Calculation::find()
+                ->where(['calculation_product_id' => $products])
+                ->andwhere(['and', ['>=', 'calculation_date', $start], ['<=', 'calculation_date', $end]])
+                ->all();
+        if (empty($aggregates)) {
+            return NULL;
+        }
+        $data = Connector::getCalculationAggregator($aggregates);
+        return $data;
+    }
+
+    private static function formAggregatForStatistic($resStart, $resEnd) {
+        $data = [];
+        if (!empty($resStart)) {
+            foreach ($resStart as $key => $aggregat) {
+                $product = Product::findOne($aggregat->params->product_id);
+                $data[$product->product_title]['start'][] = $aggregat->summ();
+            }
+        }
+        if (!empty($resEnd)) {
+            foreach ($resEnd as $key => $aggregat) {
+                $product = Product::findOne($aggregat->params->product_id);
+                $data[$product->product_title]['end'][] = $aggregat->summ();
+            }
+        }
+
         return $data;
     }
 

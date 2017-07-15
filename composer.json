@@ -24,7 +24,8 @@
         "mdmsoft/yii2-captcha": "~1.0",
         "kartik-v/yii2-widget-datepicker": "@dev",
         "phpunit/phpunit": "^5.7",
-        "codeception/codeception": "*"
+        "codeception/codeception": "*",
+        "kartik-v/yii2-field-range": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

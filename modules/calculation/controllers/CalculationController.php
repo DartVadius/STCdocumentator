@@ -113,6 +113,20 @@ class CalculationController extends Controller {
             'categories' => $categories,
         ]);
     }
+    
+    public function actionPricing() {
+        $categories = CategoryProduct::find()->asArray()->all();
+        return $this->render('pricing', [
+            'categories' => $categories,
+        ]);
+    }
+    
+    public function actionPrimeCost() {
+        $categories = CategoryProduct::find()->asArray()->all();
+        return $this->render('prime-cost', [
+            'categories' => $categories,
+        ]);
+    }
 
     protected function findModel($id) {
         if (($model = Calculation::findOne($id)) !== null) {
