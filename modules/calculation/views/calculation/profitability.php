@@ -1,4 +1,6 @@
 <?php
+//$this->registerCssFile("@web/css/tablesorter/jquery.dataTables.css");
+
 $this->title = 'Выработки';
 $this->params['breadcrumbs'][] = ['label' => 'Меню', 'url' => ['menu']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -16,9 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php foreach ($categories as $value): ?>
                 <input type="checkbox" id="<?= $value['category_product_id'] ?>" name="category[]" value="<?= $value['category_product_id'] ?>"><label name="[category][<?= $value['category_product_title'] ?>]">&nbsp;<?= $value['category_product_title'] ?></label><br>
             <?php endforeach; ?>
-                <input type="text" name="discount" value="0"><label for="discount">&nbsp;Скидка, %</label>
-                <input type="text" name="partial" hidden="true" value="profitability-partial">
-                <br>
+            <input type="text" name="discount" value="0"><label for="discount">&nbsp;Скидка, %</label>
+            <input type="text" name="partial" hidden="true" value="profitability-partial">
+            <br>
             <button id="group-statement" class="btn btn-success">Сформировать</button>
         </form>
     <?php endif; ?>
@@ -26,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div id="ajax-response">
 
 </div>
+<?php // $this->registerJsFile('@web/js/tablesorter/jquery.dataTables.min.js'); ?>
 <script>
     $(document).ready(function () {
         $('#group-statement').click(function (e) {

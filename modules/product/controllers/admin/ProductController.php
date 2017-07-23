@@ -146,6 +146,7 @@ class ProductController extends Controller {
         $model = $this->findModel($id);
         try {
             Pm::deleteAll('pm_product_id = :id', [':id' => $id]);
+            Pma::deleteAll('pma_product_id = :id', [':id' => $id]);
             Pap::deleteAll('pap_product_id = :id', [':id' => $id]);
             Sp::deleteAll('sp_product_id = :id', [':id' => $id]);
             Papr::deleteAll('papr_product_id = :id', [':id' => $id]);
@@ -177,6 +178,7 @@ class ProductController extends Controller {
             $newProduct->save();
 
             $this->copyMaterials($productAggregator->materials, $newProduct->product_id);
+            $this->copyAdditionalMaterials($productAggregator->materialsAdditional, $newProduct->product_id);
             $this->copyPacks($productAggregator->packs, $newProduct->product_id);
             $this->copyPositions($productAggregator->positions, $newProduct->product_id);
             $this->copyExpenses($productAggregator->expenses, $newProduct->product_id);
@@ -227,6 +229,18 @@ class ProductController extends Controller {
         }
     }
 
+    private function copyAdditionalMaterials($materials, $id) {
+        if (!empty($materials)) {
+            foreach ($materials as $maretial) {
+                $productMaterial = new Pma();
+                $newProductMaterial = $this->copy($maretial, $productMaterial);
+                unset($newProductMaterial->pma_id);
+                $newProductMaterial->pma_product_id = $id;
+                $newProductMaterial->save();
+            }
+        }
+    }
+    
     private function copyPacks($packs, $id) {
         if (!empty($packs)) {
             foreach ($packs as $pack) {

@@ -59,14 +59,14 @@ AppAsset::register($this);
             ?>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <?php
                         if (!Yii::$app->user->isGuest) {
                             echo $this->render('@app/views/partials/side_menu');
                         }
                         ?>
                     </div>
-                    <div class="col-lg-9 top-margin">
+                    <div class="col-lg-10 top-margin">
                         <?php
                         if (!Yii::$app->user->isGuest) {
                             echo Breadcrumbs::widget([

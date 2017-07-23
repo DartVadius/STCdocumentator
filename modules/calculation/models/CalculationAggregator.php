@@ -107,6 +107,7 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
                 $aggregat[$category->category_product_title] = admin\Calculation::find()
                         ->where(['calculation_product_id' => $products])
                         ->andWhere(['calculation_archive' => $archive])
+                        ->orderBy('calculation_product_title')
                         ->all();
             }
         } else {
@@ -120,6 +121,7 @@ class CalculationAggregator extends \yii\db\ActiveRecord {
             $aggregat[$category->category_product_title] = admin\Calculation::find()
                     ->where(['calculation_product_id' => $products])
                     ->andWhere(['calculation_archive' => '0'])
+                    ->orderBy('calculation_product_title')
                     ->all();
         }
         if (empty($aggregat)) {

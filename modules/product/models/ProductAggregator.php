@@ -29,6 +29,7 @@ use app\modules\product\models\admin\Pm;
  * @property Recipe $recipe
  * @property CategoryProduct $category
  * @property array $materials           array of Pm objects
+ * @property array $materialsAdditional array of Pma objects
  * @property array $packs               array of Pap objects
  * @property array $solutions
  * @property array $positions           array of Pop objects

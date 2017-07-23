@@ -20,6 +20,7 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/my-css.css',
+        '/css/tablesorter/jquery.dataTables.css',
     ];
     public $js = [
         'js/my-js/my-js.js',
@@ -27,6 +28,7 @@ class AppAsset extends AssetBundle
         'js/left_menu.js',
         'js/jquery.table2excel.js',
         'js/table-edits.js',
+        'js/tablesorter/jquery.dataTables.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

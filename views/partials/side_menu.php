@@ -6,11 +6,11 @@ $this->registerCssFile('@web/css/left_menu.css');
 $adminMenuItems = [];
 if (Yii::$app->user->identity->status > 30) {
     $adminMenuItems[] = [
-        'label' => 'Управление номенклатурой',
+        'label' => 'Номенклатура',
         'items' => [
             ['label' => 'Продукция', 'url' => ['/product/admin/product/index']],
             ['label' => 'Рецептуры', 'url' => ['/product/admin/recipe/index']],
-            ['label' => 'Отчеты', 'url' => ['/calculation/calculation/menu']],
+            ['label' => 'Аналитика', 'url' => ['/calculation/calculation/menu']],
         ]
     ];
     $adminMenuItems[] = [
@@ -24,7 +24,7 @@ if (Yii::$app->user->identity->status > 30) {
         ],
     ];
     $adminMenuItems[] = [
-        'label' => 'Характеристики продукции',
+        'label' => 'Характеристики',
         'items' => [
             ['label' => 'Свойства и параметры', 'url' => ['/product/admin/parameter/index']],
             ['label' => 'Решения', 'url' => ['/product/admin/solution/index']],
@@ -54,7 +54,7 @@ if (Yii::$app->user->identity->status == 100) {
     ];
 }
 ?>
-<div id="my-left-menu" class="col-lg-3 navbar-fixed-top top-margin">
+<div id="my-left-menu" class="col-lg-2 navbar-fixed-top top-margin">
     <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status > 30): ?>
         <p class="list-group-item active">Админпанель</p>
     <?php endif; ?>

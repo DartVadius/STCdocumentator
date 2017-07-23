@@ -5,7 +5,7 @@ namespace app\modules\product\models\admin;
 use Yii;
 
 /**
- * This is the model class for table "pma".
+ * This is the model class for table "pma" (product additional materials)
  *
  * @property string $pma_id
  * @property string $pma_product_id
