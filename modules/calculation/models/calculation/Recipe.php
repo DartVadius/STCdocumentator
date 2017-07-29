@@ -11,10 +11,12 @@ class Recipe implements iCalculation {
 
     private $title;
     private $materials;
+    private $loss;
 
     public function __construct($recipe) {
         $this->title = $recipe['title'];
         $this->materials = $recipe['materials'];
+        $this->loss = $recipe['loss'];
     }
 
     public function summ() {
@@ -23,6 +25,9 @@ class Recipe implements iCalculation {
             foreach ($this->materials as $material) {
                 $summ += $material['summ'];
             }
+        }
+        if (!empty($this->loss)) {
+            $summ += $summ / 100 * $this->loss; 
         }
         return $summ;
     }
@@ -55,6 +60,13 @@ class Recipe implements iCalculation {
             $netto += $material['quantity'];
         }
         return $netto;
+    }
+    
+    public function getLoss() {
+        if (!empty($this->loss)) {
+            return $this->loss;
+        }
+        return '0';
     }
 
 }

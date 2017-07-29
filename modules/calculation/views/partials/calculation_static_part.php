@@ -4,15 +4,14 @@
         <?php $recipeMaterials = unserialize($calculation->calculation_recipe_data); ?>
         <tr style="display: none"><th><?= $calculation->calculation_product_title ?></th></tr>
         <tr></tr>
-        <tr>
-            <th>Герметик (<?= $recipeMaterials->getTitle() ?>)</th>
-            <th style="text-align: center">Ед.изм.</th>
-            <th style="text-align: center">Количество</th>
-            <th style="text-align: center">Цена</th>
-            <th style="text-align: center">Сумма</th>
-        </tr>
-
         <?php if (!empty($recipeMaterials->get())): ?>
+            <tr>
+                <th>Герметик (<?= $recipeMaterials->getTitle() . ' потери: ' . $recipeMaterials->getLoss() . '%' ?>)</th>
+                <th style="text-align: center">Ед.изм.</th>
+                <th style="text-align: center">Количество</th>
+                <th style="text-align: center">Цена</th>
+                <th style="text-align: center">Сумма</th>
+            </tr>
             <?php $recipe_weight = 0 ?>
             <?php foreach ($recipeMaterials->get() as $material): ?>
                 <?php $recipe_weight += $material['quantity']; ?>

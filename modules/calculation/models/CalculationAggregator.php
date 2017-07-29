@@ -31,7 +31,7 @@ use app\modules\calculation\models\admin\CalculationRepo;
  * @property Expenses $expenses
  * @property Losses $losses
  */
-class CalculationAggregator extends \yii\db\ActiveRecord {
+class CalculationAggregator {
 
     private $id;
     private $params;

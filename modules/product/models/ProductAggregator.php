@@ -24,6 +24,7 @@ use app\modules\product\models\admin\Pm;
  * @property string $vendorCode
  * @property string $archive
  * @property string $recipe_weight
+ * 
  *
  * @property Unit $unit
  * @property Recipe $recipe
@@ -67,6 +68,7 @@ class ProductAggregator {
     private $losses = [];
     private $tech_map;
     private $tech_desc;
+    private $recipe_loss;
 
     public function __construct(Product $product) {
         $this->id = $product->product_id;
@@ -97,6 +99,7 @@ class ProductAggregator {
         $this->losses = $product->lps;
         $this->tech_map = $product->product_tech_map;
         $this->tech_desc = $product->product_tech_desc;
+        $this->recipe_loss = $product->product_recipe_loss;
     }
 
     /**
@@ -272,9 +275,10 @@ class ProductAggregator {
      * 
      * @return array
      */
-    public function getRecipe() {
+    public function getRecipe() {        
         $recipe = [];
         $recipe['title'] = $this->recipe->recipe_title;
+        $recipe['loss'] = $this->recipe_loss;
         if (empty($this->recipe->mrs)) {
             return NULL;
         }
@@ -315,7 +319,7 @@ class ProductAggregator {
             $packs[$pack->papPack->pack_id]['title'] = $pack->papPack->pack_title;
             $packs[$pack->papPack->pack_id]['capacity'] = $pack->pap_capacity;
             $packs[$pack->papPack->pack_id]['price'] = $pack->papPack->pack_price * $delivery;
-            $packs[$pack->papPack->pack_id]['value'] = $pack->papPack->pack_price / $pack->pap_capacity;
+            $packs[$pack->papPack->pack_id]['value'] = $packs[$pack->papPack->pack_id]['price'] / $pack->pap_capacity;
         }
         return $packs;
     }

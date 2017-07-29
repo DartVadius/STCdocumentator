@@ -45,7 +45,7 @@ AppAsset::register($this);
             $jsonUsd = json_encode($xmlUsd);
             $usd = json_decode($jsonUsd, TRUE);
             NavBar::begin([
-                'brandLabel' => 'Documentator' . '<font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EUR: ' . $eur['currency']['rate'] . ', USD: ' .$usd['currency']['rate'] . ' Дата: ' . $eur['currency']['exchangedate'] . '</font>',
+                'brandLabel' => 'Documentator' . '<font size="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EUR: ' . $eur['currency']['rate'] . ', USD: ' . $usd['currency']['rate'] . ' Дата: ' . $eur['currency']['exchangedate'] . '</font>',
                 'brandUrl' => Yii::$app->homeUrl,
                 'options' => [
                     'class' => 'navbar-inverse navbar-fixed-top', //navbar-fixed-top
@@ -54,6 +54,7 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => $menuItems,
+                
             ]);
             NavBar::end();
             ?>
@@ -91,7 +92,6 @@ AppAsset::register($this);
                 <p class="pull-right"><?= Yii::powered() ?></p>
             </div>
         </footer>
-
         <?php $this->endBody() ?>
     </body>
 </html>

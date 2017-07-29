@@ -47,10 +47,21 @@ use app\modules\product\models\admin\Recipe;
             <?= $form->field($model, 'product_unit_id')->dropDownList($unit, $unitParams)->label('Ед.изм.') ?>
         </div>
         <div class="col-lg-3">
+            <?= $form->field($model, 'product_category_id')->dropDownList($category, $catParams)->label('Категория') ?>
+        </div>
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_price')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
             <?= $form->field($model, 'product_recipe_id')->dropDownList($recipe, $recipeParams)->label('Рецептура') ?>
         </div>
         <div class="col-lg-3">
             <?= $form->field($model, 'product_recipe_weight')->textInput(['maxlength' => true])->hint('Если указан, нетто продукта рассчитывается прямым методом') ?>            
+        </div>
+        <div class="col-lg-3">
+            <?= $form->field($model, 'product_recipe_loss')->textInput(['maxlength' => true]) ?>
         </div>
     </div>
     <div class="row">
@@ -68,12 +79,7 @@ use app\modules\product\models\admin\Recipe;
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3">
-            <?= $form->field($model, 'product_category_id')->dropDownList($category, $catParams)->label('Категория') ?>
-        </div>
-        <div class="col-lg-3">
-            <?= $form->field($model, 'product_price')->textInput(['maxlength' => true]) ?>
-        </div>
+        
         <div class="col-lg-3">
             <?= $form->field($model, 'product_vendor_code')->textInput(['maxlength' => true]) ?>
         </div>

@@ -10,3 +10,14 @@ table.table-consolidated-statement {
 table.table-consolidated-statement th {
     text-align: center;
 }
+
+ul.dropdown-menu li {
+    padding: 0px;
+    margin: 0px;
+    font-size: 100%;
+    font-style: normal;
+}
+.my-menu-class ul {
+    max-height: 600px;
+    overflow-y: scroll;
+}

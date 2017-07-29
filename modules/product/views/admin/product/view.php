@@ -119,6 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'product_weight',
                 'product_recipe_weight',
+                'product_recipe_loss',
                 [
                     'attribute' => 'product_note',
                     'format' => 'raw',

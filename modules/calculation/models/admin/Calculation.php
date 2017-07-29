@@ -46,11 +46,14 @@ class Calculation extends \yii\db\ActiveRecord {
      */
     public function rules() {
         return [
-            [['calculation_product_id', ], 'integer'],
+            [['calculation_product_id',], 'integer'],
             ['calculation_weight', 'integer', 'when' => function($this) {
                     return $this->calculation_weight != NULL;
                 }],
-            [['calculation_product_capacity_hour', 'calculation_length', 'calculation_width', 'calculation_thickness',], 'number'],
+            ['calculation_thickness', 'number', 'when' => function($this) {
+                    return $this->calculation_thickness != NULL;
+                }],
+            [['calculation_product_capacity_hour', 'calculation_length', 'calculation_width',], 'number'],
             [['calculation_product_title', 'calculation_date', 'calculation_product_capacity_hour'], 'required'],
             [['calculation_date', 'calculation_archive'], 'safe'],
             [['calculation_note', 'calculation_materials_data', 'calculation_materials_additional_data', 'calculation_recipe_data', 'calculation_packs_data', 'calculation_positions_data', 'calculation_expenses_data', 'calculation_losses_data'], 'string'],

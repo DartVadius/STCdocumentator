@@ -77,6 +77,7 @@ class CategoryProduct extends \yii\db\ActiveRecord {
         return [
             'label' => 'Категории продукции',
             'items' => $items,
+            'options' => ['class' => 'my-menu-class'],
         ];
     }
 
