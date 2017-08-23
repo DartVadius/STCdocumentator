@@ -11,13 +11,28 @@ $this->params['breadcrumbs'][] = $this->title;
     <button id="export_button" class="glyphicon glyphicon-export btn btn-success"></button>
 </div>
 <br>
-<div id="filter" class="row">
+<div id="filter">
     <?php if (!empty($categories)): ?>
         <input type="checkbox" id="select-all" name="select-all" value="0"><label name="select-all">&nbsp;Выделить все / убрать выделение</label>
         <form id="form-statement" method="POST" name="group-aggregat" class="form-group">
-            <?php foreach ($categories as $value): ?>
-                <input type="checkbox" id="<?= $value['category_product_id'] ?>" name="category[]" value="<?= $value['category_product_id'] ?>"><label name="[category][<?= $value['category_product_title'] ?>]">&nbsp;<?= $value['category_product_title'] ?></label><br>
-            <?php endforeach; ?>
+            <?php
+            $count = floor(count($categories) / 2);
+            $category_col1 = array_slice($categories, 0, $count + 1);
+            $category_col2 = array_slice($categories, $count + 1);
+            ?>
+            <div class="row">
+                <div class="col-lg-6">
+                    <?php foreach ($category_col1 as $value): ?>
+                        <input type="checkbox" id="<?= $value['category_product_id'] ?>" name="category[]" value="<?= $value['category_product_id'] ?>"><label name="[category][<?= $value['category_product_title'] ?>]">&nbsp;<?= $value['category_product_title'] ?></label><br>
+                    <?php endforeach; ?>
+                </div>
+                <div class="col-lg-6">
+                    <?php foreach ($category_col2 as $value): ?>
+                        <input type="checkbox" id="<?= $value['category_product_id'] ?>" name="category[]" value="<?= $value['category_product_id'] ?>"><label name="[category][<?= $value['category_product_title'] ?>]">&nbsp;<?= $value['category_product_title'] ?></label><br>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
             <input type="text" name="discount" value="0"><label for="discount">&nbsp;Скидка, %</label>
             <input type="text" name="partial" hidden="true" value="profitability-partial">
             <br>

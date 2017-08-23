@@ -54,15 +54,14 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => $menuItems,
-                
             ]);
             NavBar::end();
             ?>
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-lg-2 top-margin">
                         <?php
-                        if (!Yii::$app->user->isGuest) {
+                        if (Yii::$app->user->identity->status > 30) {
                             echo $this->render('@app/views/partials/side_menu');
                         }
                         ?>
@@ -88,7 +87,6 @@ AppAsset::register($this);
         <footer class="footer">
             <div class="container-fluid">
                 <p class="pull-left">&copy; STC Ltd <?= date('Y') ?></p>
-
                 <p class="pull-right"><?= Yii::powered() ?></p>
             </div>
         </footer>

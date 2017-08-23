@@ -101,28 +101,28 @@ class CalculationController extends Controller {
     }
 
     public function actionGroupStatement() {
-        $categories = CategoryProduct::find()->asArray()->all();
+        $categories = CategoryProduct::find()->orderBy('category_product_title')->asArray()->all();
         return $this->render('group-statement', [
                     'categories' => $categories,
         ]);
     }
 
     public function actionProfitability() {
-        $categories = CategoryProduct::find()->asArray()->all();
+        $categories = CategoryProduct::find()->orderBy('category_product_title')->asArray()->all();
         return $this->render('profitability', [
             'categories' => $categories,
         ]);
     }
     
     public function actionPricing() {
-        $categories = CategoryProduct::find()->asArray()->all();
+        $categories = CategoryProduct::find()->orderBy('category_product_title')->asArray()->all();
         return $this->render('pricing', [
             'categories' => $categories,
         ]);
     }
     
     public function actionPrimeCost() {
-        $categories = CategoryProduct::find()->asArray()->all();
+        $categories = CategoryProduct::find()->orderBy('category_product_title')->asArray()->all();
         return $this->render('prime-cost', [
             'categories' => $categories,
         ]);

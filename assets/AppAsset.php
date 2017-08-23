@@ -20,11 +20,12 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/site.css',
         'css/my-css.css',
+//        'css/menu/jquery.dropdown.css',
         '/css/tablesorter/jquery.dataTables.css',
     ];
     public $js = [
         'js/my-js/my-js.js',
-//        'js/jquery.easing.min.js',
+//        'js/menu/jquery.dropdown.min.js',
         'js/left_menu.js',
         'js/jquery.table2excel.js',
         'js/table-edits.js',

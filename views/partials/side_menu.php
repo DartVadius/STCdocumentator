@@ -8,7 +8,7 @@ if (Yii::$app->user->identity->status > 30) {
     $adminMenuItems[] = [
         'label' => 'Номенклатура',
         'items' => [
-            ['label' => 'Продукция', 'url' => ['/product/admin/product/index']],
+            ['label' => 'Продукция', 'url' => ['/product/admin/product/index'],],
             ['label' => 'Рецептуры', 'url' => ['/product/admin/recipe/index']],
             ['label' => 'Аналитика', 'url' => ['/calculation/calculation/menu']],
         ]
@@ -54,17 +54,15 @@ if (Yii::$app->user->identity->status == 100) {
     ];
 }
 ?>
-<div id="my-left-menu" class="col-lg-2 navbar-fixed-top top-margin">
-    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status > 30): ?>
+<div id="my-left-menu">
         <p class="list-group-item active">Админпанель</p>
-    <?php endif; ?>
-    <?php
-    echo Nav::widget([
-        'options' => [
-            'class' => 'nav nav-pills nav-stacked',
-            'id' => 'menu_left_custom'
-        ],
-        'items' => $adminMenuItems,
-    ]);
-    ?>
+        <?php
+        echo Nav::widget([
+            'options' => [
+                'class' => 'nav nav-pills nav-stacked',
+                'id' => 'menu_left_custom'
+            ],
+            'items' => $adminMenuItems,
+        ]);
+        ?>
 </div>

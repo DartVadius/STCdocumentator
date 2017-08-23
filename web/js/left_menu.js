@@ -9,14 +9,4 @@ $(document).ready(function () {
         }
     });
 
-    $(window).resize(function () {
-        if ($(window).width() <= '1200') {
-            $('#my-left-menu').removeClass('col-lg-3 navbar-fixed-top');
-            
-        } else {
-            $('#my-left-menu').addClass('col-lg-3 navbar-fixed-top');
-        }
-
-    });
-
 });

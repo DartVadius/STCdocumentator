@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = $model->product_title;
 $this->params['breadcrumbs'][] = ['label' => 'Продукция', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->productCategory->category_product_title, 'url' => ['index', 'category_id' => $model->product_category_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">

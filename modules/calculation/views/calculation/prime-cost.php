@@ -15,62 +15,75 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <br>
 
-<div id="filter" class="row">
+<div id="filter">
     <?php if (!empty($categories)): ?>
         <form id="form-statement" method="POST" name="group-aggregat" class="form-group">
-            <div class="col-lg-4">
-                <input type="checkbox" id="select-all" name="select-all" value="0"><label name="select-all">&nbsp;Выделить все / убрать выделение</label>
-                <br>
-                <?php foreach ($categories as $value): ?>
-                    <input type="checkbox" id="<?= $value['category_product_id'] ?>" name="category[]" value="<?= $value['category_product_id'] ?>"><label name="[category][<?= $value['category_product_title'] ?>]">&nbsp;<?= $value['category_product_title'] ?></label><br>
-                <?php endforeach; ?>
-            </div>
-            <div class="col-lg-4">
-                <input type="checkbox" name="last-calc" value="1" checked="true"><label name="last-calc">&nbsp;Только последенюю себестоимость</label>
-                <h4>Период 1</h4>
-                <?php
-                echo DatePicker::widget([
-                    'language' => 'ru',
-                    'size' => 'sm',
-                    'name' => 'from_date_start',
-//                'value' => date('Y-m-d'),
-                    'type' => DatePicker::TYPE_RANGE,
-                    'name2' => 'to_date_start',
-//                'value2' => date('Y-m-d'),
-                    'separator' => '<i class="glyphicon glyphicon-resize-horizontal"></i>',
-                    'options' => [
-                        'placeholder' => 'От',
-                    ],
-                    'options2' => ['placeholder' => 'До'],
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'dd-mm-yyyy',
-                    ]
-                ]);
-                ?>
-                <h4>Период 2</h4>
-                <?php
-                echo DatePicker::widget([
-                    'language' => 'ru',
-                    'size' => 'sm',
-                    'name' => 'from_date_end',
-//                'value' => date('Y-m-d'),
-                    'type' => DatePicker::TYPE_RANGE,
-                    'name2' => 'to_date_end',
-//                'value2' => date('Y-m-d'),
-                    'options' => ['placeholder' => 'От'],
-                    'options2' => ['placeholder' => 'До'],
-                    'separator' => '<i class="glyphicon glyphicon-resize-horizontal"></i>',
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'dd-mm-yyyy',
-                    ]
-                ]);
-                ?>
 
-                <input type="text" name="partial" hidden="true" value="prime-cost-partial">
-                <br>
-            </div> 
+            <input type="checkbox" id="select-all" name="select-all" value="0"><label name="select-all">&nbsp;Выделить все / убрать выделение</label>
+            <br>
+            <?php
+            $count = floor(count($categories) / 2);
+            $category_col1 = array_slice($categories, 0, $count + 1);
+            $category_col2 = array_slice($categories, $count + 1);
+            ?>
+            <div class="row">
+                <div class="col-lg-4">
+                    <?php foreach ($category_col1 as $value): ?>
+                        <input type="checkbox" id="<?= $value['category_product_id'] ?>" name="category[]" value="<?= $value['category_product_id'] ?>"><label name="[category][<?= $value['category_product_title'] ?>]">&nbsp;<?= $value['category_product_title'] ?></label><br>
+                    <?php endforeach; ?>
+                </div>
+                <div class="col-lg-4">
+                    <?php foreach ($category_col2 as $value): ?>
+                        <input type="checkbox" id="<?= $value['category_product_id'] ?>" name="category[]" value="<?= $value['category_product_id'] ?>"><label name="[category][<?= $value['category_product_title'] ?>]">&nbsp;<?= $value['category_product_title'] ?></label><br>
+                    <?php endforeach; ?>
+                </div>
+                <div class="col-lg-4">
+                    <input type="checkbox" name="last-calc" value="1" checked="true"><label name="last-calc">&nbsp;Только последенюю себестоимость</label>
+                    <h4>Период 1</h4>
+                    <?php
+                    echo DatePicker::widget([
+                        'language' => 'ru',
+                        'size' => 'sm',
+                        'name' => 'from_date_start',
+//                'value' => date('Y-m-d'),
+                        'type' => DatePicker::TYPE_RANGE,
+                        'name2' => 'to_date_start',
+//                'value2' => date('Y-m-d'),
+                        'separator' => '<i class="glyphicon glyphicon-resize-horizontal"></i>',
+                        'options' => [
+                            'placeholder' => 'От',
+                        ],
+                        'options2' => ['placeholder' => 'До'],
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'dd-mm-yyyy',
+                        ]
+                    ]);
+                    ?>
+                    <h4>Период 2</h4>
+                    <?php
+                    echo DatePicker::widget([
+                        'language' => 'ru',
+                        'size' => 'sm',
+                        'name' => 'from_date_end',
+//                'value' => date('Y-m-d'),
+                        'type' => DatePicker::TYPE_RANGE,
+                        'name2' => 'to_date_end',
+//                'value2' => date('Y-m-d'),
+                        'options' => ['placeholder' => 'От'],
+                        'options2' => ['placeholder' => 'До'],
+                        'separator' => '<i class="glyphicon glyphicon-resize-horizontal"></i>',
+                        'pluginOptions' => [
+                            'autoclose' => true,
+                            'format' => 'dd-mm-yyyy',
+                        ]
+                    ]);
+                    ?>
+
+                    <input type="text" name="partial" hidden="true" value="prime-cost-partial">
+                    <br>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-lg-12">
                     <button id="send" class="btn btn-success">Сформировать</button>
