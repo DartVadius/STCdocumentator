@@ -33,8 +33,8 @@ class MaterialController extends Controller {
      * Lists all Material models.
      * @return mixed
      */
-    public function actionIndex() {
-        $searchModel = new MaterialSearch();
+    public function actionIndex($material_category_id = null) {
+        $searchModel = new MaterialSearch(['material_category_id' => $material_category_id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

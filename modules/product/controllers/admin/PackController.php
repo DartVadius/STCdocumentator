@@ -32,8 +32,8 @@ class PackController extends Controller {
      * Lists all Pack models.
      * @return mixed
      */
-    public function actionIndex() {
-        $searchModel = new PackSearch();
+    public function actionIndex($pack_category_id = null) {
+        $searchModel = new PackSearch(['pack_category_id' => $pack_category_id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [

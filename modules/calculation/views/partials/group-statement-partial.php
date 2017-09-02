@@ -24,7 +24,7 @@ $productModel = new Product();
                         <th>Расход на ед.пр.</th>
                         <th>Сумма, грн</th>
                     </tr>
-                    <?php if (!empty($product->recipe)): ?>
+                    <?php if (!empty($product->recipe->get())): ?>
                         <tr>
                             <td>Герметик</td>
                             <td>кг</td>

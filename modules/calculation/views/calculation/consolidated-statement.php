@@ -76,8 +76,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                         <td style="text-align: right">
                                             <?= number_format($product['sealant_weight'], 3, ',', '') ?>
                                         </td>
+                                        <?php $count = 1 ?>
                                         <?php if (!empty($product['packs'])): ?>
-                                            <?php $count = 1 ?>
                                             <?php foreach ($product['packs'] as $pack): ?>
                                                 <td>
                                                     <?= $pack['title'] ?>
@@ -96,14 +96,14 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 $tmp = $pack;
                                                 ?>
                                             <?php endforeach; ?>
-                                            <?php $td = $pack_count - $count + 1; ?>
-                                            <?php if ($td > 0): ?>
-                                                <?php for ($i = 1; $i <= $td; $i++): ?>
-                                                    <td></td><td></td>
-                                                <?php endfor; ?>
-                                            <?php endif; ?> 
-                                        <?php endif; ?>
 
+                                        <?php endif; ?>
+                                        <?php $td = $pack_count - $count + 1; ?>
+                                        <?php if ($td > 0): ?>
+                                            <?php for ($i = 1; $i <= $td; $i++): ?>
+                                                <td></td><td></td>
+                                            <?php endfor; ?>
+                                        <?php endif; ?>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php endif; ?>

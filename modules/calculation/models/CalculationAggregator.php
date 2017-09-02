@@ -275,11 +275,21 @@ class CalculationAggregator {
      * 
      * @return boolean
      */
-    public static function recreateCalculations() {
+    public static function recreateCalculations($categoryId = null) {
         $productModel = new Product();
         $repo = new CalculationRepo();
-        $repo->saveAllasArchived();
-        $allProducts = $productModel->find()->where(['product_archiv' => '0'])->all();
+        if (empty($categoryId)) {
+            $repo->saveAllasArchived();
+        } else {
+            $repo->saveByCategoryIdasArchived($categoryId);
+        }
+
+        $select = $productModel->find()
+            ->where(['product_archiv' => '0']);
+        if (!empty($categoryId)) {
+            $select->andWhere(['product_category_id' => $categoryId]);
+        }
+        $allProducts = $select->all();
         foreach ($allProducts as $product) {
             $productAggregator = new ProductAggregator($product);
             $calculationAggregator = Connector::getCalculationAggregator($productAggregator);

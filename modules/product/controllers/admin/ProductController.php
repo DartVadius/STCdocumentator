@@ -43,7 +43,7 @@ class ProductController extends Controller {
      * Lists all Product models.
      * @return mixed
      */
-    public function actionIndex($category_id = NULL) {
+    public function actionIndex($category_id = null) {
         $searchModel = new ProductSearch(['product_category_id' => $category_id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [

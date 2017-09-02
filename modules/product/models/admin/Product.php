@@ -1,9 +1,6 @@
 <?php
 
 namespace app\modules\product\models\admin;
-use yii\helpers\Url;
-
-use Yii;
 
 /**
  * This is the model class for table "product".

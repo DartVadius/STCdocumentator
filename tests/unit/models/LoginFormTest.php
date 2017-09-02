@@ -2,32 +2,30 @@
 
 namespace tests\models;
 
-use app\models\LoginForm;
+//use app\models\LoginForm;
 use Codeception\Specify;
+use mdm\admin\models\form\Login;
 
-class LoginFormTest extends \Codeception\Test\Unit
-{
+class LoginFormTest extends \Codeception\Test\Unit {
     private $model;
 
-    protected function _after()
-    {
+    protected function _after() {
         \Yii::$app->user->logout();
     }
 
-    public function testLoginNoUser()
-    {
-        $this->model = new LoginForm([
+    public function testLoginNoUser() {
+        $this->model = new Login([
             'username' => 'not_existing_username',
             'password' => 'not_existing_password',
+            'rememberMe' => TRUE
         ]);
 
         expect_not($this->model->login());
         expect_that(\Yii::$app->user->isGuest);
     }
 
-    public function testLoginWrongPassword()
-    {
-        $this->model = new LoginForm([
+    public function testLoginWrongPassword() {
+        $this->model = new Login([
             'username' => 'demo',
             'password' => 'wrong_password',
         ]);
@@ -37,16 +35,18 @@ class LoginFormTest extends \Codeception\Test\Unit
         expect($this->model->errors)->hasKey('password');
     }
 
-    public function testLoginCorrect()
-    {
-        $this->model = new LoginForm([
-            'username' => 'demo',
-            'password' => 'demo',
+    public function testLoginCorrect() {
+        $form = new Login([
+            'username' => 'superuser',
+            'password' => '111111',
+            'rememberMe' => TRUE
         ]);
 
-        expect_that($this->model->login());
+        $this->assertTrue($form->validate());
+
+        expect_that($form->login());
         expect_not(\Yii::$app->user->isGuest);
-        expect($this->model->errors)->hasntKey('password');
+        expect($form->errors)->hasntKey('password');
     }
 
 }

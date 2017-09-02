@@ -2,6 +2,7 @@
 
 namespace app\modules\calculation\controllers;
 
+use app\modules\services\CategoryProductService;
 use Yii;
 use yii\web\Controller;
 use app\modules\product\models\ProductAggregator;
@@ -12,7 +13,6 @@ use app\modules\calculation\models\admin\CalculationSearch;
 use app\modules\product\models\admin\CategoryProduct;
 use app\modules\classes\Connector;
 use yii\web\NotFoundHttpException;
-use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 
 class CalculationController extends Controller {
@@ -32,12 +32,15 @@ class CalculationController extends Controller {
     }
 
     public function actionIndex() {
+        $categoryService = new CategoryProductService();
         $searchModel = new CalculationSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $category = new CategoryProduct();
         return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'model' => $category,
+                    'categoryService' => $categoryService,
         ]);
     }
 
@@ -48,14 +51,13 @@ class CalculationController extends Controller {
         $calculationAggregator = Connector::getCalculationAggregator($productAggregator);
         $calculation = Connector::setCalculationModel($calculationAggregator);
         if (!$productAggregator->weight && !$productAggregator->recipe_weight) {
-            $msg = 'Укажите вес продукции или вес герметика';
+            Yii::$app->session->setFlash('error', 'Укажите вес продукции или вес герметика');
         }
         if ($calculation->load(Yii::$app->request->post()) && ($productAggregator->weight || $productAggregator->recipe_weight) && $calculation->save()) {
             return $this->redirect(['view', 'id' => $calculation->calculation_id]);
         } else {
             return $this->render('create', [
                         'calculation' => $calculation,
-                        'msg' => $msg,
             ]);
         }
     }
@@ -82,7 +84,8 @@ class CalculationController extends Controller {
     }
 
     public function actionRecreate() {
-        CalculationAggregator::recreateCalculations();
+        $categoryId = Yii::$app->request->post()['CategoryProduct']['category_product_id'];
+        CalculationAggregator::recreateCalculations($categoryId);
         return $this->redirect(['index']);
     }
 

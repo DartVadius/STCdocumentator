@@ -3,13 +3,17 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\grid\GridView;
+use app\modules\product\models\admin\Product;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\admin\Product */
+/* @var $model app\modules\product\models\admin\Product */
 
 $this->title = $model->product_title;
 $this->params['breadcrumbs'][] = ['label' => 'Продукция', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->productCategory->category_product_title, 'url' => ['index', 'category_id' => $model->product_category_id]];
+if (!empty($model->product_category_id)) {
+    $this->params['breadcrumbs'][] = ['label' => $model->productCategory->category_product_title, 'url' => ['index', 'category_id' => $model->product_category_id]];
+}
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -100,7 +104,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'product_category_id',
                     'label' => 'Категория',
-                    'value' => $model->productCategory->category_product_title,
+                    'value' => function (Product $product) {
+                        return (!empty($product->product_category_id)) ? $product->productCategory->category_product_title : null;
+                    },
                 ],
                 'product_price',
                 [

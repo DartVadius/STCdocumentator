@@ -2,12 +2,16 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\modules\product\models\admin\Pack;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\admin\Pack */
+/* @var $model app\modules\product\models\admin\Pack */
 
 $this->title = $model->pack_title;
 $this->params['breadcrumbs'][] = ['label' => 'Упаковка', 'url' => ['index']];
+if (!empty($model->pack_category_id)) {
+    $this->params['breadcrumbs'][] = ['label' => $model->packCategory->category_pack_title, 'url' => ['index', 'pack_category_id' => $model->pack_category_id]];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -38,6 +42,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'pack_desc',
                 'pack_price',
                 'pack_weight',
+                [
+                    'attribute' => 'pack_category_id',
+                    'label' => 'Категория',
+                    'value' => function (Pack $pack) {
+                        return (!empty($pack->pack_category_id)) ? $pack->packCategory->category_pack_title : null;
+                    },
+                ],
             ],
         ])
         ?>

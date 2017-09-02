@@ -25,10 +25,10 @@ class AjaxController extends Controller {
             $data = CalculationAggregator::findCalculationByCategoryIds($c['category']);
             $aggregat = CalculationAggregator::findAggregatorByCategoryIds($data);
             $partial = $c['partial'];
-            $discount = $c['discount'];
-            $profit = $c['profit'];
-            $step = $c['step'];
-            $stepCount = $c['step-count'];
+            $discount = (!empty($c['discount'])) ? $c['discount'] : null;
+            $profit = (!empty($c['profit'])) ? $c['profit'] : null;
+            $step = (!empty($c['step'])) ? $c['step'] : null;
+            $stepCount = (!empty($c['step-count'])) ? $c['step-count'] : null;
             return $this->renderAjax("@app/modules/calculation/views/partials/$partial", [
                         'data' => $aggregat,
                         'shift' => $shift,

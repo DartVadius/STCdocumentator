@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
-/* @var $calculation  */
+/* @var $calculation */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -35,6 +35,6 @@ use kartik\date\DatePicker;
     ?>
     <?= $form->field($calculation, 'calculation_archive')->checkbox(['value' => '1', 'uncheck' => '0']) ?>
 
-<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 
 </div>

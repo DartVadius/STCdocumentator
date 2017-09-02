@@ -2,9 +2,8 @@
 
 namespace app\modules\calculation\models\admin;
 
-use Yii;
 use app\modules\product\models\admin\Product;
-use app\modules\product\models\admin\CategoryProduct;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "calculation".
@@ -32,7 +31,7 @@ use app\modules\product\models\admin\CategoryProduct;
  * @property Product $calculationProduct
  * @property Calculation $calculation
  */
-class Calculation extends \yii\db\ActiveRecord {
+class Calculation extends ActiveRecord {
 
     /**
      * @inheritdoc
@@ -47,10 +46,10 @@ class Calculation extends \yii\db\ActiveRecord {
     public function rules() {
         return [
             [['calculation_product_id',], 'integer'],
-            ['calculation_weight', 'integer', 'when' => function($this) {
+            ['calculation_weight', 'integer', 'when' => function() {
                     return $this->calculation_weight != NULL;
                 }],
-            ['calculation_thickness', 'number', 'when' => function($this) {
+            ['calculation_thickness', 'number', 'when' => function() {
                     return $this->calculation_thickness != NULL;
                 }],
             [['calculation_product_capacity_hour', 'calculation_length', 'calculation_width',], 'number'],

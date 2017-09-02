@@ -16,7 +16,8 @@ class Recipe implements iCalculation {
     public function __construct($recipe) {
         $this->title = $recipe['title'];
         $this->materials = $recipe['materials'];
-        $this->loss = $recipe['loss'];
+        $this->loss = (!empty($recipe['loss'])) ? $recipe['loss'] : null;
+//        $this->loss = $recipe['loss'];
     }
 
     public function summ() {

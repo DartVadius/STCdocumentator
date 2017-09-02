@@ -5,10 +5,13 @@ use yii\widgets\DetailView;
 use app\modules\product\models\admin\Material;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\admin\Material */
+/* @var $model app\modules\product\models\admin\Material */
 
 $this->title = $model->material_title;
 $this->params['breadcrumbs'][] = ['label' => 'Материалы', 'url' => ['index']];
+if (!empty($model->material_category_id)) {
+    $this->params['breadcrumbs'][] = ['label' => $model->materialCategory->category_title, 'url' => ['index', 'material_category_id' => $model->material_category_id]];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -58,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'material_category_id',
                     'label' => 'Категория',
                     'value' => function (Material $material) {
-                        return $material->materialCategory->category_title;
+                        return (!empty($material->material_category_id)) ? $material->materialCategory->category_title : null;
                     },
                 ],
             ],

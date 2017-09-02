@@ -61,7 +61,7 @@ AppAsset::register($this);
                 <div class="row">
                     <div class="col-lg-2 top-margin">
                         <?php
-                        if (Yii::$app->user->identity->status > 30) {
+                        if (!Yii::$app->user->isGuest && Yii::$app->user->identity->status > 30) {
                             echo $this->render('@app/views/partials/side_menu');
                         }
                         ?>
