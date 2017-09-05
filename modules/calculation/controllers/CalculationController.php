@@ -46,20 +46,20 @@ class CalculationController extends Controller {
 
     public function actionCreate($id_product = null) {
         $product = new Product();
-        $msg = NULL;
         $productAggregator = new ProductAggregator($product->findOne($id_product));
         $calculationAggregator = Connector::getCalculationAggregator($productAggregator);
         $calculation = Connector::setCalculationModel($calculationAggregator);
         if (!$productAggregator->weight && !$productAggregator->recipe_weight) {
             Yii::$app->session->setFlash('error', 'Укажите вес продукции или вес герметика');
-        }
+        };
+//        print_r($calculation);
+//        die;
         if ($calculation->load(Yii::$app->request->post()) && ($productAggregator->weight || $productAggregator->recipe_weight) && $calculation->save()) {
             return $this->redirect(['view', 'id' => $calculation->calculation_id]);
-        } else {
-            return $this->render('create', [
-                        'calculation' => $calculation,
-            ]);
         }
+        return $this->render('create', [
+            'calculation' => $calculation,
+        ]);
     }
 
     public function actionUpdate($id) {

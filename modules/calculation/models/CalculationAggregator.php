@@ -77,7 +77,7 @@ class CalculationAggregator {
     }
 
     public function summ() {
-        return $this->summRealExpenses() + $this->losses->summ();
+        return (float)$this->summRealExpenses() + (float)$this->losses->summ();
     }
 
     public function getNetto() {

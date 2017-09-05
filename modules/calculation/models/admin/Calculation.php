@@ -52,7 +52,13 @@ class Calculation extends ActiveRecord {
             ['calculation_thickness', 'number', 'when' => function() {
                     return $this->calculation_thickness != NULL;
                 }],
-            [['calculation_product_capacity_hour', 'calculation_length', 'calculation_width',], 'number'],
+            ['calculation_length', 'number', 'when' => function() {
+                return $this->calculation_length != NULL;
+            }],
+            ['calculation_width', 'number', 'when' => function() {
+                return $this->calculation_width != NULL;
+            }],
+            [['calculation_product_capacity_hour',], 'number'],
             [['calculation_product_title', 'calculation_date', 'calculation_product_capacity_hour'], 'required'],
             [['calculation_date', 'calculation_archive'], 'safe'],
             [['calculation_note', 'calculation_materials_data', 'calculation_materials_additional_data', 'calculation_recipe_data', 'calculation_packs_data', 'calculation_positions_data', 'calculation_expenses_data', 'calculation_losses_data'], 'string'],

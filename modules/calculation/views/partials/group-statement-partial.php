@@ -26,11 +26,14 @@ $productModel = new Product();
                     </tr>
                     <?php if (!empty($product->recipe->get())): ?>
                         <tr>
-                            <td>Герметик</td>
+                            <td>Герметик/Клей</td>
                             <td>кг</td>
                             <td style="text-align: right"><?= number_format($product->recipe->summ() / $product->recipe->getNetto(), 2, ',', '') ?></td>
                             <td style="text-align: right"><?= number_format($product->recipe->getNetto(), 4, ',', '') ?></td>
                             <td style="text-align: right"><?= number_format($product->recipe->summ(), 2, ',', '') ?></td>
+                            <?php if ($product->recipe->getLoss() > 0): ?>
+                                <td style="text-align: right"> + <?= number_format($product->recipe->getLoss(), 2, ',', '') ?> %</td>
+                            <?php endif; ?>
                         </tr>
                     <?php endif; ?>
                     <?php if (!empty($product->materials->get())): ?>

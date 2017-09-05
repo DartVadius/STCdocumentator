@@ -57,6 +57,7 @@ class Connector {
             if (!empty($recipeData)) {
                 $recipe['title'] = $recipeData->getTitle();
                 $recipe['materials'] = $recipeData->get();
+                $recipe['loss'] = $recipeData->getLoss();
             }
             $packsData = unserialize($product->calculation_packs_data);
             $packs = NULL;
