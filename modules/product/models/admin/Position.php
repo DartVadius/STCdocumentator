@@ -31,6 +31,7 @@ class Position extends \yii\db\ActiveRecord {
         return [
             [['position_title'], 'required'],
             [['position_salary_hour'], 'number'],
+            [['by_item'], 'integer'],
             [['position_title', 'position_desc'], 'string', 'max' => 255],
         ];
     }
@@ -44,6 +45,7 @@ class Position extends \yii\db\ActiveRecord {
             'position_title' => 'Название должности',
             'position_desc' => 'Описание должности',
             'position_salary_hour' => 'Оплата в час',
+            'by_item' => 'Учитывать выработку герметика'
         ];
     }
 

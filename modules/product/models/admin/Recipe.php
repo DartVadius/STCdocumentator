@@ -34,11 +34,12 @@ class Recipe extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['recipe_title', 'recipe_date', 'recipe_update'], 'required'],
+            [['recipe_title', 'recipe_date', 'recipe_update', 'quantity_by_hour'], 'required'],
             [['recipe_note'], 'string'],
             [['recipe_date', 'recipe_update'], 'safe'],
             [['recipe_approved'], 'integer'],
             [['recipe_title'], 'string', 'max' => 255],
+            [['quantity_by_hour'], 'number'],
         ];
     }
 
@@ -54,6 +55,7 @@ class Recipe extends \yii\db\ActiveRecord
             'recipe_date' => 'Дата создания',
             'recipe_update' => 'Дата редактирования',
             'recipe_approved' => 'Утверждено',
+            'quantity_by_hour' => 'Выработка, кг/час',
         ];
     }
 

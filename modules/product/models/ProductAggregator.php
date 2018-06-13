@@ -2,6 +2,9 @@
 
 namespace app\modules\product\models;
 
+use app\modules\product\models\admin\CategoryProduct;
+use app\modules\product\models\admin\Recipe;
+use app\modules\product\models\admin\Unit;
 use Yii;
 use app\modules\product\models\admin\Product;
 use app\modules\product\models\admin\Pm;
@@ -334,9 +337,19 @@ class ProductAggregator {
         foreach ($this->positions as $position) {
             $positions[$position->pop_position_id]['title'] = $position->popPosition->position_title;
             $positions[$position->pop_position_id]['quantity'] = $position->pop_num;
+//            print_r($this->recipe->quantity_by_hour);
+//            die;
             $positions[$position->pop_position_id]['value_per_hour'] = $position->popPosition->position_salary_hour;
-            $positions[$position->pop_position_id]['summ'] = $positions[$position->pop_position_id]['value_per_hour'] /
+            $positions[$position->pop_position_id]['by_item'] = $position->popPosition->by_item;
+            if ($position->popPosition->by_item) {
+                $positions[$position->pop_position_id]['summ'] = $positions[$position->pop_position_id]['quantity'] *
+                    $positions[$position->pop_position_id]['value_per_hour'] / $this->recipe->quantity_by_hour *
+                    $this->getRecipeWeight() / 1000;
+            } else {
+                $positions[$position->pop_position_id]['summ'] = $positions[$position->pop_position_id]['value_per_hour'] /
                     $this->capacity * $positions[$position->pop_position_id]['quantity'];
+            }
+
         }
         return $positions;
     }

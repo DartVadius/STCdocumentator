@@ -41,6 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
                 'position_desc',
+                'by_item:boolean',
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'header' => 'Действия',

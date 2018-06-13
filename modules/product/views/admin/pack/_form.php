@@ -4,9 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\modules\product\models\admin\CategoryPack;
 use yii\helpers\ArrayHelper;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\admin\Pack */
+/* @var $model \app\modules\product\models\admin\Pack */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -33,6 +34,14 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'pack_category_id')->dropDownList($category, $catParams)->label('Категория') ?>
     
     <?= $form->field($model, 'pack_delivery')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'buying_date')->widget(DatePicker::classname(), [
+        'options' => ['placeholder' => 'Введите дату закупки'],
+        'pluginOptions' => [
+            'autoclose'=>true,
+            'format' => 'yyyy-mm-dd',
+        ]
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

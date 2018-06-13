@@ -87,6 +87,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'style' => 'text-align:right'
                     ],
                 ],
+                'buying_date',
                 [
                     'attribute' => 'material_category_id',
                     'label' => 'Категория',

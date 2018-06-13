@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'recipe_date',
                     'recipe_update',
                     'recipe_note:ntext',
+                    'quantity_by_hour',
                     [
                         'attribute' => 'recipe_approved',
                         'label' => 'Утверждено',

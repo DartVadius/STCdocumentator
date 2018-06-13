@@ -34,6 +34,7 @@ class Pack extends \yii\db\ActiveRecord {
         return [
             [['pack_title', 'pack_price'], 'required'],
             [['pack_price', 'pack_weight', 'pack_delivery'], 'number'],
+            [['buying_date'], 'date', 'format' => 'yyyy-mm-dd'],
             [['pack_category_id'], 'integer'],
             [['pack_title', 'pack_desc'], 'string', 'max' => 255],
             [['pack_category_id'], 'exist', 'skipOnError' => true, 'targetClass' => CategoryPack::className(), 'targetAttribute' => ['pack_category_id' => 'category_pack_id']],
@@ -51,7 +52,8 @@ class Pack extends \yii\db\ActiveRecord {
             'pack_price' => 'Цена',
             'pack_weight' => 'Вес упаковки, гр',
             'pack_category_id' => 'Категория',
-            'pack_delivery' => 'Доставка'
+            'pack_delivery' => 'Доставка',
+            'buying_date' => 'Дата закупки',
         ];
     }
 

@@ -26,6 +26,8 @@ use app\modules\product\models\admin\Material;
 
     <?= $form->field($model, 'recipe_note')->textarea(['rows' => 6]) ?>
 
+    <?= $form->field($model, 'quantity_by_hour')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'recipe_approved')->checkbox() ?>
     
     <div class="form-group">

@@ -148,7 +148,7 @@
                 <td style="text-align: right"></td>
                 <td style="text-align: right"><?= number_format($position['quantity'], 2, ',', '') ?></td>
                 <td style="text-align: right"><?= number_format($position['value_per_hour'], 2, ',', '') ?></td>
-                <td style="text-align: right"><?= number_format($position['summ'], 2, ',', '') ?></td>
+                <td style="text-align: right"><?= $position['by_item'] ? '(с учетом выработки герметика) ' : '' ?><?= number_format($position['summ'], 2, ',', '') ?></td>
             </tr>
         <?php endforeach; ?>
         <tr>

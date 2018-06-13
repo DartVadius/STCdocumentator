@@ -6,6 +6,7 @@ use app\modules\product\models\admin\Category;
 use app\modules\product\models\admin\Unit;
 use app\modules\product\models\admin\Currency;
 use yii\helpers\ArrayHelper;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Material */
@@ -47,6 +48,14 @@ use yii\helpers\ArrayHelper;
     <?= $form->field($model, 'material_currency_type')->dropDownList($currency, $currencyParams)->label('Валюта закупки') ?>
     
     <?= $form->field($model, 'material_delivery')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'buying_date')->widget(DatePicker::classname(), [
+        'options' => ['placeholder' => 'Введите дату закупки'],
+        'pluginOptions' => [
+            'autoclose'=>true,
+            'format' => 'yyyy-mm-dd',
+        ]
+    ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Редактировать', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'recipe_note:ntext',
                 'recipe_date',
                 'recipe_update',
+                'quantity_by_hour',
                 'recipe_approved:boolean',
             ],
         ])

@@ -44,6 +44,7 @@ class Material extends \yii\db\ActiveRecord
         return [
             [['material_title', 'material_price', 'material_unit_id'], 'required'],
             [['material_price', 'material_delivery'], 'number'],
+            [['buying_date'], 'date', 'format' => 'yyyy-mm-dd'],
             [['material_category_id', 'material_unit_id', 'material_currency_type'], 'integer'],
             [['material_title'], 'string', 'max' => 255],
             [['material_article'], 'string', 'max' => 12],
@@ -67,6 +68,7 @@ class Material extends \yii\db\ActiveRecord
             'material_unit_id' => 'Ед.изм.',
             'material_currency_type' => 'Валюта',
             'material_delivery' => 'Доставка',
+            'buying_date' => 'Дата закупки',
         ];
     }
 

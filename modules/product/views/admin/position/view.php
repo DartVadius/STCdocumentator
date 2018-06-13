@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'position_title',
                 'position_desc',
                 'position_salary_hour',
+                'by_item:boolean',
             ],
         ])
         ?>
